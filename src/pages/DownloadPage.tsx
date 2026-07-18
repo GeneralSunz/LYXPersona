@@ -19,13 +19,16 @@ export default function DownloadPage() {
   const [previewFile, setPreviewFile] = useState<FileItem | null>(null)
   const [isNavigating, setIsNavigating] = useState(false)
   const [navKey, setNavKey] = useState(0)
+  const [loading, setLoading] = useState(isSupabaseConfigured())
 
   // Load data
   useEffect(() => {
     if (!isSupabaseConfigured()) return
+    setLoading(true)
     Promise.all([fetchAllFiles(), fetchFolders()])
       .then(([files, flds]) => { setAllFiles(files); setFolders(flds) })
       .catch(() => {})
+      .finally(() => setLoading(false))
   }, [])
 
   // Compute items to display
@@ -205,7 +208,12 @@ export default function DownloadPage() {
 
         {/* ═══ File Grid ═══ */}
         <div key={navKey} className={`file-grid${search ? ' file-grid--search' : ''}`}>
-          {items.map((item, i) => (
+          {loading ? (
+            <div className="empty-state">
+              <div className="loading-spinner" />
+              <p className="empty-state-text">正在加载档案...</p>
+            </div>
+          ) : items.map((item, i) => (
             <CelestialBody
               key={item.id}
               item={item}

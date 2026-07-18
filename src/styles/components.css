@@ -715,6 +715,15 @@
   margin: 0;
 }
 
+.loading-spinner {
+  width: 28px;
+  height: 28px;
+  border: 2px solid var(--border-default);
+  border-top-color: var(--accent-blue);
+  border-radius: 50%;
+  animation: spin 600ms linear infinite;
+}
+
 .empty-state-hint {
   font-size: 11px;
   color: var(--color-text-muted);
