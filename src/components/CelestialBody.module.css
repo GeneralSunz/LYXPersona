@@ -1,0 +1,236 @@
+/* ═══════════════════════════════════════
+   萨卡兹游戏收藏品卡片
+   ═══════════════════════════════════════ */
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 18px 14px 14px;
+  background: linear-gradient(165deg, #1a1128 0%, #120d20 50%, #0f0a1a 100%);
+  border: 1.5px solid rgba(124, 58, 237, 0.2);
+  outline: 1px solid rgba(245, 158, 11, 0.08);
+  outline-offset: 2px;
+  border-radius: 4px;
+  cursor: pointer;
+  min-width: 0;
+  transition: border-color 0.35s, box-shadow 0.35s, transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  animation: cardEnter 0.5s cubic-bezier(0.22, 1, 0.36, 1) var(--delay, 0s) both;
+  overflow: visible;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 5px;
+  background: linear-gradient(135deg, rgba(124,58,237,0.08), transparent, rgba(245,158,11,0.05));
+  pointer-events: none;
+  z-index: -1;
+}
+
+.card:hover {
+  border-color: var(--card-clr, #7c3aed);
+  box-shadow:
+    0 0 25px rgba(124, 58, 237, 0.08),
+    0 0 60px rgba(124, 58, 237, 0.04),
+    inset 0 0 20px rgba(124, 58, 237, 0.03);
+  transform: translateY(-3px) scale(1.02);
+}
+
+@keyframes cardEnter {
+  0% {
+    opacity: 0;
+    transform: translateY(24px) scale(0.92);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ── Top color bar ── */
+
+.topBar {
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  right: -1px;
+  height: 3px;
+  background: var(--card-clr, #7c3aed);
+  border-radius: 4px 4px 0 0;
+  box-shadow: 0 0 12px var(--card-clr, #7c3aed);
+  transition: box-shadow 0.35s;
+}
+
+.card:hover .topBar {
+  box-shadow: 0 0 20px var(--card-clr, #7c3aed), 0 0 40px var(--card-clr, #7c3aed);
+}
+
+/* ── Corner diamonds ── */
+
+.cornerTL, .cornerTR, .cornerBL, .cornerBR {
+  position: absolute;
+  font-size: 7px;
+  color: var(--gem-gold);
+  opacity: 0.3;
+  transition: opacity 0.3s;
+  pointer-events: none;
+  line-height: 1;
+}
+
+.card:hover .cornerTL,
+.card:hover .cornerTR,
+.card:hover .cornerBL,
+.card:hover .cornerBR {
+  opacity: 0.7;
+}
+
+.cornerTL { top: 5px; left: 6px; }
+.cornerTR { top: 5px; right: 6px; }
+.cornerBL { bottom: 5px; left: 6px; }
+.cornerBR { bottom: 5px; right: 6px; }
+
+/* ── Icon ── */
+
+.iconWrap {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(124,58,237,0.1), transparent 70%);
+  margin-bottom: 2px;
+  transition: background 0.3s, box-shadow 0.3s;
+}
+
+.card:hover .iconWrap {
+  background: radial-gradient(circle, rgba(124,58,237,0.18), transparent 70%);
+  box-shadow: 0 0 20px rgba(124,58,237,0.08);
+}
+
+.icon {
+  font-size: 20px;
+  color: var(--card-clr, #7c3aed);
+  transition: transform 0.3s;
+}
+
+.card:hover .icon {
+  transform: scale(1.15);
+}
+
+/* ── Name ── */
+
+.name {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #d4cce8;
+  text-align: center;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  line-height: 1.4;
+  transition: color 0.3s;
+}
+
+.card:hover .name {
+  color: #f0ebf8;
+}
+
+/* ── Meta ── */
+
+.meta {
+  font-size: 10.5px;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-family: 'Noto Sans SC', sans-serif;
+}
+
+.metaDot {
+  color: var(--text-muted);
+}
+
+/* ── Hover overlay ── */
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  background: rgba(12, 8, 20, 0.7);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  opacity: 0;
+  transition: opacity 0.25s;
+  border-radius: inherit;
+  pointer-events: none;
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 12px;
+  color: #e4dff0;
+  letter-spacing: 1px;
+}
+
+.overlayShow {
+  opacity: 1;
+}
+
+.overlayIcon {
+  font-size: 14px;
+  color: var(--card-clr, #7c3aed);
+}
+
+/* ── Search mode ── */
+
+.searchMode {
+  flex-direction: row;
+  padding: 8px 14px 8px 10px;
+  gap: 10px;
+  animation-duration: 0.25s;
+}
+
+.searchMode .topBar {
+  width: 3px;
+  height: auto;
+  top: -1px;
+  bottom: -1px;
+  left: -1px;
+  right: auto;
+  border-radius: 4px 0 0 4px;
+}
+
+.searchMode .iconWrap {
+  width: 28px;
+  height: 28px;
+}
+
+.searchMode .icon {
+  font-size: 14px;
+}
+
+.searchMode .name {
+  font-size: 12px;
+  text-align: left;
+}
+
+.searchMode .meta {
+  font-size: 10px;
+}
+
+.searchMode .overlay {
+  display: none;
+}
+.searchMode .cornerTL,
+.searchMode .cornerTR,
+.searchMode .cornerBL,
+.searchMode .cornerBR {
+  display: none;
+}

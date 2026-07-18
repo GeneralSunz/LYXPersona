@@ -1,0 +1,48 @@
+:root {
+  /* ── Backgrounds ── */
+  --color-bg-deepest: #0a0a0c;
+  --color-bg-dark: #131211;
+  --color-bg-card: rgba(22, 20, 18, 0.88);
+  --color-bg-card-hover: rgba(32, 28, 24, 0.92);
+
+  /* ── Gold / Brass ── */
+  --color-gold-primary: #c89b3c;
+  --color-gold-dark: #8a6a28;
+  --color-gold-light: #e8c86a;
+  --color-gold-glow: rgba(200, 155, 60, 0.25);
+
+  /* ── Blood / Crimson ── */
+  --color-blood: #8b1a1a;
+  --color-blood-dark: #5c1010;
+  --color-blood-glow: rgba(139, 26, 26, 0.2);
+
+  /* ── Phosphor / Teal ── */
+  --color-phosphor: #4a7c8c;
+  --color-phosphor-dark: #1a3a4a;
+  --color-phosphor-glow: rgba(74, 124, 140, 0.15);
+
+  /* ── Text ── */
+  --color-text-primary: #bfb096;
+  --color-text-secondary: #8a7a64;
+  --color-text-muted: #5a4f40;
+  --color-text-gold: #c89b3c;
+  --color-text-on-dark: #8a8070;
+
+  /* ── Fonts ── */
+  --font-title: 'Source Han Serif SC', 'Noto Serif SC', 'SimSun', 'STSong', serif;
+  --font-body: 'Source Han Serif SC', 'Noto Serif SC', 'STSong', serif;
+  --font-ui: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --font-mono: 'Cascadia Code', 'Fira Code', 'JetBrains Mono', monospace;
+  --font-en-title: 'Cinzel Decorative', 'Trajan Pro', 'Times New Roman', serif;
+
+  /* ── Shadows ── */
+  --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.6), inset 0 0 40px rgba(200, 155, 60, 0.03);
+  --shadow-card-hover: 0 4px 20px rgba(0, 0, 0, 0.7), inset 0 0 40px rgba(200, 155, 60, 0.06);
+  --shadow-text-gold: 0 0 10px var(--color-gold-glow), 1px 1px 0 rgba(0, 0, 0, 0.8);
+  --shadow-glow-soft: 0 0 15px rgba(200, 155, 60, 0.08);
+
+  /* ── Borders ── */
+  --border-gold: 1px solid rgba(200, 155, 60, 0.25);
+  --border-gold-strong: 1px solid rgba(200, 155, 60, 0.45);
+  --border-blood: 1px solid rgba(139, 26, 26, 0.3);
+}

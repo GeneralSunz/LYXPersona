@@ -1,0 +1,12 @@
+name = "r2-upload-proxy"
+main = "src/index.ts"
+compatibility_date = "2024-04-01"
+
+[vars]
+R2_PUBLIC_URL = "https://pub-ac5abe7a212f453abd134cea6c25d943.r2.dev"
+R2_BUCKET_NAME = "myweb-files"
+R2_ACCOUNT_ID = "405c1246f73e024c552b158dc25f7a13"
+
+[[r2_buckets]]
+binding = "MY_BUCKET"
+bucket_name = "myweb-files"

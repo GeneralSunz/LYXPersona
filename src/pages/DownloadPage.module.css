@@ -1,0 +1,486 @@
+/* ═══════════════════════════════════════════════
+   集成战略「萨卡兹的无终奇语」
+   游戏 UI 风格 — 魂灵熔炉档案库
+   ═══════════════════════════════════════════════ */
+
+.page {
+  position: relative;
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 32px 24px 24px;
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(124, 58, 237, 0.08) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 100%, rgba(245, 158, 11, 0.05) 0%, transparent 45%),
+    radial-gradient(ellipse at 20% 80%, rgba(153, 27, 27, 0.04) 0%, transparent 40%),
+    url("https://static.prts.wiki/charinfo/PRTS_7thStyle/bkg11.png") repeat,
+    #0c0814;
+}
+
+/* ── Noise overlay ── */
+.page::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.25;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 200px 200px;
+  mix-blend-mode: overlay;
+}
+
+/* ═══════════════════════════════════════
+   Main Content Frame
+   ═══════════════════════════════════════ */
+
+.frame {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  max-width: 880px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ═══════════════════════════════════════
+   Header — 游戏标题区
+   ═══════════════════════════════════════ */
+
+.header {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 16px;
+  padding: 20px 28px 16px;
+  width: 100%;
+  max-width: 780px;
+  border: 1.5px solid rgba(124, 58, 237, 0.15);
+  outline: 1px solid rgba(245, 158, 11, 0.06);
+  outline-offset: 3px;
+  background: linear-gradient(180deg, rgba(26, 17, 40, 0.4) 0%, transparent 100%);
+}
+
+/* Corner diamonds on header */
+.header::before {
+  content: '◆';
+  position: absolute;
+  top: 4px;
+  left: 6px;
+  font-size: 7px;
+  color: var(--gem-gold);
+  opacity: 0.3;
+}
+
+.header::after {
+  content: '◆';
+  position: absolute;
+  top: 4px;
+  right: 6px;
+  font-size: 7px;
+  color: var(--gem-gold);
+  opacity: 0.3;
+}
+
+/* bottom corners via pseudo */
+.headerBottomL, .headerBottomR {
+  position: absolute;
+  bottom: 4px;
+  font-size: 7px;
+  color: var(--gem-gold);
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+/* ── Top ornamental border ── */
+.headerBorder {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+.headerBorderLine {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(124, 58, 237, 0.3), rgba(245, 158, 11, 0.2), rgba(124, 58, 237, 0.3), transparent);
+}
+
+.headerDiamond {
+  font-size: 8px;
+  color: var(--accent-gold);
+  opacity: 0.4;
+}
+
+/* ── Title ── */
+.title {
+  font-family: 'Noto Serif SC', 'Noto Sans SC', serif;
+  font-size: 27px;
+  font-weight: 700;
+  color: #e4dff0;
+  text-shadow:
+    0 0 60px rgba(124, 58, 237, 0.1),
+    0 2px 4px rgba(0, 0, 0, 0.4);
+  margin: 0 0 6px;
+  line-height: 1.35;
+  letter-spacing: 3px;
+}
+
+.subtitle {
+  font-family: 'EB Garamond', 'Times New Roman', serif;
+  font-size: 13.5px;
+  font-weight: 500;
+  font-style: italic;
+  color: var(--text-secondary);
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  margin: 0 0 10px;
+}
+
+/* ── Bottom ornamental border ── */
+.headerBottomBorder {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 70%;
+}
+
+.headerBottomLine {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(245, 158, 11, 0.15), transparent);
+}
+
+.headerBottomDiamond {
+  font-size: 6px;
+  color: var(--gem-gold);
+  opacity: 0.3;
+}
+
+/* ═══════════════════════════════════════
+   Control Bar — 游戏菜单栏
+   ═══════════════════════════════════════ */
+
+.controlBar {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  max-width: 780px;
+  padding: 10px 16px;
+  margin-bottom: 18px;
+  background: rgba(12, 8, 20, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1.5px solid rgba(124, 58, 237, 0.12);
+  outline: 1px solid rgba(245, 158, 11, 0.05);
+  outline-offset: 2px;
+  border-radius: 3px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.controlBar:focus-within {
+  border-color: rgba(124, 58, 237, 0.2);
+  box-shadow: 0 0 30px rgba(124, 58, 237, 0.03);
+}
+
+/* Control bar corner diamonds */
+.controlBar::before {
+  content: '◆';
+  position: absolute;
+  top: 3px;
+  left: 4px;
+  font-size: 6px;
+  color: var(--gem-gold);
+  opacity: 0.2;
+}
+.controlBar::after {
+  content: '◆';
+  position: absolute;
+  top: 3px;
+  right: 4px;
+  font-size: 6px;
+  color: var(--gem-gold);
+  opacity: 0.2;
+}
+
+.backBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid rgba(124, 58, 237, 0.12);
+  background: rgba(124, 58, 237, 0.04);
+  color: var(--text-secondary);
+  cursor: pointer;
+  flex-shrink: 0;
+  font-size: 14px;
+  border-radius: 3px;
+  transition: all 0.2s;
+}
+
+.backBtn:hover {
+  background: rgba(124, 58, 237, 0.1);
+  border-color: rgba(124, 58, 237, 0.25);
+  color: var(--accent-purple);
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.crumbRow {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.crumbSep {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.crumbBtn {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-family: 'Noto Sans SC', 'Noto Serif SC', sans-serif;
+  padding: 2px 8px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.crumbBtn:hover {
+  color: var(--text-primary);
+  background: rgba(124, 58, 237, 0.05);
+}
+
+.crumbActive {
+  color: #d4cce8;
+  font-weight: 600;
+}
+
+.searchWrap {
+  position: relative;
+  flex-shrink: 0;
+  width: 170px;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 9px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 13px;
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 6px 10px 6px 30px;
+  background: rgba(124, 58, 237, 0.03);
+  border: 1px solid rgba(124, 58, 237, 0.08);
+  border-radius: 3px;
+  color: var(--text-primary);
+  font-size: 12px;
+  font-family: 'Noto Sans SC', sans-serif;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.searchInput::placeholder {
+  color: var(--text-muted);
+}
+
+.searchInput:focus {
+  border-color: rgba(124, 58, 237, 0.2);
+}
+
+/* ═══════════════════════════════════════
+   Stats Bar — 游戏状态栏
+   ═══════════════════════════════════════ */
+
+.statsBar {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 11px;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+  padding: 5px 16px;
+  background: rgba(124, 58, 237, 0.02);
+  border: 1px solid rgba(124, 58, 237, 0.06);
+  border-radius: 3px;
+  font-family: 'Noto Sans SC', sans-serif;
+  letter-spacing: 0.3px;
+}
+
+.statsIcon {
+  font-size: 13px;
+  color: var(--accent-purple);
+}
+
+.statsDot {
+  color: var(--text-muted);
+}
+
+/* ═══════════════════════════════════════
+   File Grid
+   ═══════════════════════════════════════ */
+
+.grid {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  width: 100%;
+  max-width: 780px;
+  padding: 0 0 18px;
+  flex: 1;
+  align-content: flex-start;
+}
+
+.grid > * {
+  flex: 1 1 200px;
+  max-width: 100%;
+  min-width: 170px;
+}
+
+.gridSearch {
+  flex-direction: column;
+  max-width: 560px;
+  gap: 6px;
+}
+
+.gridSearch > * {
+  flex: 0 0 auto;
+}
+
+/* ═══════════════════════════════════════
+   Empty State
+   ═══════════════════════════════════════ */
+
+.empty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  gap: 12px;
+  width: 100%;
+  text-align: center;
+}
+
+.emptyIcon {
+  font-size: 44px;
+  color: var(--text-muted);
+  opacity: 0.35;
+}
+
+.emptyText {
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 13px;
+  color: var(--text-secondary);
+  letter-spacing: 2px;
+  margin: 0;
+}
+
+.emptyHint {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-style: italic;
+  letter-spacing: 1px;
+}
+
+/* ═══════════════════════════════════════
+   Footer
+   ═══════════════════════════════════════ */
+
+.footer {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  max-width: 780px;
+  margin-top: 6px;
+  padding: 0 8px;
+}
+
+.footerDivider {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.footerDividerLine {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(124, 58, 237, 0.12), rgba(245, 158, 11, 0.08), rgba(124, 58, 237, 0.12), transparent);
+}
+
+.footerDiamond {
+  font-size: 6px;
+  color: var(--gem-gold);
+  opacity: 0.25;
+}
+
+.footerInner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.footerInfo {
+  font-size: 10.5px;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  letter-spacing: 1px;
+  font-family: 'Noto Sans SC', sans-serif;
+  opacity: 0.7;
+}
+
+.adminLink {
+  font-size: 10.5px;
+  color: var(--text-muted);
+  text-decoration: none;
+  letter-spacing: 1px;
+  transition: color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-family: 'Noto Sans SC', sans-serif;
+  opacity: 0.7;
+}
+
+.adminLink:hover {
+  color: var(--accent-purple);
+  text-decoration: none;
+  opacity: 1;
+}

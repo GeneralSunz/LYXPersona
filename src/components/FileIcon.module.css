@@ -1,0 +1,15 @@
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-default);
+  flex-shrink: 0;
+}
+
+.icon[data-category='document'] { color: var(--accent-blue); }
+.icon[data-category='image']    { color: var(--accent-green); }
+.icon[data-category='archive']  { color: var(--accent-orange); }
+.icon[data-category='other']    { color: var(--text-muted); }

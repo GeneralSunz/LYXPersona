@@ -1,0 +1,105 @@
+/* ── Ember particles ── */
+.emberField {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.ember {
+  position: absolute;
+  bottom: -10px;
+  border-radius: 50%;
+  opacity: 0;
+  animation: emberRise linear infinite;
+}
+
+@keyframes emberRise {
+  0% {
+    transform: translateY(0) translateX(0) scale(0.3);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.9;
+    transform: translateY(-10vh) translateX(0) scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: translateY(-50vh) translateX(var(--drift, 0px)) scale(0.8);
+  }
+  90% {
+    opacity: 0.3;
+    transform: translateY(-90vh) translateX(calc(var(--drift, 0px) * 0.5)) scale(0.4);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-100vh) translateX(0) scale(0.1);
+  }
+}
+
+/* ── Ambient glow layers ── */
+.glowTop {
+  position: fixed;
+  top: -20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 700px;
+  height: 400px;
+  background: radial-gradient(ellipse, rgba(200, 155, 60, 0.1) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+  animation: pulseGlow 8s ease-in-out infinite alternate;
+}
+
+.glowBottom {
+  position: fixed;
+  bottom: -15%;
+  left: 30%;
+  width: 500px;
+  height: 350px;
+  background: radial-gradient(ellipse, rgba(139, 26, 26, 0.06) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+  animation: pulseGlow 10s ease-in-out infinite alternate-reverse;
+}
+
+.glowLeft {
+  position: fixed;
+  top: 30%;
+  left: -10%;
+  width: 350px;
+  height: 500px;
+  background: radial-gradient(ellipse, rgba(74, 124, 140, 0.05) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+  animation: pulseGlow 12s ease-in-out infinite alternate;
+}
+
+.glowRight {
+  position: fixed;
+  top: 20%;
+  right: -8%;
+  width: 300px;
+  height: 400px;
+  background: radial-gradient(ellipse, rgba(200, 155, 60, 0.05) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+  animation: pulseGlow 9s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes pulseGlow {
+  0%   { opacity: 0.5; transform: translateX(-50%) scale(1); }
+  100% { opacity: 1;   transform: translateX(-50%) scale(1.2); }
+}
+
+/* ── Vignette ── */
+.vignette {
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 30%, transparent 40%, rgba(10, 7, 15, 0.6) 100%),
+    radial-gradient(ellipse at 50% 80%, transparent 30%, rgba(10, 7, 15, 0.4) 100%);
+  pointer-events: none;
+  z-index: 1;
+}

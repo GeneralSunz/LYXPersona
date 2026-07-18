@@ -1,0 +1,114 @@
+:root {
+  /* Background */
+  --bg-primary: #0a070f;
+  --bg-secondary: #0f0b1a;
+  --bg-tertiary: #16131f;
+  --bg-card: rgba(22, 15, 31, 0.7);
+
+  /* Borders */
+  --border-default: #2a2340;
+  --border-hover: #3d3160;
+  --border-active: #8b5cf6;
+
+  /* Text */
+  --text-primary: #e4dff0;
+  --text-secondary: #8b7fa0;
+  --text-muted: #5c4f78;
+
+  /* Accent - Sarkaz palette */
+  --accent-purple: #7c3aed;
+  --accent-gold: #f59e0b;
+  --accent-orange: #f59e0b;
+  --accent-red: #dc2626;
+  --accent-amber: #d97706;
+  --accent-blue: #3b82f6;
+  --accent-green: #22c55e;
+  --accent-pink: #ec4899;
+
+  /* Gem tones - game UI */
+  --gem-purple: #6d28d9;
+  --gem-gold: #b8860b;
+  --gem-crimson: #991b1b;
+  --gem-amber: #d97706;
+
+  /* Sizing */
+  --header-height: 56px;
+  --sidebar-width: 240px;
+  --radius-sm: 2px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-normal: 250ms ease;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+a {
+  color: var(--accent-blue);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+}
+
+input, textarea {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-default);
+  border-radius: var(--radius-sm);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--border-hover);
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}

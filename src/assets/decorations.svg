@@ -1,0 +1,162 @@
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <defs>
+    <!-- ── Corner Bracket Top-Left ── -->
+    <g id="corner-tl" fill="none" stroke="#c89b3c" stroke-width="1.2" opacity="0.5">
+      <path d="M 18 2 L 2 2 L 2 18" />
+      <path d="M 16 4 L 4 4 L 4 16" stroke-width="0.5" opacity="0.4" />
+    </g>
+
+    <!-- ── Corner Bracket Top-Right ── -->
+    <g id="corner-tr" fill="none" stroke="#c89b3c" stroke-width="1.2" opacity="0.5">
+      <path d="M 2 2 L 18 2 L 18 18" />
+      <path d="M 4 4 L 16 4 L 16 16" stroke-width="0.5" opacity="0.4" />
+    </g>
+
+    <!-- ── Corner Bracket Bottom-Left ── -->
+    <g id="corner-bl" fill="none" stroke="#c89b3c" stroke-width="1.2" opacity="0.5">
+      <path d="M 18 18 L 2 18 L 2 2" />
+      <path d="M 16 16 L 4 16 L 4 4" stroke-width="0.5" opacity="0.4" />
+    </g>
+
+    <!-- ── Corner Bracket Bottom-Right ── -->
+    <g id="corner-br" fill="none" stroke="#c89b3c" stroke-width="1.2" opacity="0.5">
+      <path d="M 2 18 L 18 18 L 18 2" />
+      <path d="M 4 16 L 16 16 L 16 4" stroke-width="0.5" opacity="0.4" />
+    </g>
+
+    <!-- ── Blood Corner TL ── -->
+    <g id="corner-blood-tl" fill="none" stroke="#8b1a1a" stroke-width="1.5" opacity="0.4">
+      <path d="M 18 2 L 2 2 L 2 18" />
+      <circle cx="2" cy="2" r="2" fill="#8b1a1a" stroke="none" opacity="0.3" />
+    </g>
+
+    <!-- ── Chain Link Divider ── -->
+    <g id="chain-divider" fill="none" stroke="#c89b3c" stroke-width="0.6" opacity="0.3">
+      <path d="M 0 6 C 4 2, 8 2, 12 6 C 16 10, 20 10, 24 6 L 28 6" />
+      <path d="M 0 8 C 4 12, 8 12, 12 8 C 16 4, 20 4, 24 8 L 28 8" />
+    </g>
+
+    <!-- ── Rune Bullet ── -->
+    <g id="rune-bullet" fill="#c89b3c" opacity="0.6">
+      <polygon points="6,0 12,6 6,12 0,6" />
+      <polygon points="6,2 10,6 6,10 2,6" fill="#0a0a0c" />
+    </g>
+
+    <!-- ── Title Ornament Left ── -->
+    <g id="title-orn-l" fill="none" stroke="#c89b3c" stroke-width="0.8" opacity="0.35">
+      <path d="M 60 12 C 40 12, 20 8, 0 12" />
+      <path d="M 60 16 C 40 16, 20 12, 0 16" stroke-width="0.4" />
+      <path d="M 0 12 L 0 16" stroke-width="0.6" />
+      <circle cx="60" cy="14" r="2" fill="#c89b3c" stroke="none" opacity="0.3" />
+    </g>
+
+    <!-- ── Title Ornament Right ── -->
+    <g id="title-orn-r" fill="none" stroke="#c89b3c" stroke-width="0.8" opacity="0.35">
+      <path d="M 0 12 C 20 12, 40 8, 60 12" />
+      <path d="M 0 16 C 20 16, 40 12, 60 16" stroke-width="0.4" />
+      <path d="M 60 12 L 60 16" stroke-width="0.6" />
+      <circle cx="0" cy="14" r="2" fill="#c89b3c" stroke="none" opacity="0.3" />
+    </g>
+
+    <!-- ── Section Divider ── -->
+    <g id="section-divider" fill="none" stroke="#c89b3c" stroke-width="0.5" opacity="0.2">
+      <line x1="0" y1="4" x2="100" y2="4" />
+      <circle cx="50" cy="4" r="2" fill="#c89b3c" opacity="0.3" />
+      <circle cx="30" cy="4" r="1" fill="#c89b3c" opacity="0.15" />
+      <circle cx="70" cy="4" r="1" fill="#c89b3c" opacity="0.15" />
+    </g>
+
+    <!-- ── File Icon (Document) ── -->
+    <g id="icon-document" fill="none" stroke="#c89b3c" stroke-width="1.2" opacity="0.7">
+      <path d="M 5 2 L 15 2 L 19 6 L 19 22 L 5 22 Z" />
+      <path d="M 15 2 L 15 6 L 19 6" />
+      <line x1="8" y1="10" x2="16" y2="10" stroke-width="0.8" />
+      <line x1="8" y1="14" x2="14" y2="14" stroke-width="0.8" />
+      <line x1="8" y1="18" x2="12" y2="18" stroke-width="0.8" />
+    </g>
+
+    <!-- ── Folder Icon ── -->
+    <g id="icon-folder" fill="none" stroke="#c89b3c" stroke-width="1.2" opacity="0.7">
+      <path d="M 2 4 L 9 4 L 12 7 L 22 7 L 22 20 L 2 20 Z" />
+      <line x1="4" y1="10" x2="20" y2="10" stroke-width="0.6" opacity="0.4" />
+    </g>
+
+    <!-- ── Image Icon ── -->
+    <g id="icon-image" fill="none" stroke="#c89b3c" stroke-width="1.2" opacity="0.7">
+      <rect x="3" y="4" width="18" height="16" rx="1" />
+      <circle cx="9" cy="9" r="2" />
+      <path d="M 3 17 L 9 12 L 14 17 L 18 13 L 21 17" stroke-width="0.8" />
+    </g>
+
+    <!-- ── Archive Icon ── -->
+    <g id="icon-archive" fill="none" stroke="#c89b3c" stroke-width="1.2" opacity="0.7">
+      <path d="M 3 5 L 21 5 L 19 20 L 5 20 Z" />
+      <line x1="3" y1="5" x2="21" y2="5" stroke-width="0.8" />
+      <line x1="8" y1="9" x2="16" y2="9" stroke-width="0.6" />
+      <line x1="8" y1="13" x2="14" y2="13" stroke-width="0.6" />
+    </g>
+
+    <!-- ── Generic File Icon ── -->
+    <g id="icon-other" fill="none" stroke="#c89b3c" stroke-width="1.2" opacity="0.5">
+      <path d="M 6 2 L 15 2 L 19 6 L 19 22 L 6 22 Z" />
+      <path d="M 15 2 L 15 6 L 19 6" />
+    </g>
+
+    <!-- ── Left Arrow ── -->
+    <g id="arrow-left" fill="none" stroke="#c89b3c" stroke-width="1.5" opacity="0.6">
+      <path d="M 14 4 L 6 12 L 14 20" />
+      <line x1="6" y1="12" x2="20" y2="12" stroke-width="1" opacity="0.4" />
+    </g>
+
+    <!-- ── Chevron Right ── -->
+    <g id="chevron-right" fill="none" stroke="#706858" stroke-width="1.2" opacity="0.5">
+      <path d="M 4 4 L 10 10 L 4 16" />
+    </g>
+
+    <!-- ── Flame Ornament ── -->
+    <g id="ornament-flame" fill="none" stroke="#c89b3c" stroke-width="0.8" opacity="0.3">
+      <path d="M 12 2 C 8 8, 4 12, 4 16 C 4 20.5, 7.5 24, 12 24 C 16.5 24, 20 20.5, 20 16 C 20 12, 16 8, 12 2 Z" />
+      <path d="M 12 6 C 10 10, 8 13, 8 16 C 8 18.5, 10 21, 12 21 C 14 21, 16 18.5, 16 16 C 16 13, 14 10, 12 6 Z" fill="#c89b3c" fill-opacity="0.06" />
+      <path d="M 12 10 C 11 13, 10 15, 10 16.5 C 10 17.8, 11 18.5, 12 18.5" stroke-width="0.5" />
+    </g>
+
+    <!-- ── Rune Ring ── -->
+    <g id="rune-ring" fill="none" stroke="#c89b3c" stroke-width="0.6" opacity="0.2">
+      <circle cx="16" cy="16" r="14" />
+      <circle cx="16" cy="16" r="12" stroke-width="0.3" opacity="0.5" />
+      <circle cx="16" cy="16" r="4" stroke-width="0.4" />
+      <line x1="16" y1="2" x2="16" y2="6" opacity="0.4" />
+      <line x1="16" y1="26" x2="16" y2="30" opacity="0.4" />
+      <line x1="2" y1="16" x2="6" y2="16" opacity="0.4" />
+      <line x1="26" y1="16" x2="30" y2="16" opacity="0.4" />
+      <line x1="6" y1="6" x2="9" y2="9" opacity="0.3" />
+      <line x1="23" y1="23" x2="26" y2="26" opacity="0.3" />
+      <line x1="6" y1="26" x2="9" y2="23" opacity="0.3" />
+      <line x1="23" y1="9" x2="26" y2="6" opacity="0.3" />
+      <polygon points="16,2 17,4 16,6 15,4" fill="#c89b3c" opacity="0.3" />
+      <polygon points="16,26 17,28 16,30 15,28" fill="#c89b3c" opacity="0.3" />
+      <polygon points="2,16 4,17 6,16 4,15" fill="#c89b3c" opacity="0.3" />
+      <polygon points="26,16 28,17 30,16 28,15" fill="#c89b3c" opacity="0.3" />
+    </g>
+
+    <!-- ── Runic Divider Alt ── -->
+    <g id="rune-divider-alt" fill="none" stroke="#c89b3c" stroke-width="0.5" opacity="0.15">
+      <line x1="0" y1="6" x2="40" y2="6" />
+      <line x1="0" y1="8" x2="40" y2="8" stroke-width="0.3" opacity="0.5" />
+      <polygon points="20,3 22,6 20,9 18,6" fill="#c89b3c" opacity="0.2" />
+      <circle cx="10" cy="6" r="1.5" fill="#c89b3c" opacity="0.15" />
+      <circle cx="30" cy="6" r="1.5" fill="#c89b3c" opacity="0.15" />
+    </g>
+
+    <!-- ── Furnace Emblem ── -->
+    <g id="furnace-emblem" fill="none" stroke="#c89b3c" stroke-width="0.7" opacity="0.2">
+      <path d="M 4 22 L 4 4 L 20 4 L 20 22 Z" />
+      <path d="M 8 4 L 8 22" stroke-width="0.3" opacity="0.4" />
+      <path d="M 16 4 L 16 22" stroke-width="0.3" opacity="0.4" />
+      <path d="M 4 10 L 20 10" stroke-width="0.3" opacity="0.4" />
+      <path d="M 4 16 L 20 16" stroke-width="0.3" opacity="0.4" />
+      <circle cx="12" cy="13" r="3" stroke-width="0.5" />
+      <circle cx="12" cy="13" r="1.5" fill="#c89b3c" opacity="0.1" />
+    </g>
+  </defs>
+</svg>

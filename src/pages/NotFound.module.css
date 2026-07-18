@@ -1,0 +1,39 @@
+.page {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.content {
+  text-align: center;
+}
+
+.code {
+  font-family: 'Rajdhani', 'Inter', sans-serif;
+  font-size: 96px;
+  font-weight: 700;
+  color: var(--text-muted);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.message {
+  color: var(--text-secondary);
+  margin-bottom: 24px;
+}
+
+.back {
+  display: inline-block;
+  padding: 8px 20px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-size: 14px;
+  transition: border-color var(--transition-fast);
+}
+
+.back:hover {
+  border-color: var(--accent-blue);
+  text-decoration: none;
+}

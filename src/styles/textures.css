@@ -1,0 +1,67 @@
+/* ═══════════════════════════════════════
+   Pure CSS Textures — no external images
+   ═══════════════════════════════════════ */
+
+/* ── Parchment paper background ── */
+.parchment-bg {
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(200, 155, 60, 0.015) 2px,
+      rgba(200, 155, 60, 0.015) 3px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 3px,
+      rgba(200, 155, 60, 0.008) 3px,
+      rgba(200, 155, 60, 0.008) 4px
+    ),
+    radial-gradient(ellipse at 20% 50%, rgba(200, 155, 60, 0.04) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 50%, rgba(200, 155, 60, 0.03) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 0%, rgba(200, 155, 60, 0.02) 0%, transparent 60%);
+}
+
+/* ── Card surface grain ── */
+.card-texture {
+  background:
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 4px,
+      rgba(200, 155, 60, 0.008) 4px,
+      rgba(200, 155, 60, 0.008) 5px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 4px,
+      rgba(139, 26, 26, 0.005) 4px,
+      rgba(139, 26, 26, 0.005) 5px
+    );
+}
+
+/* ── Soot / shadow overlay ── */
+.soot-overlay {
+  background:
+    radial-gradient(ellipse at 50% 0%, transparent 60%, rgba(10, 10, 12, 0.5) 100%),
+    radial-gradient(ellipse at 50% 100%, transparent 40%, rgba(10, 10, 12, 0.35) 100%),
+    radial-gradient(ellipse at 20% 50%, transparent 50%, rgba(10, 10, 12, 0.2) 100%),
+    radial-gradient(ellipse at 80% 50%, transparent 50%, rgba(10, 10, 12, 0.2) 100%);
+}
+
+/* ── Ink stain decorative overlay ── */
+.ink-stain {
+  background:
+    radial-gradient(ellipse at 25% 35%, rgba(139, 26, 26, 0.05) 0%, transparent 50%),
+    radial-gradient(ellipse at 75% 65%, rgba(10, 10, 12, 0.06) 0%, transparent 40%);
+}
+
+/* ── Furnace glow — warm ember light ── */
+.furnace-glow {
+  background:
+    radial-gradient(ellipse at 50% 100%, rgba(200, 155, 60, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 30% 20%, rgba(139, 26, 26, 0.03) 0%, transparent 40%);
+}

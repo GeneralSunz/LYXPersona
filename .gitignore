@@ -1,0 +1,10 @@
+node_modules
+dist
+.DS_Store
+*.local
+.env
+.claude/
+tsconfig.tsbuildinfo
+/测试文件-请拖入上传区域.txt
+/萨卡兹.jpg
+/需求设计文档.md
