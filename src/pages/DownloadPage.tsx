@@ -125,7 +125,7 @@ export default function DownloadPage() {
 
           {/* Wiki descriptions */}
           <p className="app-desc">死魂灵的声音将你引离现实。一场仪式，一场沟通。超脱大地的畅想即将开始。</p>
-          <p className="app-desc-detail">魂灵熔炉，新生家园一颗前所未有的强健心脏。城市的血液奔流澎湃，同胞们并不知晓，驱使这心脏律动的，是多么宝贵的材料。</p>
+          <p className="app-desc-detail">我见诸城，满目疮痍；我见源石，布满大地。</p>
 
           {/* Header divider */}
           <div className="header-divider">
@@ -230,7 +230,7 @@ export default function DownloadPage() {
                 {search ? '未找到匹配的档案' : '✦ 过去、当下与未来，尚无人书写 ✦'}
               </p>
               {!search && (
-                <span className="empty-state-hint">只要魂灵熔炉不熄灭，看着那柔和的火光，就能努力再过一天</span>
+                <span className="empty-state-hint">我见你，头顶黑冠；将万千生灵，熬成回忆。</span>
               )}
             </div>
           )}
