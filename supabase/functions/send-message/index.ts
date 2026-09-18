@@ -11,7 +11,7 @@
  *
  * 需要配置的密钥（不设 RESEND_API_KEY 时仍可落库，只是不发信）：
  *   supabase secrets set RESEND_API_KEY=re_xxxxxxxx
- *   supabase secrets set MAIL_TO=296266488@qq.com
+ *   supabase secrets set MAIL_TO=2962668488@qq.com
  *   supabase secrets set IP_SALT=<随便一串随机字符>
  *
  * SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY 由平台自动注入，不必手工设置。
@@ -23,7 +23,7 @@ const corsHeaders = {
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
 }
 
-const MAIL_TO = (Deno.env.get('MAIL_TO') || '296266488@qq.com').trim()
+const MAIL_TO = (Deno.env.get('MAIL_TO') || '2962668488@qq.com').trim()
 const RESEND_API_KEY = (Deno.env.get('RESEND_API_KEY') || '').trim()
 const SUPABASE_URL = (Deno.env.get('SUPABASE_URL') || '').trim()
 const SERVICE_KEY = (Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') || '').trim()
