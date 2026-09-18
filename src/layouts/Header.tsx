@@ -18,6 +18,7 @@ export default function Header() {
         <div className={styles.actions}>
           <Link to="/" className={styles.downloadLink}>个人主页</Link>
           <Link to="/archive" className={styles.downloadLink}>{ARCHIVE.plainName}</Link>
+          <Link to="/stats" className={styles.downloadLink}>访问统计</Link>
           {configured && user && (
             <>
               <span className={styles.userEmail}>{user.email}</span>

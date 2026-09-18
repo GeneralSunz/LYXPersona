@@ -4,8 +4,10 @@ import { AuthProvider } from './store/AuthContext'
 import { isSupabaseConfigured } from './lib/supabase'
 import { useAuth } from './store/AuthContext'
 import Header from './layouts/Header'
+import VisitTracker from './components/VisitTracker'
 import Portfolio from './pages/Portfolio'
 import Resume from './pages/Resume'
+import Stats from './pages/Stats'
 import DownloadPage from './pages/DownloadPage'
 import Home from './pages/Home'
 import Login from './pages/Login'
@@ -41,6 +43,8 @@ export default function App() {
   return (
     <AuthProvider>
       <FileProvider>
+        {/* 访问上报：挂在路由之上，每次路径变化尝试上报一次（静默、不阻塞） */}
+        <VisitTracker />
         <Routes>
           {/* 个人主页 —— 站点门面 */}
           <Route path="/" element={<Portfolio />} />
@@ -65,6 +69,21 @@ export default function App() {
               )
             }
           />
+          {/* 访问统计：与 /admin 同级，同样需要登录才可见 */}
+          <Route
+            path="/stats"
+            element={
+              isDev ? (
+                <Stats />
+              ) : (
+                <ProtectedRoute>
+                  <Header />
+                  <Stats />
+                </ProtectedRoute>
+              )
+            }
+          />
+
           <Route path="/login" element={<Login />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

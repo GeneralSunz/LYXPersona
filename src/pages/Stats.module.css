@@ -1,0 +1,342 @@
+/* ═══════════════════════════════════════════════════════════════
+   访问统计（管理员）
+   沿用后台的羊皮纸版记体系：砂金发丝线 + 宋体标题 + 等宽数字。
+   ═══════════════════════════════════════════════════════════════ */
+
+.page {
+  flex: 1;
+  width: 100%;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 28px 28px 60px;
+}
+
+/* ── 抬头 ── */
+
+.head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+  padding-bottom: 16px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--line);
+}
+
+.title {
+  margin: 6px 0 0;
+  font-family: var(--font-serif);
+  font-size: 1.7rem;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+  color: var(--text-hi);
+}
+
+.refresh {
+  padding: 8px 18px;
+  border: 1px solid var(--line-strong);
+  background: transparent;
+  color: var(--sand-300);
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  letter-spacing: 0.12em;
+  transition: border-color var(--transition-fast), color var(--transition-fast), background var(--transition-fast);
+}
+
+.refresh:hover:not(:disabled) {
+  border-color: var(--gold-300);
+  color: var(--gold-300);
+  background: rgba(201, 171, 110, 0.08);
+}
+
+.refresh:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ── 总量卡片 ── */
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1px;
+  margin-bottom: 26px;
+  background: var(--line-hair);
+  border: 1px solid var(--line);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 18px 20px;
+  background: var(--bg-panel-solid);
+}
+
+.cardValue {
+  font-family: var(--font-mono);
+  font-size: 1.85rem;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--gold-300);
+  font-variant-numeric: tabular-nums;
+}
+
+.cardLabel {
+  font-family: var(--font-sans);
+  font-size: 0.76rem;
+  letter-spacing: 0.14em;
+  color: var(--text-dim);
+}
+
+/* ── 面板 ── */
+
+.panel {
+  position: relative;
+  padding: 20px 22px 22px;
+  margin-bottom: 20px;
+  border: 1px solid var(--line);
+  background: var(--bg-panel);
+}
+
+.panelTitle {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin: 0 0 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line-hair);
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--text-hi);
+}
+
+.panelTitleGap { margin-top: 24px; }
+
+.panelNote {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-style: normal;
+  letter-spacing: 0.08em;
+  color: var(--text-mute);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+/* ── 近 7 天柱状 ── */
+
+.trend {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  height: 150px;
+}
+
+.trendCol {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  height: 100%;
+}
+
+.trendValue {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--gold-400);
+  font-variant-numeric: tabular-nums;
+  min-height: 1em;
+}
+
+.trendBar {
+  width: 100%;
+  max-width: 46px;
+  min-height: 2px;
+  background: linear-gradient(180deg, var(--gold-300), var(--ochre-600));
+  transition: height 300ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.trendLabel {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.04em;
+  color: var(--text-mute);
+}
+
+/* ── 条形排行 ── */
+
+.bars {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.barRow {
+  display: grid;
+  grid-template-columns: minmax(70px, 130px) minmax(0, 1fr) 34px;
+  align-items: center;
+  gap: 10px;
+}
+
+.barName {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  color: var(--text-body);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.barTrack {
+  height: 6px;
+  background: rgba(207, 194, 165, 0.1);
+}
+
+.barFill {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--ochre-600), var(--gold-300));
+}
+
+.barValue {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  text-align: right;
+  color: var(--gold-400);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── 设备 chips ── */
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 7px;
+  padding: 5px 11px;
+  border: 1px solid var(--line);
+  background: rgba(201, 171, 110, 0.06);
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  color: var(--text-body);
+}
+
+.chip em {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-style: normal;
+  color: var(--gold-300);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── 明细表 ── */
+
+.tableWrap {
+  max-height: 420px;
+  overflow-y: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  padding: 8px 10px;
+  text-align: left;
+  background: var(--bg-panel-solid);
+  border-bottom: 1px solid var(--line);
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  color: var(--text-mute);
+}
+
+.table td {
+  padding: 9px 10px;
+  border-bottom: 1px solid var(--line-hair);
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  color: var(--text-body);
+}
+
+.table tbody tr:hover td { background: rgba(201, 171, 110, 0.05); }
+
+.tdTime {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  white-space: nowrap;
+}
+
+.tdTime em {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  font-style: normal;
+  color: var(--text-mute);
+}
+
+.tdPath {
+  font-family: var(--font-mono) !important;
+  font-size: 0.76rem !important;
+  color: var(--sand-300) !important;
+}
+
+/* ── 空态与错误 ── */
+
+.empty,
+.error {
+  padding: 34px 26px;
+  border: 1px solid var(--line);
+  background: var(--bg-panel);
+  text-align: center;
+  font-family: var(--font-serif);
+  font-size: 0.92rem;
+  line-height: 1.9;
+  color: var(--text-dim);
+}
+
+.error { border-color: var(--line-rust); }
+.error p { margin: 0; }
+
+.errorHint {
+  margin-top: 10px !important;
+  font-family: var(--font-sans);
+  font-size: 0.76rem;
+  color: var(--text-mute);
+}
+
+/* ── 响应式 ── */
+
+@media (max-width: 900px) {
+  .grid { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (max-width: 640px) {
+  .page { padding: 20px 16px 44px; }
+  .head { flex-direction: column; align-items: flex-start; }
+  .barRow { grid-template-columns: minmax(60px, 96px) minmax(0, 1fr) 30px; }
+  .trend { height: 120px; gap: 6px; }
+}
