@@ -1,6 +1,7 @@
 import { useState, useEffect, type FormEvent } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { useAuth } from '../store/AuthContext'
+import { ARCHIVE } from '../content/profile'
 import styles from './Login.module.css'
 
 export default function Login() {
@@ -52,7 +53,7 @@ export default function Login() {
           <span className="plate-caption">Sarkaz · Soul Furnace</span>
         </div>
 
-        <h1 className={styles.title}>熔炉档案局</h1>
+        <h1 className={styles.title}>{ARCHIVE.name}</h1>
         <p className={styles.desc}>管理员验证 · 登录以管理档案</p>
 
         {error && <p className={styles.error}>{error}</p>}

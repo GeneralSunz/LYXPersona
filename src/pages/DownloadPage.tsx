@@ -4,6 +4,8 @@ import { isSupabaseConfigured } from '../lib/supabase'
 import { fetchAllFiles, fetchFolders } from '../lib/database'
 import type { FileItem, Folder } from '../types/file'
 import { formatSize } from '../utils/format'
+import { ARCHIVE, RESUME_DOWNLOAD_NAME, RESUME_PDF } from '../content/profile'
+import { asset } from '../utils/asset'
 import {
   THEME,
   STATE_NOTES,
@@ -244,8 +246,16 @@ export default function DownloadPage() {
             <svg viewBox="0 0 60 28" preserveAspectRatio="none"><use href="#title-orn-r" /></svg>
           </div>
 
-          {/* Title —— 全站唯一的名称 */}
-          <h1 className="app-title">熔炉档案局</h1>
+          {/* 功能正名 —— 先于意象名出现。只写「熔炉档案馆」访客会猜不透，
+              所以把"这是个人资料库"提到最上面一级。 */}
+          <p className="app-kicker">
+            {ARCHIVE.plainName}
+            <span className="app-kicker-sep">·</span>
+            {ARCHIVE.plainEn}
+          </p>
+
+          {/* Title —— 与个人主页入口卡统一为「熔炉档案馆」 */}
+          <h1 className="app-title">{ARCHIVE.name}</h1>
           <p className="app-subtitle">魂灵熔炉</p>
 
           {/* 预言诗篇（节选）—— 原文四行，此处照录前两行 */}
@@ -263,6 +273,26 @@ export default function DownloadPage() {
             <div className="header-divider-line" />
           </div>
         </header>
+
+        {/* ═══ 馆藏说明 ═══
+            从分享链接直接进来、或被人丢个网址过来的人，需要一句话知道这是什么。
+            「熔炉档案馆」这个名字不解释任何事，功能正名必须显式写出来，
+            并且给出回主页的路。 */}
+        <div className="archive-notice">
+          <span className="plate-tick plate-tick--tl" aria-hidden="true" />
+          <span className="plate-tick plate-tick--br" aria-hidden="true" />
+          <span className="archive-notice-badge">{ARCHIVE.plainName}</span>
+          <div className="archive-notice-body">
+            <p className="archive-notice-text">{ARCHIVE.intro}</p>
+            <p className="archive-notice-links">
+              <Link to="/">← 返回个人主页</Link>
+              <span className="archive-notice-sep">·</span>
+              <Link to="/resume">在线简历</Link>
+              <span className="archive-notice-sep">·</span>
+              <a href={asset(RESUME_PDF)} download={RESUME_DOWNLOAD_NAME}>下载简历 PDF</a>
+            </p>
+          </div>
+        </div>
 
         {/* ═══ Toolbar ═══ */}
         <div className="toolbar">
@@ -438,7 +468,7 @@ export default function DownloadPage() {
           <div className="status-inner">
             <span className="status-info">
               <svg viewBox="0 0 24 24"><use href="#icon-folder" /></svg>
-              熔炉档案局 —— 没有终点，只有未来
+              {ARCHIVE.name} · {ARCHIVE.plainName} —— 没有终点，只有未来
             </span>
             <Link to="/" className="admin-link">
               <svg className="admin-link-icon" viewBox="0 0 32 32"><use href="#rune-ring" /></svg>

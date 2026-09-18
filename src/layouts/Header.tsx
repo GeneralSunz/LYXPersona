@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useAuth } from '../store/AuthContext'
 import { isSupabaseConfigured } from '../lib/supabase'
+import { ARCHIVE } from '../content/profile'
 import styles from './Header.module.css'
 
 export default function Header() {
@@ -12,11 +13,11 @@ export default function Header() {
       <div className={styles.inner}>
         <Link to="/admin" className={styles.brand}>
           <span className={styles.logo}>熔</span>
-          <span className={styles.title}>熔炉档案局</span>
+          <span className={styles.title}>{ARCHIVE.name}</span>
         </Link>
         <div className={styles.actions}>
           <Link to="/" className={styles.downloadLink}>个人主页</Link>
-          <Link to="/archive" className={styles.downloadLink}>熔炉档案馆</Link>
+          <Link to="/archive" className={styles.downloadLink}>{ARCHIVE.plainName}</Link>
           {configured && user && (
             <>
               <span className={styles.userEmail}>{user.email}</span>

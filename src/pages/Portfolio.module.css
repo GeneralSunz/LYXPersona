@@ -1157,10 +1157,13 @@ a.contactItem:hover {
   left: 50%;
   bottom: 0;
   width: 300px;
-  height: 34px;
+  /* 高度压在 gateInner 的下内边距（44px）之内，与说明文字留出 22px 净空。
+     实测过：34px 时只剩 10px，窄屏上会显得贴在一起。 */
+  height: 22px;
   transform: translateX(-50%);
-  opacity: 0.55;
+  opacity: 0.45;
   pointer-events: none;
+  z-index: 1;
 }
 
 .gateInner {
@@ -1169,7 +1172,8 @@ a.contactItem:hover {
   display: flex;
   align-items: center;
   gap: 34px;
-  padding: 34px 38px;
+  /* 底部多留一点：说明文字别贴到棋盘带上 */
+  padding: 34px 38px 44px;
 }
 
 /* 竖排 ENTER 牌 */
@@ -1200,13 +1204,33 @@ a.contactItem:hover {
   margin-bottom: 9px;
 }
 
+.gateTitleRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
 .gateTitle {
   font-family: var(--kv-serif);
   font-size: clamp(1.3rem, 2.8vw, 1.66rem);
   font-weight: 700;
   color: var(--kv-cream);
   letter-spacing: 0.18em;
-  margin-bottom: 6px;
+}
+
+/* 功能正名：紧挨着意象名，负责回答「这到底是什么」 */
+.gatePlain {
+  flex: none;
+  padding: 3px 10px;
+  border: 1px solid var(--kv-line-strong);
+  background: rgba(180, 149, 98, 0.12);
+  font-family: var(--kv-sans);
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  color: var(--kv-gold-bright);
+  white-space: nowrap;
 }
 
 .gateEn {

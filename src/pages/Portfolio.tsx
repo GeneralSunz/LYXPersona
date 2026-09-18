@@ -513,9 +513,13 @@ export default function Portfolio() {
                 <span className={styles.gateEnter}>ENTER</span>
                 <div className={styles.gateBody}>
                   <span className={styles.gateCaption}>{ARCHIVE.note}</span>
-                  <h3 className={styles.gateTitle}>{ARCHIVE.name}</h3>
-                  <p className={styles.gateEn}>{ARCHIVE.en}</p>
-                  <p className={styles.gateDesc}>{ARCHIVE.desc}</p>
+                  {/* 意象名 + 功能正名并排：不让访客去猜「熔炉档案馆」是什么 */}
+                  <h3 className={styles.gateTitleRow}>
+                    <span className={styles.gateTitle}>{ARCHIVE.name}</span>
+                    <span className={styles.gatePlain}>{ARCHIVE.plainName}</span>
+                  </h3>
+                  <p className={styles.gateEn}>{ARCHIVE.en} · {ARCHIVE.plainEn}</p>
+                  <p className={styles.gateDesc}>{ARCHIVE.summary}</p>
                 </div>
                 <svg className={styles.gateArrow} viewBox="0 0 28 20" aria-hidden="true">
                   <use href="#icon-arrow-right" />
