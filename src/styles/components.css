@@ -29,14 +29,20 @@
 /* 第一层：参考图本体。这里刻意"提亮"而不是压暗：
    拱门、日轮、棋盘格是主题的识别符号，压死等于把设计元素丢掉。
    可读性交给 .app-header / .file-card 自身的半透明底色，
-   以及下方那层只压四角的暗角。 */
+   以及下方那层只压四角的暗角。
+
+   ⚠ 路径必须走相对引用让 Vite 处理：
+   早先用 public/ 下的 url('/萨卡兹.jpg') 是根绝对路径，部署到
+   GitHub Pages 的 /filevault/ 子路径后解析成站点根，必然 404，
+   档案馆一直没有背景图。改为从 src/assets 相对引用后，
+   Vite 会按 base 生成带哈希的正确地址。 */
 .app-bg::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: url('/萨卡兹.jpg') center 32%/cover no-repeat;
-  filter: grayscale(0.18) brightness(0.72) contrast(1.04) saturate(0.86);
-  opacity: 0.78;
+  background: url('../assets/sarkaz-kv.jpg') center 32%/cover no-repeat;
+  filter: grayscale(0.18) brightness(0.78) contrast(1.04) saturate(0.88);
+  opacity: 0.86;
   -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 62%, rgba(0, 0, 0, 0.42) 84%, transparent 100%);
   mask-image: linear-gradient(180deg, #000 0%, #000 62%, rgba(0, 0, 0, 0.42) 84%, transparent 100%);
 }

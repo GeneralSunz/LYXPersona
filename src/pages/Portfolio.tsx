@@ -405,7 +405,7 @@ export default function Portfolio() {
                 <span className={styles.eduMetaVal}>{PROFILE.academics.gpa}</span>
               </div>
               <div className={styles.eduMetaItem}>
-                <span className={styles.eduMetaKey}>专业成绩排名</span>
+                <span className={styles.eduMetaKey}>绩点排名</span>
                 <span className={styles.eduMetaVal}>{PROFILE.academics.majorRank}</span>
               </div>
             </div>
@@ -507,7 +507,7 @@ export default function Portfolio() {
 
             <div className={styles.coursePanel}>
               <h3 className={styles.panelTitle}>
-                <span>核心课程成绩</span>
+                <span>部分核心课程成绩</span>
                 {/* 摘要由数据实时算出，改成绩不必同步改文案 */}
                 <span className={styles.panelMeta}>
                   平均 {courseStats.avg} · 最低 {courseStats.min} · 共 {courseStats.count} 门

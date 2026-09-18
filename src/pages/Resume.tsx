@@ -165,7 +165,7 @@ export default function Resume() {
             </div>
             <div className={styles.statCell}>
               <span className={styles.statValue}>{PROFILE.academics.majorRank}</span>
-              <span className={styles.statLabel}>专业成绩排名</span>
+              <span className={styles.statLabel}>绩点排名</span>
             </div>
           </div>
           <div className={styles.traitRow}>
