@@ -1093,11 +1093,36 @@
 }
 
 .cardRole {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 10px;
   font-family: var(--kv-sans);
   font-size: 0.78rem;
   letter-spacing: 0.14em;
   color: var(--kv-gold);
   margin-bottom: 13px;
+}
+
+/* 项目级别徽记：跟在「所属计划」后面 */
+.cardLevel {
+  flex: none;
+  padding: 1px 7px;
+  border: 1px solid var(--kv-line);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  color: var(--kv-body);
+}
+
+.cardDate {
+  position: absolute;
+  right: 24px;
+  bottom: 20px;
+  font-family: var(--kv-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  color: var(--kv-mute);
+  font-variant-numeric: tabular-nums;
 }
 
 .cardDesc {
@@ -1107,20 +1132,165 @@
   color: var(--kv-body);
 }
 
-.tagList {
+/* ══════════════════ Ⅵ 技能与课程 ══════════════════ */
+
+.skillsGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
+  gap: 46px;
+  align-items: start;
+}
+
+.skillPanel,
+.coursePanel {
+  position: relative;
+  padding: 24px 26px;
+  border: 1px solid var(--kv-hair);
+  background: var(--kv-panel);
+}
+
+.coursePanel {
+  padding: 24px 26px 20px;
+}
+
+.panelTitle {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px 16px;
+  flex-wrap: wrap;
+  font-family: var(--kv-serif);
+  font-size: 0.98rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--kv-cream);
+  padding-bottom: 12px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--kv-hair);
+}
+
+/* 摘要跟在标题右侧，字重与字距都退一档 */
+.panelMeta {
+  font-family: var(--kv-mono);
+  font-size: 0.72rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  color: var(--kv-mute);
+  font-variant-numeric: tabular-nums;
+}
+
+.panelTitle + .skillList + .panelTitle {
+  margin-top: 26px;
+}
+
+.skillList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.skillRow {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+}
+
+.skillLabel {
+  flex: none;
+  width: 62px;
+  font-family: var(--kv-sans);
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  color: var(--kv-mute);
+}
+
+.skillItems {
   display: flex;
   flex-wrap: wrap;
   gap: 7px;
-  margin-top: 15px;
 }
 
-.tag {
-  padding: 3px 9px;
-  border: 1px solid var(--kv-hair);
-  font-family: var(--kv-sans);
-  font-size: 0.72rem;
+.skillItem {
+  padding: 3px 11px;
+  border: 1px solid var(--kv-line);
+  background: rgba(180, 149, 98, 0.07);
+  font-family: var(--kv-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  color: var(--kv-cream);
+}
+
+.certValue {
+  font-family: var(--kv-mono);
+  font-size: 1rem;
   letter-spacing: 0.1em;
-  color: var(--kv-dim);
+  color: var(--kv-gold-bright);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── 成绩条形图 ──
+   条长 = score%，量程就是 0–100，不做区间压缩。
+   所有分数都在 92–100，看着"满"是真实情况，不放大也不缩小。 */
+
+.courseList {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 9px 30px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.courseRow {
+  display: grid;
+  grid-template-columns: 74px minmax(0, 1fr) 26px;
+  align-items: center;
+  gap: 10px;
+}
+
+.courseName {
+  font-family: var(--kv-serif);
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+  color: var(--kv-body);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.courseTrack {
+  position: relative;
+  height: 5px;
+  background: rgba(180, 149, 98, 0.12);
+}
+
+/* 90 分基准线：让「全部越过 90」一眼可见。
+   条形本身仍是 0–100 实量程，不做区间压缩。 */
+.courseTrack::after {
+  content: '';
+  position: absolute;
+  left: 90%;
+  top: -3px;
+  bottom: -3px;
+  width: 1px;
+  background: rgba(244, 237, 227, 0.32);
+}
+
+.courseBar {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--kv-brown), var(--kv-gold-bright));
+}
+
+.courseScore {
+  font-family: var(--kv-mono);
+  font-size: 0.74rem;
+  text-align: right;
+  color: var(--kv-gold-bright);
+  font-variant-numeric: tabular-nums;
 }
 
 /* ══════════════════ Ⅵ 个人特质 ══════════════════ */
@@ -1478,6 +1648,7 @@ a.contactItem:hover {
   .traitsGrid,
   .contactGrid { grid-template-columns: minmax(0, 1fr); gap: 34px; }
   .projectsGrid { grid-template-columns: minmax(0, 1fr); gap: 34px; }
+  .skillsGrid { grid-template-columns: minmax(0, 1fr); gap: 30px; }
 }
 
 @media (max-width: 860px) {
@@ -1550,4 +1721,10 @@ a.contactItem:hover {
   }
 
   .awardBody { padding-left: 0; }
+
+  /* 成绩图窄屏转单栏，课程名给足宽度不被截断 */
+  .courseList { grid-template-columns: minmax(0, 1fr); }
+  .courseRow { grid-template-columns: 80px minmax(0, 1fr) 26px; }
+  .skillPanel,
+  .coursePanel { padding: 20px 18px; }
 }

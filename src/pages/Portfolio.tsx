@@ -204,6 +204,14 @@ export default function Portfolio() {
     scrollToId(id)
   }, [])
 
+  /* 成绩摘要：由数据实时算出，改成绩不必同步改文案 */
+  const courseStats = useMemo(() => {
+    const scores = PROFILE.courses.map(c => c.score)
+    if (scores.length === 0) return { avg: '—', min: '—', count: 0 }
+    const avg = scores.reduce((s, n) => s + n, 0) / scores.length
+    return { avg: avg.toFixed(1), min: String(Math.min(...scores)), count: scores.length }
+  }, [])
+
   const infoRows = [
     { k: '性别', v: PROFILE.gender },
     { k: '政治面貌', v: PROFILE.politicalStatus },
@@ -442,11 +450,11 @@ export default function Portfolio() {
                 <article className={styles.card} key={p.title}>
                   <span className={styles.cardIndex}>{String(i + 1).padStart(2, '0')}</span>
                   <h3 className={styles.cardTitle}>{p.title}</h3>
-                  <p className={styles.cardRole}>{p.role}</p>
-                  <p className={styles.cardDesc}>{p.desc}</p>
-                  <div className={styles.tagList}>
-                    {p.tags.map(t => <span className={styles.tag} key={t}>{t}</span>)}
-                  </div>
+                  <p className={styles.cardRole}>
+                    {p.program}
+                    <span className={styles.cardLevel}>{p.level}</span>
+                  </p>
+                  {p.date && <span className={styles.cardDate}>{p.date}</span>}
                 </article>
               ))}
             </div>
@@ -468,8 +476,63 @@ export default function Portfolio() {
           </div>
         </Section>
 
-        {/* ── Ⅵ 个人特质 ── */}
-        <Section id="traits" mark="Ⅵ" title="个人特质" en="TRAITS">
+        {/* ── Ⅵ 技能与课程 ──
+            左栏是工具栈与语言成绩，右栏是核心课程成绩条形图。
+            条形按 0–100 归一化，不压缩量程 —— 高分段看着都满，是真实情况，
+            刻意不把 92 与 100 的差距放大。 */}
+        <Section id="skills" mark="Ⅵ" title="技能与课程" en="SKILLS">
+          <div className={styles.skillsGrid}>
+            <div className={styles.skillPanel}>
+              <h3 className={styles.panelTitle}>工具与语言</h3>
+              <ul className={styles.skillList}>
+                {PROFILE.skills.map(s => (
+                  <li className={styles.skillRow} key={s.label}>
+                    <span className={styles.skillLabel}>{s.label}</span>
+                    <span className={styles.skillItems}>
+                      {s.items.map(it => <span className={styles.skillItem} key={it}>{it}</span>)}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+
+              <h3 className={styles.panelTitle}>语言成绩</h3>
+              <ul className={styles.skillList}>
+                {PROFILE.certs.map(c => (
+                  <li className={styles.skillRow} key={c.label}>
+                    <span className={styles.skillLabel}>{c.label}</span>
+                    <span className={styles.certValue}>{c.value}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className={styles.coursePanel}>
+              <h3 className={styles.panelTitle}>
+                <span>核心课程成绩</span>
+                {/* 摘要由数据实时算出，改成绩不必同步改文案 */}
+                <span className={styles.panelMeta}>
+                  平均 {courseStats.avg} · 最低 {courseStats.min} · 共 {courseStats.count} 门
+                </span>
+              </h3>
+              <ul className={styles.courseList}>
+                {PROFILE.courses.map(c => (
+                  <li className={styles.courseRow} key={c.name}>
+                    <span className={styles.courseName} title={c.group}>{c.name}</span>
+                    <span className={styles.courseTrack}>
+                      {/* 条形按 0–100 实量程，不压缩；轨道上另画一条 90 分基准线，
+                          让「全部越过 90」这件事一眼可见 */}
+                      <span className={styles.courseBar} style={{ width: `${c.score}%` }} />
+                    </span>
+                    <span className={styles.courseScore}>{c.score}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </Section>
+
+        {/* ── Ⅶ 个人特质 ── */}
+        <Section id="traits" mark="Ⅶ" title="个人特质" en="TRAITS">
           <div className={styles.traitsGrid}>
             <div className={styles.traitStack}>
               {PROFILE.traits.map((t, i) => (
@@ -486,8 +549,8 @@ export default function Portfolio() {
           </div>
         </Section>
 
-        {/* ── Ⅶ 联络与档案 ── */}
-        <Section id="contact" mark="Ⅶ" title="联络与档案" en="CONTACT">
+        {/* ── Ⅷ 联络与档案 ── */}
+        <Section id="contact" mark="Ⅷ" title="联络与档案" en="CONTACT">
           <div className={styles.contactGrid}>
             <div>
               <div className={styles.contactList}>

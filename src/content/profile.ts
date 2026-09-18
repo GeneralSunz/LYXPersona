@@ -29,10 +29,36 @@ export interface Award {
 }
 
 export interface Project {
+  /** 时间 YYYY.MM。留空则卡片不显示日期 */
+  date: string
+  /** 项目／作品名称 */
   title: string
-  role: string
-  desc: string
-  tags: string[]
+  /** 所属计划、赛事或平台 */
+  program: string
+  /** 级别或角色，如「国家级立项」「省级立项 · 负责人」 */
+  level: string
+}
+
+/** 技能栈分组：一组一个熟练度标签 */
+export interface SkillGroup {
+  /** 熟练度标签，如「精通」 */
+  label: string
+  /** 该档下的工具／语言 */
+  items: string[]
+}
+
+/** 语言或技能认证 */
+export interface Cert {
+  label: string
+  value: string
+}
+
+/** 单门课程成绩，用于成绩条形图 */
+export interface Course {
+  name: string
+  score: number
+  /** 归类，用于分组显示 */
+  group: '数学基础' | '经济学' | '工具与软件'
 }
 
 export interface Photo {
@@ -171,19 +197,44 @@ export const PROFILE = {
     },
   ] as Award[],
 
-  /* ── 创新项目与学术活动 ── */
+  /* ── 创新项目与学术活动 ──
+     大创三项 + 两个黑客松项目，按时间升序。 */
   projects: [
     {
-      title: '岳麓书院黑客松',
-      role: '参赛成员',
-      desc: '成功报名并参与全程，可作为创新项目实践经历记入档案。',
-      tags: ['创新实践', '团队协作'],
+      date: '2025.06',
+      title: '多层政策对企业绿算转型的影响——来自东数西算与省域政策的证据',
+      program: '大学生创新训练计划',
+      level: '国家级立项',
     },
     {
+      date: '2025.06',
+      title: '文化空间视域下岳麓书院数智化转型路径探究',
+      program: '大学生创新训练计划',
+      level: '省级立项 · 负责人',
+    },
+    {
+      date: '2025.06',
+      title: '基于多模态机器学习模型的基孔肯雅热防疫舆情预警系统',
+      program: '大学生创新训练计划',
+      level: '省级立项',
+    },
+    {
+      date: '2025.12',
+      title: '“心语 · 阅界”智能 AI 情感交互系统',
+      program: '岳麓书院黑客松',
+      level: '参赛项目',
+    },
+    {
+      date: '2026.05',
+      title: '“知视”情感交互系统',
+      program: '抖音创变计划黑客松 · 湖南大学站',
+      level: '参赛项目',
+    },
+    {
+      date: '',
       title: '“点金工作坊”学业辅导站',
-      role: '主讲',
-      desc: '面向同学开展学业辅导与经验分享，把课程难点讲成可复用的方法。',
-      tags: ['学业辅导', '知识输出'],
+      program: '学业辅导',
+      level: '主讲',
     },
   ] as Project[],
 
@@ -195,6 +246,35 @@ export const PROFILE = {
       desc: '主导组织「湖南大学第四届数学建模」相关活动，负责学术内容策划与现场组织。',
     },
   ],
+
+  /* ── 技能与工具栈 ──
+     一组一个熟练度档，界面按档渲染成一行。 */
+  skills: [
+    { label: '精通', items: ['R', 'LaTeX'] },
+    { label: '熟练掌握', items: ['Python', 'MATLAB', 'Stata'] },
+  ] as SkillGroup[],
+
+  /** 语言与技能认证 */
+  certs: [
+    { label: 'CET-4', value: '606' },
+    { label: 'CET-6', value: '559' },
+  ] as Cert[],
+
+  /* ── 核心课程成绩 ──
+     用于成绩条形图。score 按 0–100 归一化成条长，
+     因此高分段的差异不会被夸大（93 与 100 的条长就是真实差距）。 */
+  courses: [
+    { name: '数学分析 BI', score: 100, group: '数学基础' },
+    { name: '数学分析 BII', score: 92, group: '数学基础' },
+    { name: '数学分析 BIII', score: 97, group: '数学基础' },
+    { name: '高等代数 B', score: 99, group: '数学基础' },
+    { name: '概率论', score: 97, group: '数学基础' },
+    { name: '数理统计', score: 97, group: '数学基础' },
+    { name: '微观经济学', score: 95, group: '经济学' },
+    { name: '宏观经济学', score: 94, group: '经济学' },
+    { name: '计量经济学', score: 97, group: '经济学' },
+    { name: '统计软件 R', score: 95, group: '工具与软件' },
+  ] as Course[],
 
   /* ── 个人特质 ── */
   traits: [
@@ -238,8 +318,9 @@ export const SECTIONS = [
   { id: 'awards', mark: 'Ⅲ', title: '竞赛荣誉', en: 'HONOURS' },
   { id: 'projects', mark: 'Ⅳ', title: '创新项目', en: 'PROJECTS' },
   { id: 'leadership', mark: 'Ⅴ', title: '组织与领导', en: 'LEADERSHIP' },
-  { id: 'traits', mark: 'Ⅵ', title: '个人特质', en: 'TRAITS' },
-  { id: 'contact', mark: 'Ⅶ', title: '联络与档案', en: 'CONTACT' },
+  { id: 'skills', mark: 'Ⅵ', title: '技能与课程', en: 'SKILLS' },
+  { id: 'traits', mark: 'Ⅶ', title: '个人特质', en: 'TRAITS' },
+  { id: 'contact', mark: 'Ⅷ', title: '联络与档案', en: 'CONTACT' },
 ] as const
 
 /* ═══════════════════════════════════════════════════════════════

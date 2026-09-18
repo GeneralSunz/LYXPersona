@@ -179,7 +179,9 @@
 /* ── 分区 ── */
 
 .section {
-  padding-top: 4.6mm;
+  /* 4.6 → 3.8mm：内容从 8 条竞赛 / 2 个项目增至 10 条 / 3 个后，
+     靠这几毫米的分区间距维持单页 A4。版式本身未改。 */
+  padding-top: 3.8mm;
 }
 
 .sectionHead {
@@ -254,7 +256,7 @@
   display: flex;
   align-items: baseline;
   gap: 2mm;
-  padding: 1.15mm 0;
+  padding: 0.95mm 0;
   break-inside: avoid;
   font-size: 8.5pt;
   line-height: 1.5;
@@ -293,7 +295,7 @@
 /* ── 项目 / 组织条目 ── */
 
 .entry {
-  padding: 1.6mm 0 1.6mm 4mm;
+  padding: 1.3mm 0 1.3mm 4mm;
   border-left: 1.2px solid #ded6c7;
   break-inside: avoid;
 }

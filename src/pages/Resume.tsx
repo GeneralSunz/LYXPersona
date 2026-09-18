@@ -126,13 +126,15 @@ export default function Resume() {
         {/* 02 项目 */}
         <SectionShell index={1}>
           <p className={styles.subHead}>创新类项目经历</p>
-          {PROFILE.projects.map(p => (
+          {/* ⚠ 简历暂不改版：只取前 3 项（三项大创立项，分量最重）以维持单页 A4。
+              完整 6 项在主页 Ⅳ 创新项目。简历改版时一并处理这个取舍。 */}
+          {PROFILE.projects.slice(0, 3).map(p => (
             <div className={styles.entry} key={p.title}>
               <div className={styles.entryTop}>
                 <span className={styles.entryTitle}>{p.title}</span>
-                <span className={styles.entryRole}>{p.role}</span>
+                <span className={styles.entryRole}>{p.level}</span>
               </div>
-              <p className={styles.entryDesc}>{p.desc}</p>
+              <p className={styles.entryDesc}>{p.program}</p>
             </div>
           ))}
         </SectionShell>
