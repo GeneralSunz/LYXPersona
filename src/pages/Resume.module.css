@@ -117,6 +117,17 @@
   margin-bottom: 4mm;
 }
 
+/* 座右铭的英文对照。此前 JSX 引用了 taglineEn 却没写这条规则，
+   结果「我于此言语Thus I Speak」直接粘在一起，这里补上。 */
+.taglineEn {
+  margin-left: 2.6mm;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 7.4pt;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #8a6a28;
+}
+
 .contactGrid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));

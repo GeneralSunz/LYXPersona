@@ -1049,14 +1049,20 @@
   text-wrap: pretty;
 }
 
-/* 作品英文题目：换用拉丁Display体 + 略开字距，与中文行区分开 */
+/* 作品英文题目。
+   ⚠ 这里**不能**用 --kv-display（Cinzel Decorative）：它是罗马碑体设计，
+   只有大写字形，论文题目会被强制成全大写（Models for Olympic Medal Tables
+   → MODELS FOR OLYMPIC MEDAL TABLES），大小写失真。
+   座右铭那种格言可以接受全大写，但论文题目必须保留原样，故改用思源宋体的
+   拉丁部分，并以斜体与上面的中文题目行区分。 */
 .awardWorkEn {
   margin: 7px 0 0;
   max-width: 62ch;
-  font-family: var(--kv-display);
-  font-size: 0.84rem;
-  line-height: 1.7;
-  letter-spacing: 0.06em;
+  font-family: var(--kv-serif);
+  font-size: 0.86rem;
+  font-style: italic;
+  line-height: 1.75;
+  letter-spacing: 0.02em;
   color: var(--kv-slate-soft);
 }
 
