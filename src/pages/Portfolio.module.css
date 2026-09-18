@@ -422,13 +422,30 @@
   color: var(--kv-mute);
 }
 
+/* 座右铭：中文与英文对照，英文退成第二声部 */
 .tagline {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-bottom: 16px;
+}
+
+.taglineZh {
   font-family: var(--kv-serif);
   font-size: clamp(1rem, 1.9vw, 1.24rem);
   font-weight: 600;
   letter-spacing: 0.14em;
   color: var(--kv-cream-soft);
-  margin-bottom: 16px;
+}
+
+.taglineEn {
+  font-family: var(--kv-display);
+  font-size: 0.78rem;
+  font-weight: 400;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--kv-gold);
+  opacity: 0.9;
 }
 
 .taglineRule {

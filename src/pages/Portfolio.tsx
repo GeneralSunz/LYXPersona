@@ -317,7 +317,10 @@ export default function Portfolio() {
               </div>
             </div>
 
-            <p className={styles.tagline}>{PROFILE.tagline}</p>
+            <p className={styles.tagline}>
+              <span className={styles.taglineZh}>{PROFILE.tagline}</span>
+              <span className={styles.taglineEn}>{PROFILE.taglineEn}</span>
+            </p>
             <div className={`kv-rule ${styles.taglineRule}`} aria-hidden="true">
               <span className="kv-diamond kv-diamond--blood" />
             </div>
@@ -398,16 +401,12 @@ export default function Portfolio() {
                 <span className={styles.eduMetaVal}>{PROFILE.grade}</span>
               </div>
               <div className={styles.eduMetaItem}>
-                <span className={styles.eduMetaKey}>入校总排名</span>
-                <span className={styles.eduMetaVal}>{PROFILE.academics.entranceRank}</span>
+                <span className={styles.eduMetaKey}>专业成绩绩点</span>
+                <span className={styles.eduMetaVal}>{PROFILE.academics.gpa}</span>
               </div>
               <div className={styles.eduMetaItem}>
                 <span className={styles.eduMetaKey}>专业成绩排名</span>
                 <span className={styles.eduMetaVal}>{PROFILE.academics.majorRank}</span>
-              </div>
-              <div className={styles.eduMetaItem}>
-                <span className={styles.eduMetaKey}>学期成绩进步</span>
-                <span className={styles.eduMetaVal}>{PROFILE.academics.progress}</span>
               </div>
             </div>
           </div>
@@ -562,16 +561,6 @@ export default function Portfolio() {
                   </span>
                 </a>
 
-                {PROFILE.showPhoneOnSite && (
-                  <a className={styles.contactItem} href={`tel:${PROFILE.phone}`}>
-                    <svg className={styles.contactIcon} viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-phone" /></svg>
-                    <span>
-                      <span className={styles.contactKey}>Tel</span>
-                      <span className={styles.contactVal}>{PROFILE.phone}</span>
-                    </span>
-                  </a>
-                )}
-
                 <a className={styles.contactItem} href={asset(RESUME_PDF)} download={RESUME_DOWNLOAD_NAME}>
                   <svg className={styles.contactIcon} viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-download" /></svg>
                   <span>
@@ -580,14 +569,6 @@ export default function Portfolio() {
                   </span>
                 </a>
               </div>
-
-              {!PROFILE.showPhoneOnSite && (
-                <p className={styles.privacyNote}>
-                  手机号未在公网页面展示，简历 PDF 中保留完整联系方式。
-                  如需在主页一并展示，把 <code>profile.ts</code> 里的
-                  {' '}<code>showPhoneOnSite</code> 改成 <code>true</code>。
-                </p>
-              )}
             </div>
 
             {/* ── 门：熔炉档案馆 ── */}

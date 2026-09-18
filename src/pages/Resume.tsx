@@ -58,7 +58,7 @@ export default function Resume() {
     { k: '学院', v: PROFILE.college },
     { k: '专业', v: PROFILE.major },
     { k: '年级', v: PROFILE.grade },
-    { k: '联系电话', v: PROFILE.phone },
+    // 对外联络只留邮箱
     { k: '电子邮箱', v: PROFILE.email },
   ]
 
@@ -82,7 +82,10 @@ export default function Resume() {
           <div className={styles.headMain}>
             <h1 className={styles.name}>{PROFILE.name}</h1>
             <p className={styles.nameEn}>{PROFILE.nameEn}</p>
-            <p className={styles.tagline}>{PROFILE.tagline}</p>
+            <p className={styles.tagline}>
+              {PROFILE.tagline}
+              <span className={styles.taglineEn}>{PROFILE.taglineEn}</span>
+            </p>
             <div className={styles.contactGrid}>
               {basics.map(b => (
                 <div className={styles.contactItem} key={b.k}>
@@ -152,20 +155,17 @@ export default function Resume() {
           ))}
         </SectionShell>
 
-        {/* 04 特质 */}
+        {/* 04 特质
+            成绩只留绩点与排名两项，其余排名类数据已按要求撤下。 */}
         <SectionShell index={3}>
           <div className={styles.statBar}>
             <div className={styles.statCell}>
-              <span className={styles.statValue}>{PROFILE.academics.entranceRank}</span>
-              <span className={styles.statLabel}>入校总排名</span>
+              <span className={styles.statValue}>{PROFILE.academics.gpa}</span>
+              <span className={styles.statLabel}>专业成绩绩点</span>
             </div>
             <div className={styles.statCell}>
               <span className={styles.statValue}>{PROFILE.academics.majorRank}</span>
               <span className={styles.statLabel}>专业成绩排名</span>
-            </div>
-            <div className={styles.statCell}>
-              <span className={styles.statValue}>{PROFILE.academics.progress}</span>
-              <span className={styles.statLabel}>学期成绩进步</span>
             </div>
           </div>
           <div className={styles.traitRow}>

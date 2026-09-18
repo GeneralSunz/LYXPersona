@@ -364,7 +364,9 @@
 
 .statBar {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  /* 原为三格（入校排名 / 专业排名 / 学期进步），
+     撤下两项后改两格 */
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0;
   margin-bottom: 3.4mm;
   border: 1px solid #ded6c7;
