@@ -495,45 +495,7 @@
   flex: none;
 }
 
-/* 首屏高光版记：只放一项最有分量的荣誉，字号放大让它单独撑住版面 */
-.statPlate {
-  display: inline-flex;
-  flex-direction: column;
-  max-width: 100%;
-  padding: 18px 26px 17px 22px;
-  border-left: 2px solid var(--kv-gold);
-  background: linear-gradient(90deg, rgba(180, 149, 98, 0.1), transparent 76%);
-}
-
-.statValue {
-  display: block;
-  font-family: var(--kv-serif);
-  font-size: clamp(1.85rem, 4.2vw, 2.6rem);
-  font-weight: 900;
-  color: var(--kv-gold-bright);
-  letter-spacing: 0.1em;
-  line-height: 1.14;
-  text-shadow: 0 0 32px rgba(180, 149, 98, 0.22);
-}
-
-.statName {
-  display: block;
-  margin-top: 10px;
-  font-family: var(--kv-serif);
-  font-size: 0.98rem;
-  letter-spacing: 0.1em;
-  color: var(--kv-body);
-}
-
-.statLabel {
-  display: block;
-  margin-top: 8px;
-  font-family: var(--kv-mono);
-  font-size: 9px;
-  letter-spacing: 0.26em;
-  text-transform: uppercase;
-  color: var(--kv-mute);
-}
+/* 首屏不再放荣誉高光块 —— 荣誉统一归 Ⅲ 竞赛荣誉，首屏只留身份与入口 */
 
 /* ── 首屏右：肖像 ── */
 
@@ -785,118 +747,94 @@
 
 /* ══════════════════ Ⅱ 教育背景 ══════════════════ */
 
-/* ── 四段学程：小学 → 初中 → 高中 → 本科 ──
-   每段顶部一道金线，把四格串成一条学程；未填的字段渲染成虚线「待填」框。 */
-.eduTimeline {
+/* ── 学程轨道：小学 → 初中 → 高中 → 本科 ──
+   一条砂金横线贯穿四枚菱形结点，结点下方依次是学段 / 学校 / 起止年份。
+   比原来「学校·起止·说明」三行标签式更紧凑，也更能读出"一路读上来"的递进。 */
+.eduRail {
+  position: relative;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 1px;
-  margin: 0 0 26px;
+  margin: 0 0 30px;
   padding: 0;
   list-style: none;
-  background: var(--kv-hair);
-  border: 1px solid var(--kv-hair);
 }
 
-.eduStage {
+/* 贯穿的横线：右端渐隐，暗示学程尚未走完 */
+.eduRail::before {
+  content: '';
+  position: absolute;
+  top: 5px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    var(--kv-line-strong) 0%,
+    var(--kv-gold) 40%,
+    rgba(180, 149, 98, 0.22) 86%,
+    transparent 100%
+  );
+}
+
+.eduNode {
   position: relative;
-  padding: 20px 20px 18px;
-  background: var(--kv-void);
-  transition: background 180ms ease;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 34px 30px 0 0;
 }
 
-.eduStage:hover { background: var(--kv-panel); }
+.eduNode:last-child { padding-right: 0; }
 
-.eduStage::before {
+/* 结点：菱形压在横线上 */
+.eduNode::before {
   content: '';
   position: absolute;
   top: 0;
   left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, var(--kv-gold), rgba(180, 149, 98, 0.12));
-  opacity: 0.55;
+  width: 10px;
+  height: 10px;
+  background: var(--kv-void);
+  border: 1px solid var(--kv-gold);
+  transform: rotate(45deg);
 }
 
-.eduStageHead {
-  display: flex;
-  align-items: baseline;
-  gap: 9px;
-  margin-bottom: 16px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid var(--kv-hair);
+/* 当前所在学段（末段）用实心结点 + 微光标记 */
+.eduNode:last-child::before {
+  background: var(--kv-gold);
+  box-shadow: 0 0 14px rgba(216, 187, 124, 0.55);
 }
 
-.eduStageNo {
-  flex: none;
-  font-family: var(--kv-mono);
-  font-size: 9px;
-  letter-spacing: 0.18em;
+.eduNodeStage {
+  font-family: var(--kv-sans);
+  font-size: 0.76rem;
+  letter-spacing: 0.24em;
   color: var(--kv-gold);
 }
 
-.eduStageName {
-  flex: 1;
-  min-width: 0;
+.eduNodeSchool {
   font-family: var(--kv-serif);
-  font-size: 1.22rem;
+  font-size: 1.02rem;
   font-weight: 700;
-  letter-spacing: 0.14em;
+  line-height: 1.5;
+  letter-spacing: 0.06em;
   color: var(--kv-cream);
 }
 
-.eduStageYears {
-  flex: none;
+.eduNodePeriod {
   font-family: var(--kv-mono);
-  font-size: 9px;
-  letter-spacing: 0.14em;
-  color: var(--kv-mute);
-  white-space: nowrap;
-}
-
-.eduStageFields {
-  display: flex;
-  flex-direction: column;
-  gap: 11px;
-  margin: 0;
-}
-
-.eduField {
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
-}
-
-.eduFieldKey {
-  flex: none;
-  width: 30px;
-  font-family: var(--kv-sans);
   font-size: 0.74rem;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   color: var(--kv-mute);
+  font-variant-numeric: tabular-nums;
 }
 
-.eduFieldVal {
-  flex: 1;
-  min-width: 0;
-  margin: 0;
+.eduNodeNote {
+  margin-top: 2px;
   font-family: var(--kv-serif);
-  font-size: 0.86rem;
-  line-height: 1.6;
-  color: var(--kv-body);
-}
-
-/* 空字段：虚线框 + 弱化字色，一眼看出「这里等我补」 */
-.eduFieldEmpty {
-  flex: 1;
-  min-width: 0;
-  margin: 0;
-  padding: 1px 8px;
-  border: 1px dashed rgba(180, 149, 98, 0.26);
-  font-family: var(--kv-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.18em;
-  color: var(--kv-mute);
+  font-size: 0.82rem;
+  line-height: 1.7;
+  color: var(--kv-dim);
 }
 
 /* ── 学业表现 ── */
@@ -1453,8 +1391,6 @@ a.contactItem:hover {
   .awardsGrid,
   .traitsGrid,
   .contactGrid { grid-template-columns: minmax(0, 1fr); gap: 34px; }
-  /* 四段学程改两列两行 */
-  .eduTimeline { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media (max-width: 860px) {
@@ -1463,6 +1399,34 @@ a.contactItem:hover {
   .infoList { grid-template-columns: minmax(0, 1fr); }
   .section { padding-top: 62px; }
   .hero { padding-top: 104px; }
+
+  /* 学程轨道转竖排：横线换成竖线，菱形结点移到左侧 */
+  .eduRail {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+  }
+
+  .eduRail::before {
+    top: 6px;
+    bottom: 6px;
+    left: 5px;
+    right: auto;
+    width: 1px;
+    height: auto;
+    background: linear-gradient(
+      180deg,
+      var(--kv-gold) 0%,
+      rgba(180, 149, 98, 0.22) 86%,
+      transparent 100%
+    );
+  }
+
+  .eduNode { padding: 0 0 0 28px; }
+
+  .eduNode::before {
+    top: 6px;
+    left: 0;
+  }
 }
 
 @media (max-width: 640px) {
@@ -1472,8 +1436,6 @@ a.contactItem:hover {
   .navBtnLabel { display: none; }
   .navBtn { padding: 7px 10px; }
   .eduCard { padding: 22px 20px; }
-  .eduTimeline { grid-template-columns: minmax(0, 1fr); }
   .gateInner { padding: 26px 20px; gap: 20px; }
   .gateArrow { display: none; }
-  .statPlate { padding: 15px 18px 14px 16px; }
 }

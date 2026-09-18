@@ -170,31 +170,40 @@ export const SECTIONS = [
 export interface EducationStage {
   /** 学段名 */
   stage: string
-  /** 年限小注 */
-  years: string
-  /** 学校名称 —— 留空则显示「待填」 */
-  school: string
-  /** 起止年份 —— 留空则显示「待填」 */
+  /** 起止年份 —— 显示在学段名下方 */
   period: string
-  /** 补充说明：成绩、职务、值得一提的事 —— 留空则显示「待填」 */
+  /** 学校名称 */
+  school: string
+  /** 一句话说明（成绩 / 职务 / 值得一提的事）。留空则整行不渲染 */
   note: string
 }
 
 export const EDUCATION: EducationStage[] = [
-  { stage: '小学', years: '6 年', school: '', period: '', note: '' },
-  { stage: '初中', years: '3 年', school: '', period: '', note: '' },
-  { stage: '高中', years: '3 年', school: '', period: '', note: '' },
+  {
+    stage: '小学',
+    period: '2012.09 — 2018.08',
+    school: '成都市温江区东大街第二小学',
+    note: '',
+  },
+  {
+    stage: '初中',
+    period: '2018.09 — 2021.08',
+    school: '成都新世纪外国语学校',
+    note: '',
+  },
+  {
+    stage: '高中',
+    period: '2021.09 — 2024.08',
+    school: '成都树德中学',
+    note: '',
+  },
   {
     stage: '本科',
-    years: '在读',
+    period: '2024.09 — 至今',
     school: '湖南大学', // [待确认]
-    period: '2024 — 至今', // [待确认]
     note: '金融与统计学院 · 统计学类',
   },
 ]
-
-/** 「待填」占位符 —— 教育经历里空字段统一用它，改一处全局生效 */
-export const PLACEHOLDER = '待填'
 
 /**
  * 子界面：熔炉档案馆（= 个人资料库）

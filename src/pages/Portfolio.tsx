@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import {
   ARCHIVE,
   EDUCATION,
-  PLACEHOLDER,
   PROFILE,
   RESUME_DOWNLOAD_NAME,
   RESUME_PDF,
@@ -205,15 +204,6 @@ export default function Portfolio() {
     scrollToId(id)
   }, [])
 
-  /* 首屏只留最有分量的一项荣誉。
-     排名类数据（专业第一 / 前 10.6%）已撤下首屏 —— 它们跟奖项并排会互相
-     抢注意力，而且 Ⅱ 教育背景里本来就有「学业表现」一栏，不必重复。 */
-  const heroHighlight = {
-    value: '全国一等奖',
-    label: '全国大学生数据要素素质大赛',
-    meta: 'DATA ELEMENTS · 2025',
-  }
-
   const infoRows = [
     { k: '性别', v: PROFILE.gender },
     { k: '政治面貌', v: PROFILE.politicalStatus },
@@ -335,12 +325,6 @@ export default function Portfolio() {
                 进入{ARCHIVE.name}
               </Link>
             </div>
-
-            <div className={styles.statPlate}>
-              <span className={styles.statValue}>{heroHighlight.value}</span>
-              <span className={styles.statName}>{heroHighlight.label}</span>
-              <span className={styles.statLabel}>{heroHighlight.meta}</span>
-            </div>
           </div>
 
           <div className={styles.heroRight}>
@@ -377,37 +361,16 @@ export default function Portfolio() {
         </Section>
 
         {/* ── Ⅱ 教育背景 ──
-            四段学程：小学 → 初中 → 高中 → 本科。
-            前三段的文字尚未提供，profile.ts 里是空串，这里渲染成「待填」版记。 */}
+            四段学程做成一条横向轨道：一枚菱形结点串起小学 → 初中 → 高中 → 本科，
+            结点下方依次是学段、学校、起止年份。note 为空时整行不渲染。 */}
         <Section id="education" mark="Ⅱ" title="教育背景" en="EDUCATION">
-          <ol className={styles.eduTimeline}>
-            {EDUCATION.map((s, i) => (
-              <li className={styles.eduStage} key={s.stage}>
-                <div className={styles.eduStageHead}>
-                  <span className={styles.eduStageNo}>{String(i + 1).padStart(2, '0')}</span>
-                  <span className={styles.eduStageName}>{s.stage}</span>
-                  <span className={styles.eduStageYears}>{s.years}</span>
-                </div>
-                <dl className={styles.eduStageFields}>
-                  <div className={styles.eduField}>
-                    <dt className={styles.eduFieldKey}>学校</dt>
-                    <dd className={s.school ? styles.eduFieldVal : styles.eduFieldEmpty}>
-                      {s.school || PLACEHOLDER}
-                    </dd>
-                  </div>
-                  <div className={styles.eduField}>
-                    <dt className={styles.eduFieldKey}>起止</dt>
-                    <dd className={s.period ? styles.eduFieldVal : styles.eduFieldEmpty}>
-                      {s.period || PLACEHOLDER}
-                    </dd>
-                  </div>
-                  <div className={styles.eduField}>
-                    <dt className={styles.eduFieldKey}>说明</dt>
-                    <dd className={s.note ? styles.eduFieldVal : styles.eduFieldEmpty}>
-                      {s.note || PLACEHOLDER}
-                    </dd>
-                  </div>
-                </dl>
+          <ol className={styles.eduRail}>
+            {EDUCATION.map(s => (
+              <li className={styles.eduNode} key={s.stage}>
+                <span className={styles.eduNodeStage}>{s.stage}</span>
+                <span className={styles.eduNodeSchool}>{s.school}</span>
+                <span className={styles.eduNodePeriod}>{s.period}</span>
+                {s.note && <span className={styles.eduNodeNote}>{s.note}</span>}
               </li>
             ))}
           </ol>
