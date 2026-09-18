@@ -244,6 +244,12 @@
   column-gap: 8mm;
 }
 
+/* 版式保持原样（两栏紧凑条目），简历改版留到之后一起做 */
+.awardCols {
+  columns: 2;
+  column-gap: 8mm;
+}
+
 .awardItem {
   display: flex;
   align-items: baseline;
@@ -264,6 +270,7 @@
 
 .awardName {
   flex: 1;
+  min-width: 0;
   color: #2e2a24;
 }
 

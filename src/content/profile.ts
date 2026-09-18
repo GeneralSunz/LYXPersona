@@ -7,15 +7,25 @@
    标注 [待确认] 的字段是照参考图抄录的，请核对后替换。
    ═══════════════════════════════════════════════════════════════ */
 
+export type AwardTier = 'international' | 'national' | 'provincial' | 'school' | 'none'
+
 export interface Award {
+  /** 参赛年月，格式 YYYY.MM —— 时间轴的排序依据 */
+  date: string
   /** 赛事名称 */
-  name: string
-  /** 奖项等级，用作徽记 */
-  level: string
-  /** 归色：决定徽记配色 */
-  tier: 'international' | 'national' | 'provincial' | 'school'
-  /** 年份 */
-  year: string
+  contest: string
+  /** 作品／论文中文题目。留空则只显示赛事名 */
+  work: string
+  /** 作品英文题目（美赛等）。与 work 二选一或并存 */
+  workEn: string
+  /**
+   * 奖项等级，**可以有多个** —— 同一赛事既拿国奖又拿省奖是常态
+   * （如数据要素大赛同时拿了全国一等奖与湖南省赛区一等奖）。
+   * 留空数组表示该项暂无奖项记录，版面会留白而不编造。
+   */
+  levels: string[]
+  /** 归色依据：取所获最高等级 */
+  tier: AwardTier
 }
 
 export interface Project {
@@ -74,16 +84,91 @@ export const PROFILE = {
     progress: '20%',
   },
 
-  /* ── 竞赛获奖（按分量从重到轻） ── */
+  /* ── 竞赛获奖 ──
+     按时间升序排列，界面按年份自动分组画成时间轴，不必手工分组。
+     ⚠ 作品题目里的中英混排已按中文排版惯例加空格（LED / STATA / MathorCup 等），
+       改文案时请沿用，否则时间轴右端的排版会不齐。 */
   awards: [
-    { name: '全国大学生数据要素素质大赛', level: '全国一等奖', tier: 'national', year: '2025' },
-    { name: '美国大学生数学建模竞赛', level: 'S 奖', tier: 'international', year: '2025' },
-    { name: '美国大学生数学建模竞赛', level: 'S 奖', tier: 'international', year: '2026' },
-    { name: '“华数杯”全国大学生数学建模竞赛', level: '全国二等奖', tier: 'national', year: '2025' },
-    { name: '全国大学生数据要素素质大赛', level: '省级一等奖', tier: 'provincial', year: '2025' },
-    { name: '全国大学生市场调查大赛', level: '校级一等奖', tier: 'school', year: '2026' },
-    { name: '全国大学生统计建模竞赛', level: '校级一等奖', tier: 'school', year: '2025' },
-    { name: '全国大学生统计建模竞赛', level: '校级二等奖', tier: 'school', year: '2025' },
+    {
+      date: '2025.01',
+      contest: '美国大学生数学建模大赛',
+      work: '',
+      workEn: 'Models for Olympic Medal Tables',
+      levels: ['S 奖'],
+      tier: 'international',
+    },
+    {
+      date: '2025.04',
+      contest: '全国大学生统计建模大赛 · 经济计量与 STATA 应用课程论文',
+      work: '数据要素市场化下数字化转型的人力资本路径——来自资产周转效率的证据',
+      workEn: '',
+      levels: ['校级二等奖'],
+      tier: 'school',
+    },
+    {
+      date: '2025.08',
+      contest: '华数杯数学建模竞赛',
+      work: '可调控生物节律的 LED 光源研究',
+      workEn: '',
+      levels: ['全国二等奖'],
+      tier: 'national',
+    },
+    {
+      date: '2025.09',
+      contest: '高教社杯数学建模竞赛',
+      work: '烟幕干扰弹的投放策略',
+      workEn: '',
+      levels: [], // [待填] 原稿未标注奖项，暂留空
+      tier: 'none',
+    },
+    {
+      date: '2025.12',
+      contest: '全国大学生数据要素素质大赛',
+      work: '防疫先锋——基于多模态机器学习模型的基孔肯雅热防疫舆情预警系统',
+      workEn: '',
+      levels: ['全国一等奖', '湖南省赛区一等奖'],
+      tier: 'national',
+    },
+    {
+      date: '2026.01',
+      contest: '美国大学生数学建模大赛',
+      work: '',
+      workEn: 'Data With The Stars',
+      levels: ['S 奖'],
+      tier: 'international',
+    },
+    {
+      date: '2026.03',
+      contest: '正大杯全国大学生市场调查大赛',
+      work: '承朱张之绪，起文脉新声——文化空间视域下岳麓书院数智化转型路径探究',
+      workEn: '',
+      levels: ['湖南赛区一等奖'],
+      tier: 'provincial',
+    },
+    {
+      date: '2026.04',
+      contest: 'MathorCup 数学应用挑战赛',
+      work: '中老年人群高血脂症的风险预警及干预方案优化',
+      workEn: '',
+      levels: ['全国二等奖'],
+      tier: 'national',
+    },
+    {
+      date: '2026.06',
+      contest: '全国大学生统计建模大赛',
+      work: '寻“稳”知危：面向老年跌倒预警的注意力增强深度时序建模',
+      workEn: '',
+      levels: ['湖南赛区二等奖'],
+      tier: 'provincial',
+    },
+    {
+      date: '2026.08',
+      contest: '华数杯数学建模竞赛',
+      work: '基于 B*-Tree 与模拟退火的超大规模集成电路布图规划设计',
+      workEn: '',
+      levels: ['全国一等奖'],
+      tier: 'national',
+    },
   ] as Award[],
 
   /* ── 创新项目与学术活动 ── */

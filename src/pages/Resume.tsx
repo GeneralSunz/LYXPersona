@@ -106,16 +106,18 @@ export default function Resume() {
           </div>
         </header>
 
-        {/* 01 竞赛 */}
+        {/* 01 竞赛
+            ⚠ 版式保持原样未动。这里只做新数据结构到原字段的映射，
+              简历的整体改版留到之后一起做。 */}
         <SectionShell index={0}>
           <p className={styles.subHead}>竞赛获奖</p>
           <div className={styles.awardCols}>
             {PROFILE.awards.map((a, i) => (
-              <div className={styles.awardItem} key={`${a.name}-${a.year}-${i}`}>
+              <div className={styles.awardItem} key={`${a.date}-${i}`}>
                 <span className={styles.awardDot} />
-                <span className={styles.awardName}>{a.name}</span>
-                <span className={styles.awardLevel}>{a.level}</span>
-                <span className={styles.awardYear}>{a.year}</span>
+                <span className={styles.awardName}>{a.contest}</span>
+                <span className={styles.awardLevel}>{a.levels[0] ?? '参赛'}</span>
+                <span className={styles.awardYear}>{a.date.slice(0, 4)}</span>
               </div>
             ))}
           </div>

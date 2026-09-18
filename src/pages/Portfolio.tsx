@@ -405,36 +405,52 @@ export default function Portfolio() {
           </div>
         </Section>
 
-        {/* ── Ⅲ 竞赛荣誉 ── */}
+        {/* ── Ⅲ 竞赛荣誉：一条纵向时间轴 ──
+            日期列右对齐、导轨居左，正文列放赛事名 + 奖项徽记 + 作品题目。
+            作品题目最长的一条有 30+ 字，故正文列独占剩余宽度并限制 62ch，
+            保证换行整齐、不与右侧徽记打架。 */}
         <Section id="awards" mark="Ⅲ" title="竞赛荣誉" en="HONOURS">
-          <div className={styles.awardsGrid}>
-            <div className={styles.awardList}>
-              {PROFILE.awards.map((a, i) => (
-                <div className={styles.awardRow} key={`${a.name}-${a.level}-${a.year}-${i}`}>
-                  <span className={styles.awardBadge} data-tier={a.tier}>{a.level}</span>
-                  <span className={styles.awardName}>{a.name}</span>
-                  <span className={styles.awardYear}>{a.year}</span>
+          <ol className={styles.awardList}>
+            {PROFILE.awards.map(a => (
+              <li className={styles.awardItem} key={`${a.date}-${a.contest}`}>
+                <span className={styles.awardDate}>{a.date}</span>
+                <div className={styles.awardBody}>
+                  <div className={styles.awardTop}>
+                    <span className={styles.awardContest}>{a.contest}</span>
+                    {a.levels.length > 0 && (
+                      <span className={styles.awardLevels}>
+                        {a.levels.map(l => (
+                          <span className={styles.awardLevel} data-tier={a.tier} key={l}>{l}</span>
+                        ))}
+                      </span>
+                    )}
+                  </div>
+                  {a.work && <p className={styles.awardWork}>{a.work}</p>}
+                  {a.workEn && <p className={styles.awardWorkEn}>{a.workEn}</p>}
                 </div>
+              </li>
+            ))}
+          </ol>
+        </Section>
+
+        {/* ── Ⅳ 创新项目 ──
+            活动照原本挂在 Ⅲ，但时间轴需要整幅宽度，故移到此处与项目卡并排。 */}
+        <Section id="projects" mark="Ⅳ" title="创新项目" en="PROJECTS">
+          <div className={styles.projectsGrid}>
+            <div className={styles.cardGrid}>
+              {PROFILE.projects.map((p, i) => (
+                <article className={styles.card} key={p.title}>
+                  <span className={styles.cardIndex}>{String(i + 1).padStart(2, '0')}</span>
+                  <h3 className={styles.cardTitle}>{p.title}</h3>
+                  <p className={styles.cardRole}>{p.role}</p>
+                  <p className={styles.cardDesc}>{p.desc}</p>
+                  <div className={styles.tagList}>
+                    {p.tags.map(t => <span className={styles.tag} key={t}>{t}</span>)}
+                  </div>
+                </article>
               ))}
             </div>
             <PhotoPlate photo={PROFILE.photos.activity} />
-          </div>
-        </Section>
-
-        {/* ── Ⅳ 创新项目 ── */}
-        <Section id="projects" mark="Ⅳ" title="创新项目" en="PROJECTS">
-          <div className={styles.cardGrid}>
-            {PROFILE.projects.map((p, i) => (
-              <article className={styles.card} key={p.title}>
-                <span className={styles.cardIndex}>{String(i + 1).padStart(2, '0')}</span>
-                <h3 className={styles.cardTitle}>{p.title}</h3>
-                <p className={styles.cardRole}>{p.role}</p>
-                <p className={styles.cardDesc}>{p.desc}</p>
-                <div className={styles.tagList}>
-                  {p.tags.map(t => <span className={styles.tag} key={t}>{t}</span>)}
-                </div>
-              </article>
-            ))}
           </div>
         </Section>
 

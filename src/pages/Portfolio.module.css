@@ -902,69 +902,156 @@
   letter-spacing: 0.06em;
 }
 
-/* ══════════════════ Ⅲ 竞赛荣誉 ══════════════════ */
+/* ══════════════════ Ⅲ 竞赛荣誉（纵向时间轴） ══════════════════
 
-.awardsGrid {
-  display: grid;
-  grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.6fr);
-  gap: 46px;
-  align-items: start;
-}
+   版式约定（改文案时请照此维护，否则会散）：
+     · 日期列固定 88px、右对齐、等宽数字 —— 保证 2025.01 与 2026.08 上下对齐
+     · 导轨落在 x=102，菱形结点中心压在导轨上
+     · 正文列自 x=116 起，与结点留 9px 净空
+     · 赛事名与奖项徽记同一行两端对齐，窄屏自动换行成两行
+     · 作品题目限制 62ch 并放宽行高到 1.85 —— 中文长标题的换行才不显挤
+   ═══════════════════════════════════════════════════════════════ */
 
 .awardList {
-  display: flex;
-  flex-direction: column;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* 贯穿的竖向导轨：首尾各留一段渐隐，避免到头突然断掉 */
+.awardList::before {
+  content: '';
+  position: absolute;
+  left: 102px;
+  top: 20px;
+  bottom: 20px;
+  width: 1px;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    var(--kv-line) 6%,
+    var(--kv-line) 94%,
+    transparent 100%
+  );
+}
+
+.awardItem {
+  position: relative;
+  display: grid;
+  grid-template-columns: 88px minmax(0, 1fr);
+  padding: 16px 0;
+}
+
+.awardItem + .awardItem {
   border-top: 1px solid var(--kv-hair);
 }
 
-.awardRow {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 15px 12px 15px 4px;
-  border-bottom: 1px solid var(--kv-hair);
-  transition: background 160ms ease, padding-left 160ms ease;
+/* 菱形结点：中心压在导轨上（88 + 14 = 102） */
+.awardItem::before {
+  content: '';
+  position: absolute;
+  left: 97px;
+  top: 22px;
+  width: 10px;
+  height: 10px;
+  background: var(--kv-void);
+  border: 1px solid var(--kv-line-strong);
+  transform: rotate(45deg);
 }
 
-.awardRow:hover {
-  background: linear-gradient(90deg, rgba(180, 149, 98, 0.07), transparent 70%);
-  padding-left: 12px;
-}
-
-.awardBadge {
-  flex: none;
-  min-width: 88px;
-  padding: 5px 9px;
-  text-align: center;
-  font-family: var(--kv-serif);
-  font-size: 0.79rem;
-  letter-spacing: 0.1em;
-  border: 1px solid currentColor;
-}
-
-.awardBadge[data-tier='national'] { color: var(--kv-gold-bright); }
-.awardBadge[data-tier='international'] { color: var(--kv-slate-soft); }
-.awardBadge[data-tier='provincial'] { color: var(--kv-coral); }
-.awardBadge[data-tier='school'] { color: var(--kv-brown); }
-
-.awardName {
-  flex: 1;
-  min-width: 0;
-  font-family: var(--kv-serif);
-  font-size: 0.94rem;
-  color: var(--kv-body);
-  letter-spacing: 0.04em;
-}
-
-.awardYear {
-  flex: none;
+.awardDate {
+  padding-right: 20px;
+  text-align: right;
   font-family: var(--kv-mono);
   font-size: 0.76rem;
-  letter-spacing: 0.12em;
+  line-height: 1.9;
+  letter-spacing: 0.08em;
   color: var(--kv-mute);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.awardBody {
+  min-width: 0;
+  padding-left: 28px;
+}
+
+.awardTop {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 18px;
+  flex-wrap: wrap;
+}
+
+.awardContest {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-family: var(--kv-serif);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.6;
+  letter-spacing: 0.04em;
+  color: var(--kv-cream);
+  text-wrap: pretty;
+}
+
+.awardLevels {
+  flex: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.awardLevel {
+  flex: none;
+  padding: 2px 9px;
+  border: 1px solid currentColor;
+  font-family: var(--kv-sans);
+  font-size: 0.74rem;
+  line-height: 1.7;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+
+.awardLevel[data-tier='national'] { color: var(--kv-gold-bright); }
+.awardLevel[data-tier='international'] { color: var(--kv-slate-soft); }
+.awardLevel[data-tier='provincial'] { color: var(--kv-coral); }
+.awardLevel[data-tier='school'] { color: var(--kv-brown); }
+
+/* 作品中文题目：行高放宽，宽度限 62ch 让换行点稳定 */
+.awardWork {
+  margin: 7px 0 0;
+  max-width: 62ch;
+  font-family: var(--kv-serif);
+  font-size: 0.86rem;
+  line-height: 1.85;
+  letter-spacing: 0.02em;
+  color: var(--kv-body);
+  text-wrap: pretty;
+}
+
+/* 作品英文题目：换用拉丁Display体 + 略开字距，与中文行区分开 */
+.awardWorkEn {
+  margin: 7px 0 0;
+  max-width: 62ch;
+  font-family: var(--kv-display);
+  font-size: 0.84rem;
+  line-height: 1.7;
+  letter-spacing: 0.06em;
+  color: var(--kv-slate-soft);
 }
 
 /* ══════════════════ Ⅳ 创新项目 / Ⅴ 组织 ══════════════════ */
+
+/* 项目卡 + 活动照并排（照片自 Ⅲ 移来） */
+.projectsGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 260px;
+  gap: 46px;
+  align-items: start;
+}
 
 .cardGrid {
   display: grid;
@@ -1388,9 +1475,9 @@ a.contactItem:hover {
   .heroRight { align-items: flex-start; }
   .photoPlate { max-width: 300px; }
   .aboutGrid,
-  .awardsGrid,
   .traitsGrid,
   .contactGrid { grid-template-columns: minmax(0, 1fr); gap: 34px; }
+  .projectsGrid { grid-template-columns: minmax(0, 1fr); gap: 34px; }
 }
 
 @media (max-width: 860px) {
@@ -1438,4 +1525,29 @@ a.contactItem:hover {
   .eduCard { padding: 22px 20px; }
   .gateInner { padding: 26px 20px; gap: 20px; }
   .gateArrow { display: none; }
+
+  /* 时间轴窄屏改为「日期在上、内容在下」，把整幅宽度让给长标题 */
+  .awardItem {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 14px 0 14px 24px;
+  }
+
+  .awardList::before {
+    left: 6px;
+    top: 16px;
+    bottom: 16px;
+  }
+
+  .awardItem::before {
+    left: 1px;
+    top: 20px;
+  }
+
+  .awardDate {
+    text-align: left;
+    padding-right: 0;
+    margin-bottom: 5px;
+  }
+
+  .awardBody { padding-left: 0; }
 }
