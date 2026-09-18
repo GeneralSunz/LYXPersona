@@ -1,67 +1,252 @@
-/* ═══════════════════════════════════════
-   Pure CSS Textures — no external images
-   ═══════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════════
+   纹理与母题 —— 纯 CSS / 内联 SVG，无外部图片依赖
+   对应参考图中的：颗粒纸面、制图辅助线、拱门、日轮、棋盘石柱、扇形色块
+   ═══════════════════════════════════════════════════════════════ */
 
-/* ── Parchment paper background ── */
+/* ══════════════════ 一、质感层 ══════════════════ */
+
+/* ── 全局颗粒：整个画面覆盖一层哑光噪点 ── */
+.grain-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.4;
+  background-image: var(--grain-url);
+  background-size: 220px 220px;
+  mix-blend-mode: soft-light;
+}
+
+/* ── 旧名保留：纸面纹理（现在读作"哑光石板"） ── */
 .parchment-bg {
   background:
     repeating-linear-gradient(
       0deg,
-      transparent,
-      transparent 2px,
-      rgba(200, 155, 60, 0.015) 2px,
-      rgba(200, 155, 60, 0.015) 3px
+      transparent 0 3px,
+      rgba(236, 228, 211, 0.012) 3px 4px
     ),
     repeating-linear-gradient(
       90deg,
-      transparent,
-      transparent 3px,
-      rgba(200, 155, 60, 0.008) 3px,
-      rgba(200, 155, 60, 0.008) 4px
+      transparent 0 4px,
+      rgba(236, 228, 211, 0.008) 4px 5px
     ),
-    radial-gradient(ellipse at 20% 50%, rgba(200, 155, 60, 0.04) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 50%, rgba(200, 155, 60, 0.03) 0%, transparent 50%),
-    radial-gradient(ellipse at 50% 0%, rgba(200, 155, 60, 0.02) 0%, transparent 60%);
+    radial-gradient(ellipse 60% 45% at 50% 0%, rgba(207, 194, 165, 0.05), transparent 70%),
+    radial-gradient(ellipse 50% 40% at 12% 68%, rgba(110, 124, 131, 0.045), transparent 70%),
+    radial-gradient(ellipse 45% 40% at 88% 74%, rgba(168, 90, 53, 0.035), transparent 70%);
 }
 
-/* ── Card surface grain ── */
+/* ── 卡片表面细砂 ── */
 .card-texture {
-  background:
+  background-image:
     repeating-linear-gradient(
       45deg,
-      transparent,
-      transparent 4px,
-      rgba(200, 155, 60, 0.008) 4px,
-      rgba(200, 155, 60, 0.008) 5px
+      transparent 0 5px,
+      rgba(236, 228, 211, 0.012) 5px 6px
     ),
     repeating-linear-gradient(
       -45deg,
-      transparent,
-      transparent 4px,
-      rgba(139, 26, 26, 0.005) 4px,
-      rgba(139, 26, 26, 0.005) 5px
+      transparent 0 5px,
+      rgba(168, 90, 53, 0.01) 5px 6px
     );
 }
 
-/* ── Soot / shadow overlay ── */
+/* ── 边缘压暗（旧名 soot-overlay / ink-stain） ── */
 .soot-overlay {
   background:
-    radial-gradient(ellipse at 50% 0%, transparent 60%, rgba(10, 10, 12, 0.5) 100%),
-    radial-gradient(ellipse at 50% 100%, transparent 40%, rgba(10, 10, 12, 0.35) 100%),
-    radial-gradient(ellipse at 20% 50%, transparent 50%, rgba(10, 10, 12, 0.2) 100%),
-    radial-gradient(ellipse at 80% 50%, transparent 50%, rgba(10, 10, 12, 0.2) 100%);
+    radial-gradient(ellipse 70% 50% at 50% 0%, transparent 40%, rgba(11, 11, 8, 0.55) 100%),
+    radial-gradient(ellipse 70% 50% at 50% 100%, transparent 30%, rgba(11, 11, 8, 0.45) 100%);
 }
 
-/* ── Ink stain decorative overlay ── */
 .ink-stain {
   background:
-    radial-gradient(ellipse at 25% 35%, rgba(139, 26, 26, 0.05) 0%, transparent 50%),
-    radial-gradient(ellipse at 75% 65%, rgba(10, 10, 12, 0.06) 0%, transparent 40%);
+    radial-gradient(ellipse at 22% 34%, rgba(125, 42, 32, 0.06) 0%, transparent 52%),
+    radial-gradient(ellipse at 78% 62%, rgba(11, 11, 8, 0.08) 0%, transparent 44%);
 }
 
-/* ── Furnace glow — warm ember light ── */
+/* ── 炉火余温（旧名保留，改为砂金/锈色环境光） ── */
 .furnace-glow {
   background:
-    radial-gradient(ellipse at 50% 100%, rgba(200, 155, 60, 0.08) 0%, transparent 50%),
-    radial-gradient(ellipse at 30% 20%, rgba(139, 26, 26, 0.03) 0%, transparent 40%);
+    radial-gradient(ellipse 55% 40% at 50% 106%, rgba(176, 138, 60, 0.09) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 30% at 14% 12%, rgba(180, 98, 58, 0.05) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 30% at 88% 18%, rgba(143, 163, 174, 0.04) 0%, transparent 70%);
+}
+
+/* ══════════════════ 二、制图辅助线 ══════════════════ */
+
+/* ── 横竖发丝网格 + 边缘刻度：参考图的"建筑底稿"感 ── */
+.guide-grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(90deg, var(--line-guide) 0 1px, transparent 1px),
+    linear-gradient(0deg, var(--line-guide) 0 1px, transparent 1px);
+  background-size: 148px 148px;
+  -webkit-mask-image: radial-gradient(ellipse 78% 62% at 50% 34%, #000 10%, transparent 78%);
+  mask-image: radial-gradient(ellipse 78% 62% at 50% 34%, #000 10%, transparent 78%);
+  opacity: 0.75;
+}
+
+/* ── 十字定位标记（制图套准点） ── */
+.crosshair {
+  position: absolute;
+  width: 13px;
+  height: 13px;
+  pointer-events: none;
+  opacity: 0.5;
+  background:
+    linear-gradient(90deg, transparent 0 6px, var(--line-strong) 6px 7px, transparent 7px),
+    linear-gradient(0deg, transparent 0 6px, var(--line-strong) 6px 7px, transparent 7px);
+}
+
+/* ── 细分隔线：中间带菱形结点 ── */
+.hairline-rule {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.hairline-rule::before,
+.hairline-rule::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--line), transparent);
+}
+
+/* ══════════════════ 三、几何母题 ══════════════════ */
+
+/* ── 拱门：参考图中央的砂金/灰蓝双层拱 ── */
+.arch-gate {
+  position: absolute;
+  border: 1px solid rgba(207, 194, 165, 0.22);
+  border-bottom: none;
+  border-radius: 50% 50% 0 0 / 58% 58% 0 0;
+  pointer-events: none;
+}
+
+.arch-gate::before {
+  content: '';
+  position: absolute;
+  inset: 14px 14px 0;
+  border: 1px solid rgba(143, 163, 174, 0.2);
+  border-bottom: none;
+  border-radius: 50% 50% 0 0 / 58% 58% 0 0;
+}
+
+.arch-gate::after {
+  content: '';
+  position: absolute;
+  inset: 30px 30px 0;
+  border: 1px solid rgba(236, 228, 211, 0.07);
+  border-bottom: none;
+  border-radius: 50% 50% 0 0 / 58% 58% 0 0;
+}
+
+/* ── 日轮：黑色圆盘 + 放射线 + 中心白光 ── */
+.sun-disc {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  background:
+    radial-gradient(circle, rgba(11, 11, 8, 0.94) 0 42%, rgba(20, 20, 16, 0.8) 58%, transparent 66%),
+    repeating-conic-gradient(
+      from 0deg,
+      rgba(236, 228, 211, 0.32) 0deg 0.35deg,
+      transparent 0.35deg 15deg
+    );
+  -webkit-mask-image: radial-gradient(circle, #000 0 46%, rgba(0, 0, 0, 0.55) 56%, transparent 68%);
+  mask-image: radial-gradient(circle, #000 0 46%, rgba(0, 0, 0, 0.55) 56%, transparent 68%);
+}
+
+/* 日轮中心的那一点白 ── */
+.sun-disc::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 9%;
+  height: 9%;
+  transform: translate(-50%, -50%);
+  background: var(--cream-100);
+  clip-path: polygon(50% 0, 58% 42%, 100% 50%, 58% 58%, 50% 100%, 42% 58%, 0 50%, 42% 42%);
+  box-shadow: 0 0 22px rgba(236, 228, 211, 0.45);
+}
+
+/* ── 棋盘石柱：参考图中央的黑白格 ── */
+.checker-strip {
+  background-image:
+    repeating-conic-gradient(
+      from 0deg,
+      rgba(11, 11, 8, 0.85) 0% 25%,
+      rgba(207, 194, 165, 0.22) 0% 50%
+    );
+  background-size: 12px 12px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+/* ── 扇形 / 三角色块：锈橙、砖红 ── */
+.sector-block {
+  position: absolute;
+  pointer-events: none;
+  background: linear-gradient(150deg, rgba(180, 98, 58, 0.3), rgba(168, 90, 53, 0.06));
+}
+
+.sector-block--tri {
+  clip-path: polygon(0 100%, 100% 0, 100% 100%);
+}
+
+.sector-block--bowl {
+  border-radius: 0 0 50% 50% / 0 0 100% 100%;
+  background: linear-gradient(180deg, rgba(163, 58, 43, 0.42), rgba(125, 42, 32, 0.12));
+}
+
+/* ── 版记边框：双线 + 四角切角，用于主要面板 ── */
+.plate-frame {
+  position: relative;
+  border: 1px solid var(--line);
+}
+
+.plate-frame::after {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  border: 1px solid var(--line-hair);
+  pointer-events: none;
+}
+
+/* 四角短线（切角版记感） */
+.plate-tick {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  pointer-events: none;
+  border-color: var(--line-strong);
+  border-style: solid;
+  border-width: 0;
+}
+
+.plate-tick--tl { top: -1px; left: -1px; border-top-width: 1px; border-left-width: 1px; }
+.plate-tick--tr { top: -1px; right: -1px; border-top-width: 1px; border-right-width: 1px; }
+.plate-tick--bl { bottom: -1px; left: -1px; border-bottom-width: 1px; border-left-width: 1px; }
+.plate-tick--br { bottom: -1px; right: -1px; border-bottom-width: 1px; border-right-width: 1px; }
+
+/* ── 拉丁文版记小字 ── */
+.plate-caption {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+}
+
+/* ── 竖向排版的小标签（档案编号感） ── */
+.plate-stamp {
+  font-family: var(--font-display);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--gold-400);
+  opacity: 0.75;
 }

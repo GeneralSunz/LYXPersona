@@ -1,27 +1,31 @@
+/* ── 投递区：把上传控件做成"送档窗口" ── */
+
 .zone {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  padding: 48px 24px;
-  border: 1px dashed var(--border-default);
-  border-radius: var(--radius-md);
+  gap: 10px;
+  padding: 30px 24px;
+  border: 1px dashed var(--line);
+  background: linear-gradient(180deg, rgba(28, 27, 21, 0.35) 0%, rgba(14, 14, 11, 0.2) 100%);
   cursor: pointer;
-  transition: all var(--transition-fast);
+  transition: all var(--transition-normal);
 }
 
 .zone:hover,
 .dragging {
-  border-color: var(--accent-blue);
-  background-color: rgba(59, 130, 246, 0.04);
+  border-color: var(--line-strong);
+  background: rgba(207, 194, 165, 0.045);
 }
 
 .uploading {
   cursor: default;
-  padding: 24px;
-  border-color: var(--accent-blue);
-  background-color: rgba(59, 130, 246, 0.04);
+  padding: 22px;
+  border-style: solid;
+  border-color: var(--line-strong);
+  background: rgba(207, 194, 165, 0.04);
 }
 
 .input {
@@ -29,37 +33,42 @@
 }
 
 .icon {
-  color: var(--text-muted);
-  transition: color var(--transition-fast);
+  color: var(--text-mute);
+  transition: color var(--transition-normal), transform var(--transition-normal);
 }
 
 .zone:hover .icon,
 .dragging .icon {
-  color: var(--accent-blue);
+  color: var(--sand-300);
+  transform: translateY(-2px);
 }
 
 .label {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: 5px;
 }
 
 .link {
-  color: var(--accent-blue);
+  font-family: var(--font-serif);
+  color: var(--sand-200);
   font-size: 14px;
+  letter-spacing: 0.2em;
 }
 
 .hint {
-  color: var(--text-muted);
-  font-size: 12px;
+  color: var(--text-mute);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
 }
 
-/* Status list */
+/* ── 上传队列 ── */
 .statusList {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
   width: 100%;
   max-width: 480px;
 }
@@ -67,7 +76,7 @@
 .statusItem {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 5px;
 }
 
 .statusRow {
@@ -77,8 +86,8 @@
 }
 
 .statusName {
-  font-size: 13px;
-  color: var(--text-primary);
+  font-size: 12.5px;
+  color: var(--text-hi);
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -86,21 +95,20 @@
   flex: 1;
 }
 
-/* Spinner */
 .spinner {
-  width: 18px;
-  height: 18px;
-  border: 2px solid var(--accent-blue);
-  border-top-color: transparent;
+  width: 15px;
+  height: 15px;
+  border: 1px solid var(--line);
+  border-top-color: var(--sand-300);
   border-radius: 50%;
-  animation: spin 0.6s linear infinite;
+  animation: spin 0.9s linear infinite;
   flex-shrink: 0;
 }
 
-/* Status indicators */
 .statusError {
-  font-size: 12px;
-  color: var(--accent-red);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: var(--accent-rust);
   flex-shrink: 0;
   max-width: 200px;
   overflow: hidden;
@@ -110,34 +118,33 @@
 }
 
 .statusDone {
-  font-size: 14px;
-  color: var(--accent-green);
+  font-size: 13px;
+  color: var(--accent-ok);
   flex-shrink: 0;
-  width: 24px;
+  width: 22px;
   text-align: center;
 }
 
 .statusPct {
-  font-size: 12px;
-  color: var(--accent-blue);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: var(--sand-300);
   flex-shrink: 0;
-  min-width: 36px;
+  min-width: 38px;
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
 .progressTrack {
   width: 100%;
-  height: 4px;
-  background-color: rgba(255, 255, 255, 0.08);
-  border-radius: 2px;
+  height: 2px;
+  background: rgba(207, 194, 165, 0.12);
   overflow: hidden;
 }
 
 .progressBar {
   height: 100%;
-  background-color: var(--accent-blue);
-  border-radius: 2px;
+  background: linear-gradient(90deg, var(--ochre-500), var(--sand-200));
   transition: width 0.2s ease;
 }
 
@@ -147,8 +154,10 @@
 }
 
 .speedText {
-  font-size: 11px;
-  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: var(--text-mute);
   font-variant-numeric: tabular-nums;
 }
 

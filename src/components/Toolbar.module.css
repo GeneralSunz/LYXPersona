@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 16px 0;
+  padding: 14px 0;
 }
 
 .search {
@@ -10,19 +10,20 @@
   align-items: center;
   gap: 8px;
   flex: 1;
-  max-width: 280px;
-  padding: 8px 12px;
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-md);
-  transition: border-color var(--transition-fast);
+  max-width: 300px;
+  padding: 7px 12px;
+  background: var(--bg-inset);
+  border: 1px solid var(--line-hair);
+  transition: border-color var(--transition-fast), background var(--transition-fast);
 }
 
 .search:focus-within {
-  border-color: var(--accent-blue);
+  border-color: var(--line-strong);
+  background: rgba(8, 8, 6, 0.72);
 }
 
 .searchIcon {
-  color: var(--text-muted);
+  color: var(--text-mute);
   flex-shrink: 0;
 }
 
@@ -31,12 +32,13 @@
   background: none;
   border: none;
   outline: none;
-  color: var(--text-primary);
-  font-size: 13px;
+  color: var(--text-hi);
+  font-size: 12.5px;
+  letter-spacing: 0.06em;
 }
 
 .searchInput::placeholder {
-  color: var(--text-muted);
+  color: var(--text-disabled);
 }
 
 .sorts {
@@ -47,25 +49,25 @@
 .sortBtn {
   display: flex;
   align-items: center;
-  gap: 3px;
-  padding: 6px 10px;
+  gap: 4px;
+  padding: 6px 11px;
   background: none;
   border: 1px solid transparent;
-  border-radius: var(--radius-md);
-  color: var(--text-muted);
-  font-size: 12px;
+  color: var(--text-mute);
+  font-size: 11.5px;
+  letter-spacing: 0.1em;
   transition: all var(--transition-fast);
 }
 
 .sortBtn:hover {
-  color: var(--text-primary);
-  border-color: var(--border-default);
+  color: var(--text-body);
+  border-color: var(--line-hair);
 }
 
 .sortBtn.active {
-  color: var(--accent-blue);
-  border-color: var(--border-default);
-  background-color: rgba(59, 130, 246, 0.06);
+  color: var(--sand-200);
+  border-color: var(--line);
+  background: rgba(207, 194, 165, 0.06);
 }
 
 .sortArrow {
@@ -74,8 +76,7 @@
 
 .views {
   display: flex;
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-md);
+  border: 1px solid var(--line);
   overflow: hidden;
   margin-left: auto;
 }
@@ -85,19 +86,24 @@
   align-items: center;
   justify-content: center;
   width: 34px;
-  height: 34px;
+  height: 32px;
   background: none;
   border: none;
-  color: var(--text-muted);
+  border-left: 1px solid var(--line-hair);
+  color: var(--text-mute);
   transition: all var(--transition-fast);
 }
 
+.viewBtn:first-child {
+  border-left: none;
+}
+
 .viewBtn:hover {
-  color: var(--text-primary);
-  background-color: var(--bg-tertiary);
+  color: var(--text-hi);
+  background: rgba(207, 194, 165, 0.06);
 }
 
 .active {
-  color: var(--accent-blue);
-  background-color: rgba(59, 130, 246, 0.08);
+  color: var(--sand-200);
+  background: rgba(207, 194, 165, 0.1);
 }

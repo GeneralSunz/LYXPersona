@@ -1,0 +1,262 @@
+/* ═══════════════════════════════════════════════════════════════
+   熔炉氛围层 —— 「会动的那一半」
+   ───────────────────────────────────────────────────────────────
+   分工：结构与排版在 components.css，这里只放会动、会发光的东西。
+
+   包含：灰烬粒子场、光标聚光、制图扫描线、滚动进度、日轮脉冲、
+         标题入场与掠光、角标弹入、卡片光标高光、底图视差与缓漂。
+
+   与 FurnaceAtmosphere.tsx 一同构成可整体摘除的一层：
+   删掉这两个文件即可完全回退到静态版，结构排版不受影响。
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ═══════════════ 一、灰烬粒子场 ═══════════════
+   放在内容之上（z-index 3）：浮尘飘在空气里，才有纵深。
+   mix-blend-mode: screen 让它只加光不遮挡，文字依然是全页最亮的东西。 */
+.atm-embers {
+  position: fixed;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0.85;
+  mix-blend-mode: screen;
+}
+
+/* ═══════════════ 二、光标聚光 ═══════════════
+   夹在暗角与内容之间（z-index 1）：只照亮底图，不糊正文。
+   组件用 translate3d 移动它，所以这里画在左上角、尺寸固定。 */
+.atm-spotlight {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 780px;
+  height: 780px;
+  z-index: 1;
+  pointer-events: none;
+  will-change: transform;
+  /* 衰减要快：它是"一束光"，不是"一团雾"。亮到糊住首屏就本末倒置了。 */
+  background:
+    radial-gradient(
+      circle,
+      rgba(224, 213, 187, 0.075) 0%,
+      rgba(201, 171, 110, 0.042) 26%,
+      rgba(180, 98, 58, 0.018) 46%,
+      transparent 64%
+    );
+}
+
+/* ═══════════════ 四、滚动进度 ═══════════════ */
+.atm-progress-track {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  z-index: 60;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(207, 194, 165, 0.07) 18%,
+    rgba(207, 194, 165, 0.07) 82%,
+    transparent
+  );
+}
+
+.atm-progress-bar {
+  height: 100%;
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: left center;
+  will-change: transform;
+  background: linear-gradient(
+    90deg,
+    rgba(143, 74, 43, 0.9) 0%,
+    var(--rust-400) 22%,
+    var(--gold-400) 62%,
+    var(--sand-200) 100%
+  );
+  box-shadow: 0 0 12px rgba(201, 171, 110, 0.45);
+}
+
+/* ═══════════════ 五、日轮脉冲 ═══════════════
+   和 .bg-sun 同几何，但独立成层 —— .sun-disc 带 mask，
+   脉冲环扩到 1.9 倍会被那层 mask 裁掉。 */
+.bg-sun-pulse {
+  position: absolute;
+  top: 12%;
+  left: 50%;
+  width: min(320px, 34vw);
+  aspect-ratio: 1;
+  pointer-events: none;
+  opacity: 0.6;
+  transform: translateX(-50%) translate3d(var(--par-x, 0px), var(--par-y, 0px), 0);
+  transition: transform 240ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.bg-sun-pulse span {
+  position: absolute;
+  inset: 20%;
+  border-radius: 50%;
+  border: 1px solid rgba(236, 228, 211, 0.42);
+  animation: sunPulse 7.2s cubic-bezier(0.2, 0.7, 0.3, 1) infinite;
+}
+
+.bg-sun-pulse span:nth-child(2) { animation-delay: 2.4s; }
+.bg-sun-pulse span:nth-child(3) { animation-delay: 4.8s; }
+
+@keyframes sunPulse {
+  0%   { transform: scale(0.5); opacity: 0; }
+  10%  { opacity: 0.75; }
+  72%  { transform: scale(2); opacity: 0; }
+  100% { transform: scale(2); opacity: 0; }
+}
+
+/* ═══════════════ 六、底图缓漂与滚动视差 ═══════════════
+   底图最慢，母题居中，内容最快 —— 三层速度差即是纵深。 */
+.app-bg::before {
+  animation: atmDrift 46s ease-in-out infinite alternate;
+}
+
+@keyframes atmDrift {
+  from { transform: scale(1.03) translate3d(0, 0, 0); }
+  to   { transform: scale(1.1) translate3d(-1.2%, -1.5%, 0); }
+}
+
+.bg-arch {
+  transform: translateX(-50%) translate3d(
+    calc(var(--par-x, 0px) * 0.6),
+    calc(var(--par-y, 0px) * 0.6 + var(--scroll-shift, 0px)),
+    0
+  );
+}
+
+.bg-sun {
+  transform: translateX(-50%) translate3d(
+    var(--par-x, 0px),
+    calc(var(--par-y, 0px) + var(--scroll-shift-2, 0px)),
+    0
+  );
+}
+
+.bg-sector-l {
+  transform: translate3d(0, calc(var(--scroll-shift, 0px) * 0.7), 0);
+}
+
+.bg-sector-r {
+  transform: scaleX(-1) translate3d(0, calc(var(--scroll-shift, 0px) * 0.5), 0);
+}
+
+.bg-checker {
+  transform: translateX(-50%) translate3d(0, calc(var(--scroll-shift, 0px) * 1.1), 0);
+}
+
+/* ═══════════════ 七、标题入场与掠光 ═══════════════ */
+.app-title {
+  position: relative;
+  animation: atmTitle 1.15s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+}
+
+@keyframes atmTitle {
+  from {
+    opacity: 0;
+    letter-spacing: 0.46em;
+    transform: translateY(10px);
+    filter: blur(7px);
+  }
+  to {
+    opacity: 1;
+    letter-spacing: 0.24em;
+    transform: none;
+    filter: blur(0);
+  }
+}
+
+/* 一次性的掠光：加色混合的柔光带扫过版记，不裁字也不改字色 */
+.app-title::after {
+  content: '';
+  position: absolute;
+  top: -20%;
+  bottom: -20%;
+  width: 38%;
+  left: -45%;
+  pointer-events: none;
+  background: linear-gradient(
+    100deg,
+    transparent 0%,
+    rgba(236, 228, 211, 0.3) 44%,
+    rgba(255, 255, 255, 0.52) 52%,
+    rgba(236, 228, 211, 0.28) 60%,
+    transparent 100%
+  );
+  filter: blur(7px);
+  mix-blend-mode: plus-lighter;
+  animation: atmSheen 1.5s cubic-bezier(0.3, 0, 0.2, 1) 1.15s both;
+}
+
+@keyframes atmSheen {
+  from { left: -45%; opacity: 0; }
+  12%  { opacity: 1; }
+  86%  { opacity: 1; }
+  to   { left: 112%; opacity: 0; }
+}
+
+/* ═══════════════ 八、角标弹入 ═══════════════ */
+.app-header .corner-tl,
+.app-header .corner-tr,
+.app-header .corner-bl,
+.app-header .corner-br {
+  animation: atmCorner 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.app-header .corner-tl { animation-delay: 0.18s; }
+.app-header .corner-tr { animation-delay: 0.24s; }
+.app-header .corner-bl { animation-delay: 0.3s; }
+.app-header .corner-br { animation-delay: 0.36s; }
+
+@keyframes atmCorner {
+  from { transform: scale(1.9); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+
+/* ═══════════════ 九、官方式浮动 ═══════════════
+   官方页的装饰件只做 rotate 与 ±6~12px 的上下浮动
+   （见其 keyframes hDEwF_ / x2eWrD / z2ORfJ），量级照抄，不放大。 */
+.title-ornament-bar {
+  animation: kvFloat 6.5s ease-in-out infinite alternate;
+}
+
+@keyframes kvFloat {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-7px); }
+}
+
+/* ═══════════════ 十、卡片光标高光 ═══════════════
+   只改 ::after 的光斑位置与强度，卡片本身的排版与交互一律不动。 */
+.file-card::after {
+  background: radial-gradient(
+    ellipse 58% 58% at var(--mx, 50%) var(--my, 112%),
+    color-mix(in srgb, var(--card-clr, var(--sand-300)) 26%, transparent),
+    transparent 72%
+  );
+}
+
+/* ═══════════════ 十一、减弱动效 ═══════════════
+   这一层动得比原来凶，所以这里的降级要更彻底。 */
+@media (prefers-reduced-motion: reduce) {
+  .atm-spotlight,
+  .atm-progress-track,
+  .bg-sun-pulse span,
+  .app-title::after {
+    display: none;
+  }
+
+  .atm-embers {
+    opacity: 0.4;
+  }
+
+  .app-bg::before,
+  .title-ornament-bar {
+    animation: none;
+  }
+}

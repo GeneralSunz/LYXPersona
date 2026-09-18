@@ -15,12 +15,13 @@ interface Props {
   onClick: () => void
 }
 
+/* 分类色取自《无终奇语》参考图色域：灰蓝 / 锈橙 / 砂金 / 石褐 */
 const CATEGORY_COLORS: Record<string, string> = {
-  folder:   '#d97706',
-  document: '#4a7c8c',
-  image:    '#8b1a1a',
-  archive:  '#6b7280',
-  other:    '#5a5a5a',
+  folder:   '#beaa85',
+  document: '#8fa3ae',
+  image:    '#b4623a',
+  archive:  '#c9ab6e',
+  other:    '#6e675a',
 }
 
 const CATEGORY_ICONS: Record<string, string> = {
@@ -38,17 +39,35 @@ export default function CelestialBody({ item, index, searchMode, onClick }: Prop
   const color = CATEGORY_COLORS[category]
   const iconId = CATEGORY_ICONS[category]
 
+  /**
+   * 光标高光：只往元素上写两个 CSS 变量，交给 atmosphere.css 的
+   * .file-card::after 取用。不碰任何布局、状态或交互。
+   */
+  const trackPointer = (e: React.PointerEvent<HTMLDivElement>) => {
+    const r = e.currentTarget.getBoundingClientRect()
+    e.currentTarget.style.setProperty('--mx', `${((e.clientX - r.left) / r.width) * 100}%`)
+    e.currentTarget.style.setProperty('--my', `${((e.clientY - r.top) / r.height) * 100}%`)
+  }
+
   return (
     <div
       className={`file-card${searchMode ? ' file-card--search' : ''}`}
       style={{
         '--card-clr': color,
-        '--delay': `${index * 0.06}s`,
+        '--delay': `${index * 0.05}s`,
       } as React.CSSProperties}
       onClick={onClick}
+      onPointerMove={trackPointer}
     >
       {/* Top color bar */}
       <div className="card-topbar" />
+
+      {/* 档案编号 —— 藏品图鉴的 No. 记法；卷宗按"箱底祭器"（区域）记 */}
+      <span className="card-index">
+        {isFolder
+          ? `卷宗 ${String(index + 1).padStart(2, '0')}`
+          : `No.${String(index + 1).padStart(2, '0')}`}
+      </span>
 
       {/* Corner brackets */}
       <svg className="corner-tl" viewBox="0 0 20 20"><use href="#corner-tl" /></svg>
@@ -83,8 +102,8 @@ export default function CelestialBody({ item, index, searchMode, onClick }: Prop
 
       {/* Hover overlay */}
       <div className="card-overlay">
-        <svg viewBox="0 0 24 24" width="14" height="14">
-          <use href="#icon-document" />
+        <svg viewBox="0 0 24 24" width="15" height="15">
+          <use href={iconId} />
         </svg>
         <span>{isFolder ? '进入' : '预览'}</span>
       </div>

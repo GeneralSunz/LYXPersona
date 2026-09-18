@@ -4,127 +4,180 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0e0e0b" />
+    <meta name="color-scheme" content="dark" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@400;500;700&family=Cinzel+Decorative:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
-    <title>熔炉档案库</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@400;500;700&family=Cinzel+Decorative:wght@400;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <title>熔炉档案局</title>
   </head>
   <body>
-    <!-- SVG sprite — holds all icon/decor defs for <use> references -->
+    <!-- SVG sprite — 所有图标 / 装饰的 <use> 源；线条统一取参考图的砂金与骨白 -->
     <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
       <defs>
-        <!-- ── Corner Bracket Top-Left ── -->
-        <g id="corner-tl" fill="none" stroke="#c89b3c" stroke-width="1.2" opacity="0.5">
+        <!-- ── 四角版记角标 ── -->
+        <g id="corner-tl" fill="none" stroke="#cfc2a5" stroke-width="0.9" opacity="0.55">
           <path d="M 18 2 L 2 2 L 2 18" />
-          <path d="M 16 4 L 4 4 L 4 16" stroke-width="0.5" opacity="0.4" />
+          <path d="M 14 5 L 5 5 L 5 14" stroke-width="0.35" opacity="0.5" />
         </g>
-        <g id="corner-tr" fill="none" stroke="#c89b3c" stroke-width="1.2" opacity="0.5">
+        <g id="corner-tr" fill="none" stroke="#cfc2a5" stroke-width="0.9" opacity="0.55">
           <path d="M 2 2 L 18 2 L 18 18" />
-          <path d="M 4 4 L 16 4 L 16 16" stroke-width="0.5" opacity="0.4" />
+          <path d="M 6 5 L 15 5 L 15 14" stroke-width="0.35" opacity="0.5" />
         </g>
-        <g id="corner-bl" fill="none" stroke="#c89b3c" stroke-width="1.2" opacity="0.5">
+        <g id="corner-bl" fill="none" stroke="#cfc2a5" stroke-width="0.9" opacity="0.55">
           <path d="M 18 18 L 2 18 L 2 2" />
-          <path d="M 16 16 L 4 16 L 4 4" stroke-width="0.5" opacity="0.4" />
+          <path d="M 14 15 L 5 15 L 5 6" stroke-width="0.35" opacity="0.5" />
         </g>
-        <g id="corner-br" fill="none" stroke="#c89b3c" stroke-width="1.2" opacity="0.5">
+        <g id="corner-br" fill="none" stroke="#cfc2a5" stroke-width="0.9" opacity="0.55">
           <path d="M 2 18 L 18 18 L 18 2" />
-          <path d="M 4 16 L 16 16 L 16 4" stroke-width="0.5" opacity="0.4" />
+          <path d="M 6 15 L 15 15 L 15 6" stroke-width="0.35" opacity="0.5" />
         </g>
-        <g id="corner-blood-tl" fill="none" stroke="#8b1a1a" stroke-width="1.5" opacity="0.4">
+
+        <!-- ── 砖红角标（用于危险 / 返回等强调位置） ── -->
+        <g id="corner-blood-tl" fill="none" stroke="#b4623a" stroke-width="1" opacity="0.5">
           <path d="M 18 2 L 2 2 L 2 18" />
-          <circle cx="2" cy="2" r="2" fill="#8b1a1a" stroke="none" opacity="0.3" />
+          <circle cx="2" cy="2" r="1.6" fill="#b4623a" stroke="none" opacity="0.45" />
         </g>
-        <g id="chain-divider" fill="none" stroke="#c89b3c" stroke-width="0.6" opacity="0.3">
-          <path d="M 0 6 C 4 2, 8 2, 12 6 C 16 10, 20 10, 24 6 L 28 6" />
-          <path d="M 0 8 C 4 12, 8 12, 12 8 C 16 4, 20 4, 24 8 L 28 8" />
+
+        <!-- ── 分隔线 ── -->
+        <g id="chain-divider" fill="none" stroke="#cfc2a5" stroke-width="0.5" opacity="0.35">
+          <path d="M 0 6 L 28 6" />
+          <path d="M 7 3.5 L 10 6 L 7 8.5" opacity="0.7" />
+          <path d="M 21 3.5 L 18 6 L 21 8.5" opacity="0.7" />
         </g>
-        <g id="rune-bullet" fill="#c89b3c" opacity="0.6">
+        <g id="section-divider" fill="none" stroke="#cfc2a5" stroke-width="0.5" opacity="0.28">
+          <line x1="0" y1="5" x2="34" y2="5" />
+          <line x1="66" y1="5" x2="100" y2="5" />
+          <polygon points="50,1.5 53.5,5 50,8.5 46.5,5" />
+          <circle cx="36" cy="5" r="1" fill="#cfc2a5" opacity="0.4" />
+          <circle cx="64" cy="5" r="1" fill="#cfc2a5" opacity="0.4" />
+        </g>
+        <g id="rune-divider-alt" fill="none" stroke="#cfc2a5" stroke-width="0.5" opacity="0.22">
+          <line x1="0" y1="6" x2="15" y2="6" />
+          <line x1="25" y1="6" x2="40" y2="6" />
+          <polygon points="20,3 23,6 20,9 17,6" fill="#cfc2a5" opacity="0.35" stroke="none" />
+        </g>
+
+        <!-- ── 标题两侧饰线 ── -->
+        <g id="title-orn-l" fill="none" stroke="#cfc2a5" stroke-width="0.7" opacity="0.4">
+          <path d="M 60 14 L 0 14" />
+          <path d="M 60 10 L 24 10" stroke-width="0.35" opacity="0.6" />
+          <path d="M 60 18 L 40 18" stroke-width="0.35" opacity="0.6" />
+          <path d="M 0 10 L 0 18" stroke-width="0.6" />
+          <polygon points="60,14 56,11.5 56,16.5" fill="#cfc2a5" opacity="0.45" stroke="none" />
+        </g>
+        <g id="title-orn-r" fill="none" stroke="#cfc2a5" stroke-width="0.7" opacity="0.4">
+          <path d="M 0 14 L 60 14" />
+          <path d="M 0 10 L 36 10" stroke-width="0.35" opacity="0.6" />
+          <path d="M 0 18 L 20 18" stroke-width="0.35" opacity="0.6" />
+          <path d="M 60 10 L 60 18" stroke-width="0.6" />
+          <polygon points="0,14 4,11.5 4,16.5" fill="#cfc2a5" opacity="0.45" stroke="none" />
+        </g>
+
+        <!-- ── 菱形符点 ── -->
+        <g id="rune-bullet" fill="#cfc2a5" opacity="0.7">
           <polygon points="6,0 12,6 6,12 0,6" />
-          <polygon points="6,2 10,6 6,10 2,6" fill="#0a0a0c" />
+          <polygon points="6,3 9,6 6,9 3,6" fill="#0e0e0b" />
         </g>
-        <g id="title-orn-l" fill="none" stroke="#c89b3c" stroke-width="0.8" opacity="0.35">
-          <path d="M 60 12 C 40 12, 20 8, 0 12" />
-          <path d="M 60 16 C 40 16, 20 12, 0 16" stroke-width="0.4" />
-          <path d="M 0 12 L 0 16" stroke-width="0.6" />
-          <circle cx="60" cy="14" r="2" fill="#c89b3c" stroke="none" opacity="0.3" />
+
+        <!-- ── 日轮（放射刻线 + 中心菱形白光） ── -->
+        <g id="sun-gate" fill="none" stroke="#ece4d3" stroke-width="0.6" opacity="0.5">
+          <circle cx="40" cy="40" r="17" />
+          <circle cx="40" cy="40" r="13" stroke-width="0.3" opacity="0.6" />
+          <g opacity="0.75">
+            <line x1="40" y1="2" x2="40" y2="20" />
+            <line x1="40" y1="60" x2="40" y2="78" />
+            <line x1="2" y1="40" x2="20" y2="40" />
+            <line x1="60" y1="40" x2="78" y2="40" />
+            <line x1="13" y1="13" x2="25" y2="25" />
+            <line x1="55" y1="55" x2="67" y2="67" />
+            <line x1="13" y1="67" x2="25" y2="55" />
+            <line x1="55" y1="25" x2="67" y2="13" />
+          </g>
+          <polygon points="40,32 44.5,40 40,48 35.5,40" fill="#ece4d3" stroke="none" opacity="0.9" />
         </g>
-        <g id="title-orn-r" fill="none" stroke="#c89b3c" stroke-width="0.8" opacity="0.35">
-          <path d="M 0 12 C 20 12, 40 8, 60 12" />
-          <path d="M 0 16 C 20 16, 40 12, 60 16" stroke-width="0.4" />
-          <path d="M 60 12 L 60 16" stroke-width="0.6" />
-          <circle cx="0" cy="14" r="2" fill="#c89b3c" stroke="none" opacity="0.3" />
+
+        <!-- ── 拱门轮廓 ── -->
+        <g id="arch-line" fill="none" stroke="#cfc2a5" stroke-width="0.8" opacity="0.4">
+          <path d="M 0 120 L 0 44 A 40 44 0 0 1 80 44 L 80 120" />
+          <path d="M 10 120 L 10 48 A 30 34 0 0 1 70 48 L 70 120" stroke="#8fa3ae" stroke-width="0.4" opacity="0.7" />
         </g>
-        <g id="section-divider" fill="none" stroke="#c89b3c" stroke-width="0.5" opacity="0.2">
-          <line x1="0" y1="4" x2="100" y2="4" />
-          <circle cx="50" cy="4" r="2" fill="#c89b3c" opacity="0.3" />
-          <circle cx="30" cy="4" r="1" fill="#c89b3c" opacity="0.15" />
-          <circle cx="70" cy="4" r="1" fill="#c89b3c" opacity="0.15" />
+
+        <!-- ── 制图十字 ── -->
+        <g id="crosshair-mark" fill="none" stroke="#cfc2a5" stroke-width="0.6" opacity="0.5">
+          <line x1="0" y1="6" x2="12" y2="6" />
+          <line x1="6" y1="0" x2="6" y2="12" />
+          <circle cx="6" cy="6" r="2.4" stroke-width="0.4" opacity="0.7" />
         </g>
-        <g id="icon-document" fill="none" stroke="#c89b3c" stroke-width="1.2" opacity="0.7">
+
+        <!-- ── 金色飞鸟符形（官方主题图中漂浮的砂金符形） ── -->
+        <g id="gold-bird" fill="none" stroke="#c9ab6e" stroke-width="0.8" opacity="0.7">
+          <path d="M 3.5 11.5 C 7.5 4.5, 13.5 2, 21 3 C 16.5 5, 13 8.5, 11 14 C 9 10.8, 6.2 10.4, 3.5 11.5 Z" />
+          <path d="M 6.6 10.9 L 2.4 14.6" stroke-width="0.6" opacity="0.8" />
+          <circle cx="12.6" cy="5.6" r="0.75" fill="#c9ab6e" stroke="none" />
+        </g>
+
+        <!-- ── 文件类型图标 ── -->
+        <g id="icon-document" fill="none" stroke="#8fa3ae" stroke-width="1.1" opacity="0.9">
           <path d="M 5 2 L 15 2 L 19 6 L 19 22 L 5 22 Z" />
           <path d="M 15 2 L 15 6 L 19 6" />
-          <line x1="8" y1="10" x2="16" y2="10" stroke-width="0.8" />
-          <line x1="8" y1="14" x2="14" y2="14" stroke-width="0.8" />
-          <line x1="8" y1="18" x2="12" y2="18" stroke-width="0.8" />
+          <line x1="8" y1="11" x2="16" y2="11" stroke-width="0.7" opacity="0.75" />
+          <line x1="8" y1="15" x2="14" y2="15" stroke-width="0.7" opacity="0.75" />
+          <line x1="8" y1="19" x2="12" y2="19" stroke-width="0.7" opacity="0.75" />
         </g>
-        <g id="icon-folder" fill="none" stroke="#c89b3c" stroke-width="1.2" opacity="0.7">
+        <g id="icon-folder" fill="none" stroke="#beaa85" stroke-width="1.1" opacity="0.9">
           <path d="M 2 4 L 9 4 L 12 7 L 22 7 L 22 20 L 2 20 Z" />
-          <line x1="4" y1="10" x2="20" y2="10" stroke-width="0.6" opacity="0.4" />
+          <line x1="4" y1="11" x2="20" y2="11" stroke-width="0.5" opacity="0.5" />
         </g>
-        <g id="icon-image" fill="none" stroke="#c89b3c" stroke-width="1.2" opacity="0.7">
-          <rect x="3" y="4" width="18" height="16" rx="1" />
-          <circle cx="9" cy="9" r="2" />
-          <path d="M 3 17 L 9 12 L 14 17 L 18 13 L 21 17" stroke-width="0.8" />
+        <g id="icon-image" fill="none" stroke="#b4623a" stroke-width="1.1" opacity="0.9">
+          <rect x="3" y="4" width="18" height="16" />
+          <circle cx="9" cy="9.5" r="1.8" />
+          <path d="M 3 17.5 L 9 12.5 L 14 17.5 L 18 13.5 L 21 17" stroke-width="0.7" />
         </g>
-        <g id="icon-archive" fill="none" stroke="#c89b3c" stroke-width="1.2" opacity="0.7">
-          <path d="M 3 5 L 21 5 L 19 20 L 5 20 Z" />
-          <line x1="3" y1="5" x2="21" y2="5" stroke-width="0.8" />
-          <line x1="8" y1="9" x2="16" y2="9" stroke-width="0.6" />
-          <line x1="8" y1="13" x2="14" y2="13" stroke-width="0.6" />
+        <g id="icon-archive" fill="none" stroke="#c9ab6e" stroke-width="1.1" opacity="0.9">
+          <path d="M 3 6 L 21 6 L 19 21 L 5 21 Z" />
+          <line x1="2" y1="3.5" x2="22" y2="3.5" stroke-width="0.9" />
+          <line x1="9" y1="10" x2="15" y2="10" stroke-width="0.7" opacity="0.8" />
+          <line x1="10" y1="14" x2="14" y2="14" stroke-width="0.7" opacity="0.8" />
         </g>
-        <g id="icon-other" fill="none" stroke="#c89b3c" stroke-width="1.2" opacity="0.5">
+        <g id="icon-other" fill="none" stroke="#6e675a" stroke-width="1.1" opacity="0.95">
           <path d="M 6 2 L 15 2 L 19 6 L 19 22 L 6 22 Z" />
           <path d="M 15 2 L 15 6 L 19 6" />
         </g>
-        <g id="arrow-left" fill="none" stroke="#c89b3c" stroke-width="1.5" opacity="0.6">
+
+        <!-- ── 控件图标 ── -->
+        <g id="arrow-left" fill="none" stroke="#cfc2a5" stroke-width="1.2" opacity="0.75">
           <path d="M 14 4 L 6 12 L 14 20" />
-          <line x1="6" y1="12" x2="20" y2="12" stroke-width="1" opacity="0.4" />
+          <line x1="6" y1="12" x2="20" y2="12" stroke-width="0.8" opacity="0.55" />
         </g>
-        <g id="chevron-right" fill="none" stroke="#706858" stroke-width="1.2" opacity="0.5">
-          <path d="M 4 4 L 10 10 L 4 16" />
+        <g id="chevron-right" fill="none" stroke="#6e675a" stroke-width="1" opacity="0.6">
+          <path d="M 4 5 L 9 10 L 4 15" />
         </g>
-        <g id="ornament-flame" fill="none" stroke="#c89b3c" stroke-width="0.8" opacity="0.3">
+
+        <!-- ── 装饰母题 ── -->
+        <g id="ornament-flame" fill="none" stroke="#b4623a" stroke-width="0.8" opacity="0.5">
           <path d="M 12 2 C 8 8, 4 12, 4 16 C 4 20.5, 7.5 24, 12 24 C 16.5 24, 20 20.5, 20 16 C 20 12, 16 8, 12 2 Z" />
-          <path d="M 12 6 C 10 10, 8 13, 8 16 C 8 18.5, 10 21, 12 21 C 14 21, 16 18.5, 16 16 C 16 13, 14 10, 12 6 Z" fill="#c89b3c" fill-opacity="0.06" />
-          <path d="M 12 10 C 11 13, 10 15, 10 16.5 C 10 17.8, 11 18.5, 12 18.5" stroke-width="0.5" />
+          <path d="M 12 7 C 10 11, 8.5 13.5, 8.5 16 C 8.5 18.4, 10 20.5, 12 20.5 C 14 20.5, 15.5 18.4, 15.5 16 C 15.5 13.5, 14 11, 12 7 Z" fill="#b4623a" fill-opacity="0.08" />
         </g>
-        <g id="rune-ring" fill="none" stroke="#c89b3c" stroke-width="0.6" opacity="0.2">
+        <g id="rune-ring" fill="none" stroke="#cfc2a5" stroke-width="0.5" opacity="0.4">
           <circle cx="16" cy="16" r="14" />
-          <circle cx="16" cy="16" r="12" stroke-width="0.3" opacity="0.5" />
-          <circle cx="16" cy="16" r="4" stroke-width="0.4" />
-          <line x1="16" y1="2" x2="16" y2="6" opacity="0.4" /><line x1="16" y1="26" x2="16" y2="30" opacity="0.4" />
-          <line x1="2" y1="16" x2="6" y2="16" opacity="0.4" /><line x1="26" y1="16" x2="30" y2="16" opacity="0.4" />
-          <line x1="6" y1="6" x2="9" y2="9" opacity="0.3" /><line x1="23" y1="23" x2="26" y2="26" opacity="0.3" />
-          <line x1="6" y1="26" x2="9" y2="23" opacity="0.3" /><line x1="23" y1="9" x2="26" y2="6" opacity="0.3" />
-          <polygon points="16,2 17,4 16,6 15,4" fill="#c89b3c" opacity="0.3" />
-          <polygon points="16,26 17,28 16,30 15,28" fill="#c89b3c" opacity="0.3" />
-          <polygon points="2,16 4,17 6,16 4,15" fill="#c89b3c" opacity="0.3" />
-          <polygon points="26,16 28,17 30,16 28,15" fill="#c89b3c" opacity="0.3" />
+          <circle cx="16" cy="16" r="11" stroke-width="0.25" opacity="0.7" />
+          <circle cx="16" cy="16" r="3.5" stroke-width="0.35" />
+          <line x1="16" y1="2" x2="16" y2="6" opacity="0.6" /><line x1="16" y1="26" x2="16" y2="30" opacity="0.6" />
+          <line x1="2" y1="16" x2="6" y2="16" opacity="0.6" /><line x1="26" y1="16" x2="30" y2="16" opacity="0.6" />
+          <polygon points="16,2 17,4 16,6 15,4" fill="#cfc2a5" opacity="0.5" stroke="none" />
+          <polygon points="16,26 17,28 16,30 15,28" fill="#cfc2a5" opacity="0.5" stroke="none" />
+          <polygon points="2,16 4,17 6,16 4,15" fill="#cfc2a5" opacity="0.5" stroke="none" />
+          <polygon points="26,16 28,17 30,16 28,15" fill="#cfc2a5" opacity="0.5" stroke="none" />
         </g>
-        <g id="rune-divider-alt" fill="none" stroke="#c89b3c" stroke-width="0.5" opacity="0.15">
-          <line x1="0" y1="6" x2="40" y2="6" /><line x1="0" y1="8" x2="40" y2="8" stroke-width="0.3" opacity="0.5" />
-          <polygon points="20,3 22,6 20,9 18,6" fill="#c89b3c" opacity="0.2" />
-          <circle cx="10" cy="6" r="1.5" fill="#c89b3c" opacity="0.15" />
-          <circle cx="30" cy="6" r="1.5" fill="#c89b3c" opacity="0.15" />
-        </g>
-        <g id="furnace-emblem" fill="none" stroke="#c89b3c" stroke-width="0.7" opacity="0.2">
+        <g id="furnace-emblem" fill="none" stroke="#cfc2a5" stroke-width="0.6" opacity="0.35">
           <path d="M 4 22 L 4 4 L 20 4 L 20 22 Z" />
-          <path d="M 8 4 L 8 22" stroke-width="0.3" opacity="0.4" />
-          <path d="M 16 4 L 16 22" stroke-width="0.3" opacity="0.4" />
-          <path d="M 4 10 L 20 10" stroke-width="0.3" opacity="0.4" />
-          <path d="M 4 16 L 20 16" stroke-width="0.3" opacity="0.4" />
-          <circle cx="12" cy="13" r="3" stroke-width="0.5" />
-          <circle cx="12" cy="13" r="1.5" fill="#c89b3c" opacity="0.1" />
+          <path d="M 8 4 L 8 22" stroke-width="0.25" opacity="0.5" />
+          <path d="M 16 4 L 16 22" stroke-width="0.25" opacity="0.5" />
+          <path d="M 4 10 L 20 10" stroke-width="0.25" opacity="0.5" />
+          <path d="M 4 16 L 20 16" stroke-width="0.25" opacity="0.5" />
+          <circle cx="12" cy="13" r="3" stroke-width="0.4" />
+          <polygon points="12,11 13.6,13 12,15 10.4,13" fill="#cfc2a5" opacity="0.35" stroke="none" />
         </g>
       </defs>
     </svg>

@@ -4,11 +4,79 @@ import { isSupabaseConfigured } from '../lib/supabase'
 import { fetchAllFiles, fetchFolders } from '../lib/database'
 import type { FileItem, Folder } from '../types/file'
 import { formatSize } from '../utils/format'
+import {
+  THEME,
+  STATE_NOTES,
+  FLOOR_OMEGA,
+  FLOOR_INTERLUDE,
+  FLOORS,
+  floorForDepth,
+  QUOTES,
+  PLATE_SECTIONS,
+} from '../content/sarkaz'
 
 import StarBackground from '../components/StarBackground'
+import FurnaceAtmosphere from '../components/FurnaceAtmosphere'
 import CelestialBody from '../components/CelestialBody'
 
 const FilePreview = lazy(() => import('../components/FilePreview'))
+
+/** supabase-js 抛出的可能是 Error、PostgrestError 纯对象或字符串，统一成一行可读文本 */
+function describeError(e: unknown): string {
+  const tidy = (s: string) => {
+    const one = s.replace(/\s+/g, ' ').trim()
+    return one.length > 200 ? one.slice(0, 200) + ' …' : one
+  }
+  if (!e) return '未知错误'
+  if (e instanceof Error) return tidy(e.message)
+  if (typeof e === 'string') return tidy(e)
+  const o = e as Record<string, unknown>
+  const parts = [o.message, o.code, o.details, o.hint]
+    .filter(v => typeof v === 'string' && v)
+    .map(String)
+  if (parts.length) return tidy(parts.join(' · '))
+  try { return tidy(JSON.stringify(e)) } catch { return tidy(String(e)) }
+}
+
+/** 把常见错误翻译成一句人话，别让用户只看到一串技术细节 */
+function diagnoseError(msg: string): string | null {
+  const m = msg.toLowerCase()
+  if (m.includes('failed to fetch') || m.includes('fetch failed') || m.includes('load failed') || m.includes('networkerror'))
+    return '网络请求失败：后端已被暂停，或域名暂时不可达。'
+  if (m.includes('请求超时')) return '请求超时：后端响应过慢或不可达。'
+  if (m.includes('pgrst205') || m.includes('does not exist') || m.includes('schema cache'))
+    return '数据表不可见：迁移未应用，或 API 角色缺少授权（见 006_grants.sql）。'
+  if (m.includes('invalid api key') || m.includes('jwt'))
+    return 'API Key 无效或已被轮换，需要更新 env 配置。'
+  if (m.includes('permission denied')) return '权限不足：RLS 策略或 GRANT 缺失。'
+  return null
+}
+
+/** 尊重系统的减弱动效设置 —— 格言轮换与氛围层都以此为准 */
+function prefersReducedMotion(): boolean {
+  return typeof window !== 'undefined'
+    && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+}
+
+/** 数字滚动：统计栏的三个数从 0 走到目标值，落定时用缓出，不做回弹 */
+function useCountUp(target: number, enabled: boolean, duration = 950): number {
+  const [value, setValue] = useState(enabled ? 0 : target)
+
+  useEffect(() => {
+    if (!enabled) { setValue(target); return }
+    let raf = 0
+    const t0 = performance.now()
+    const tick = (now: number) => {
+      const p = Math.min(1, (now - t0) / duration)
+      setValue(target * (1 - Math.pow(1 - p, 3)))
+      if (p < 1) raf = requestAnimationFrame(tick)
+    }
+    raf = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(raf)
+  }, [target, enabled, duration])
+
+  return value
+}
 
 export default function DownloadPage() {
   const [allFiles, setAllFiles] = useState<FileItem[]>([])
@@ -20,16 +88,41 @@ export default function DownloadPage() {
   const [isNavigating, setIsNavigating] = useState(false)
   const [navKey, setNavKey] = useState(0)
   const [loading, setLoading] = useState(isSupabaseConfigured())
+  const [loadError, setLoadError] = useState<string | null>(null)
+  const [reloadKey, setReloadKey] = useState(0)
+  const [quoteIndex, setQuoteIndex] = useState(0)
 
   // Load data
+  // 注意：失败必须显式落到 loadError —— 早期版本用 .catch(() => {}) 静默吞掉，
+  // 结果「后端被暂停」在界面上长得跟「确实没有档案」一模一样，掩盖过一次真实故障。
   useEffect(() => {
     if (!isSupabaseConfigured()) return
+    let cancelled = false
     setLoading(true)
+    setLoadError(null)
     Promise.all([fetchAllFiles(), fetchFolders()])
-      .then(([files, flds]) => { setAllFiles(files); setFolders(flds) })
-      .catch(() => {})
-      .finally(() => setLoading(false))
+      .then(([files, flds]) => {
+        if (cancelled) return
+        setAllFiles(files)
+        setFolders(flds)
+      })
+      .catch((e: unknown) => {
+        if (cancelled) return
+        setLoadError(describeError(e))
+      })
+      .finally(() => { if (!cancelled) setLoading(false) })
+    return () => { cancelled = true }
+  }, [reloadKey])
+
+  // 统计栏的格言轮换：慢速交叉淡入，只换文字不加特效
+  useEffect(() => {
+    if (prefersReducedMotion()) return
+    const id = window.setInterval(() => setQuoteIndex(i => (i + 1) % QUOTES.length), 9000)
+    return () => window.clearInterval(id)
   }, [])
+
+  // 背景视差、灰烬、聚光、扫描线等展示层全部收敛在 FurnaceAtmosphere 里，
+  // 它通过 --par-x / --par-y / --scroll-shift 广播给底图，本页不再自己监听指针。
 
   // Compute items to display
   const items = useMemo(() => {
@@ -96,13 +189,35 @@ export default function DownloadPage() {
   const isRoot = currentFolderId === null && !search
   const totalSize = allFiles.reduce((s, f) => s + f.size, 0)
 
+  // 卷宗层数 → 熔炉层级：进第一层卷宗即第Ⅰ层「熔魂之始」
+  const depth = breadcrumbs.length - 1
+  const floor = search ? FLOOR_INTERLUDE : floorForDepth(depth)
+  const showFloorPlate = Boolean(search) || depth > 0
+  const quote = QUOTES[quoteIndex]
+
+  // 统计栏数字滚动（减弱动效时直接落值）
+  const animateStats = !prefersReducedMotion()
+  const filesShown = useCountUp(allFiles.length, animateStats)
+  const sizeShown = useCountUp(totalSize, animateStats)
+  const foldersShown = useCountUp(folders.length, animateStats)
+
   return (
     <div className="app-frame">
-      {/* Background layers */}
-      <div className="app-bg parchment-bg furnace-glow" />
+      {/* Background layers —— 参考图照片 + 制图辅助线 + 拱门/日轮/色块母题 */}
+      {/* Background layers —— 参考图照片 + 制图辅助线 + 拱门/日轮/色块母题 */}
+      <div className="app-bg parchment-bg furnace-glow">
+        <div className="guide-grid" />
+        <div className="arch-gate bg-arch" />
+        <div className="sun-disc bg-sun" />
+        <div className="bg-sun-pulse" aria-hidden="true"><span /><span /><span /></div>
+        <div className="sector-block sector-block--bowl bg-sector-l" />
+        <div className="sector-block sector-block--tri bg-sector-r" />
+        <div className="checker-strip bg-checker" />
+      </div>
       <div className="app-vignette" />
 
       <StarBackground />
+      <FurnaceAtmosphere />
 
       <div className="app-container">
         {/* ═══ Header ═══ */}
@@ -113,19 +228,33 @@ export default function DownloadPage() {
           <svg className="corner-bl" viewBox="0 0 20 20"><use href="#corner-bl" /></svg>
           <svg className="corner-br" viewBox="0 0 20 20"><use href="#corner-br" /></svg>
 
-          {/* Title ornaments */}
-          <div className="title-ornament-bar">
-            <svg viewBox="0 0 60 28"><use href="#title-orn-l" /></svg>
-            <svg viewBox="0 0 60 28"><use href="#title-orn-r" /></svg>
+          {/* 拉丁版记行 —— 主题副题 + 系列归属，中间一枚砂金飞鸟符 */}
+          <div className="header-caption">
+            <span className="plate-caption">{THEME.subtitle}</span>
+            <svg className="header-caption-glyph" viewBox="0 0 24 16" aria-hidden="true">
+              <use href="#gold-bird" />
+            </svg>
+            <span className="plate-caption">集成战略</span>
           </div>
 
-          {/* Title */}
-          <h1 className="app-title">熔炉档案局</h1>
-          <p className="app-subtitle">魂灵熔炉 · 卡兹戴尔的能量之源</p>
+          {/* Title ornaments —— 两翼饰线夹一枚日轮 */}
+          <div className="title-ornament-bar">
+            <svg viewBox="0 0 60 28" preserveAspectRatio="none"><use href="#title-orn-l" /></svg>
+            <svg className="title-ornament-sun" viewBox="0 0 80 80"><use href="#sun-gate" /></svg>
+            <svg viewBox="0 0 60 28" preserveAspectRatio="none"><use href="#title-orn-r" /></svg>
+          </div>
 
-          {/* Wiki descriptions */}
-          <p className="app-desc">死魂灵的声音将你引离现实。一场仪式，一场沟通。超脱大地的畅想即将开始。</p>
-          <p className="app-desc-detail">我见诸城，满目疮痍；我见源石，布满大地。</p>
+          {/* Title —— 全站唯一的名称 */}
+          <h1 className="app-title">熔炉档案局</h1>
+          <p className="app-subtitle">魂灵熔炉</p>
+
+          {/* 预言诗篇（节选）—— 原文四行，此处照录前两行 */}
+          <div className="prophecy">
+            <span className="prophecy-label">{THEME.prophecyLabel}</span>
+            {THEME.prophecy.map(line => (
+              <p className="prophecy-line" key={line}>{line}</p>
+            ))}
+          </div>
 
           {/* Header divider */}
           <div className="header-divider">
@@ -181,28 +310,49 @@ export default function DownloadPage() {
             <input
               className="search-input"
               type="text"
-              placeholder="搜索档案..."
+              placeholder="探明去路 · 搜索档案"
               value={search}
               onChange={e => setSearch(e.target.value)}
             />
           </div>
         </div>
 
+        {/* ═══ 层级版记 —— 卷宗的每一层，对应熔炉的一层 ═══ */}
+        {showFloorPlate && (
+          <div
+            className="floor-plate"
+            key={`${floor.name}-${navKey}`}
+            style={{ '--floor-clr': floor.color } as React.CSSProperties}
+          >
+            <span className="floor-plate-mark">{floor.mark}</span>
+            <div className="floor-plate-body">
+              <span className="floor-plate-name">{floor.name}</span>
+              <span className="floor-plate-line">{floor.line}</span>
+            </div>
+          </div>
+        )}
+
         {/* ═══ Stats Bar ═══ */}
         {isRoot && allFiles.length > 0 && (
           <div className="stats-bar">
+            <span className="stats-label">旧乡晶尘</span>
+            <span className="stats-sep" />
             <svg className="stats-icon" viewBox="0 0 24 24"><use href="#icon-document" /></svg>
-            <span>共 {allFiles.length} 份档案</span>
+            <span>共 {Math.round(filesShown)} 份档案</span>
             <span className="stats-dot">|</span>
-            <span>占用 {formatSize(totalSize)}</span>
+            <span>占用 {formatSize(sizeShown)}</span>
             {folders.length > 0 && (
               <>
                 <span className="stats-dot">|</span>
-                <span>{folders.length} 个卷宗</span>
+                <span>{Math.round(foldersShown)} 个卷宗</span>
               </>
             )}
             <span className="stats-spacer" />
-            <span className="stats-quote">燃烧在萨卡兹的文明里似乎有特殊的含义</span>
+            {/* key 变化触发一次淡入：只换文字，不加动效层 */}
+            <span className="stats-quote" key={quoteIndex}>
+              {quote.text}
+              <em className="stats-quote-source">—— {quote.source}</em>
+            </span>
           </div>
         )}
 
@@ -213,26 +363,68 @@ export default function DownloadPage() {
               <div className="loading-spinner" />
               <p className="empty-state-text">正在加载档案...</p>
             </div>
-          ) : items.map((item, i) => (
-            <CelestialBody
-              key={item.id}
-              item={item}
-              index={i}
-              searchMode={!!search}
-              onClick={() => handleItemClick(item)}
-            />
-          ))}
+          ) : loadError ? (
+            /* 后端不可达 —— 用游戏内的「戛然而止」界面：断开的是熔炉，不是档案 */
+            <div
+              className="empty-state empty-state--error end-plate"
+              style={{ '--floor-clr': FLOOR_OMEGA.color } as React.CSSProperties}
+            >
+              <span className="end-plate-mark">{FLOOR_OMEGA.mark}</span>
+              <h2 className="end-plate-title">{STATE_NOTES.error.title}</h2>
+              <p className="end-plate-source">{STATE_NOTES.error.source}</p>
+              <p className="end-plate-sub">{STATE_NOTES.error.en}</p>
+              <p className="end-plate-line">{STATE_NOTES.error.line}</p>
 
-          {items.length === 0 && (
-            <div className="empty-state">
-              <svg className="empty-state-icon" viewBox="0 0 24 24"><use href="#icon-document" /></svg>
-              <p className="empty-state-text">
-                {search ? '未找到匹配的档案' : '✦ 过去、当下与未来，尚无人书写 ✦'}
+              <div className="end-plate-rule">
+                <span>连接中断</span>
+              </div>
+
+              <p className="end-plate-note">
+                熔炉后端暂时无法访问，已有档案并未丢失。<br />
+                先点下方重试；若持续失败，多半是 Supabase 项目被暂停，需到后台唤醒。
               </p>
-              {!search && (
-                <span className="empty-state-hint">我见你，头顶黑冠；将万千生灵，熬成回忆。</span>
+              {diagnoseError(loadError) && (
+                <p className="error-diagnosis">{diagnoseError(loadError)}</p>
               )}
+              <code className="error-detail">{loadError}</code>
+              <button className="retry-btn" onClick={() => setReloadKey(k => k + 1)}>
+                重试连接
+              </button>
             </div>
+          ) : (
+            <>
+              {items.map((item, i) => (
+                <CelestialBody
+                  key={item.id}
+                  item={item}
+                  index={i}
+                  searchMode={!!search}
+                  onClick={() => handleItemClick(item)}
+                />
+              ))}
+
+              {items.length === 0 && (
+                <div
+                  className="empty-state end-plate"
+                  style={{
+                    '--floor-clr': (search ? FLOOR_INTERLUDE : FLOORS[0]).color,
+                  } as React.CSSProperties}
+                >
+                  <span className="end-plate-mark">
+                    {search ? FLOOR_INTERLUDE.mark : FLOORS[0].mark}
+                  </span>
+                  <h2 className="end-plate-title">
+                    {search ? STATE_NOTES.search.title : STATE_NOTES.empty.title}
+                  </h2>
+                  <p className="end-plate-source">
+                    {search ? STATE_NOTES.search.source : STATE_NOTES.empty.source}
+                  </p>
+                  <p className="end-plate-line">
+                    {search ? STATE_NOTES.search.line : STATE_NOTES.empty.line}
+                  </p>
+                </div>
+              )}
+            </>
           )}
         </div>
 
@@ -252,6 +444,15 @@ export default function DownloadPage() {
               <svg className="admin-link-icon" viewBox="0 0 32 32"><use href="#rune-ring" /></svg>
               管理员入口
             </Link>
+          </div>
+          {/* 版记分区行 —— 官方专题页的八个分区名，只作索引式的落款 */}
+          <div className="status-sections">
+            <svg className="status-sections-glyph" viewBox="0 0 24 16" aria-hidden="true">
+              <use href="#gold-bird" />
+            </svg>
+            {PLATE_SECTIONS.map(s => (
+              <span className="status-section" key={s.name} title={s.use}>{s.name}</span>
+            ))}
           </div>
         </footer>
 

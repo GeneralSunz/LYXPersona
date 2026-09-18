@@ -1,0 +1,75 @@
+name: Keep Supabase warm
+
+# 目的：免费版 Supabase 项目「一周无访问」会被自动暂停（Paused），
+# 而暂停后项目域名会停止解析，前端看起来和「被删除」一模一样。
+# 这个定时任务定期发一个最小请求，让项目保持活跃；一旦失败，GitHub 会给你发失败通知，
+# 等于顺带成了一个「后端挂了」的告警。
+
+on:
+  schedule:
+    # 每 3 天一次（UTC 02:23 ≈ 北京 10:23）；免费版暂停阈值是 7 天，留足余量
+    - cron: '23 2 */3 * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 从 .env.production 读取 Supabase 配置
+        run: |
+          # .env.production 本身已入库，这里直接复用，避免再手工配一份 Secrets。
+          # tr -d '\r' 很关键：Windows 换行会让值末尾带上 \r，导致 URL 拼错。
+          # 注意：写进 $GITHUB_ENV 的值只在「后续步骤」可见，所以本步内另外留存一份用于校验。
+          url=$(grep -E '^VITE_SUPABASE_URL=' .env.production | head -1 | cut -d= -f2- | tr -d '\r')
+          key=$(grep -E '^VITE_SUPABASE_ANON_KEY=' .env.production | head -1 | cut -d= -f2- | tr -d '\r')
+
+          if [ -z "$url" ] || [ -z "$key" ]; then
+            echo "::error::未能从 .env.production 读到 VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY"
+            exit 1
+          fi
+
+          {
+            echo "VITE_SUPABASE_URL=$url"
+            echo "VITE_SUPABASE_ANON_KEY=$key"
+          } >> "$GITHUB_ENV"
+
+          echo "探测目标：$url"
+
+      - name: 探测 Auth 与 REST（任一失败即告警）
+        run: |
+          # 显式关掉 -e：否则第一个探测失败会直接中断，看不到第二个的结果
+          set +e -u -o pipefail
+          failed=0
+
+          probe() {
+            local name="$1" url="$2" code
+            code=$(curl -s -o /tmp/body -w '%{http_code}' --max-time 25 "$url" \
+                     -H "apikey: $VITE_SUPABASE_ANON_KEY" \
+                     -H "Authorization: Bearer $VITE_SUPABASE_ANON_KEY")
+            [ -z "$code" ] && code=000
+
+            echo "::group::$name → HTTP $code"
+            head -c 300 /tmp/body 2>/dev/null || true
+            echo
+            echo "::endgroup::"
+
+            if [ "$code" != "200" ]; then
+              echo "::error::$name 返回 HTTP $code（000 = 域名不解析）。这通常意味着项目被暂停：请到 Supabase Dashboard → 该项目 → 点 Resume project。"
+              failed=1
+            fi
+          }
+
+          # 兼探 Auth 与数据库，两者任一不可用都说明后端没在正常工作
+          probe "auth /health" "$VITE_SUPABASE_URL/auth/v1/health"
+          probe "rest files"   "$VITE_SUPABASE_URL/rest/v1/files?select=id&limit=1"
+
+          if [ "$failed" -ne 0 ]; then
+            echo "保活失败：后端未全部返回 200。"
+            exit 1
+          fi
+          echo "保活成功：Auth 与 REST 均正常。"

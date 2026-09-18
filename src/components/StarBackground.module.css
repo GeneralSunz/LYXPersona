@@ -1,4 +1,4 @@
-/* ── Ember particles ── */
+/* ── 灰烬颗粒 ── */
 .emberField {
   position: fixed;
   inset: 0;
@@ -20,86 +20,88 @@
     transform: translateY(0) translateX(0) scale(0.3);
     opacity: 0;
   }
-  10% {
-    opacity: 0.9;
-    transform: translateY(-10vh) translateX(0) scale(1);
+  12% {
+    opacity: 0.55;
+    transform: translateY(-12vh) translateX(0) scale(1);
   }
   50% {
-    opacity: 0.7;
-    transform: translateY(-50vh) translateX(var(--drift, 0px)) scale(0.8);
+    opacity: 0.38;
+    transform: translateY(-50vh) translateX(var(--drift, 0px)) scale(0.85);
   }
-  90% {
-    opacity: 0.3;
-    transform: translateY(-90vh) translateX(calc(var(--drift, 0px) * 0.5)) scale(0.4);
+  88% {
+    opacity: 0.16;
+    transform: translateY(-88vh) translateX(calc(var(--drift, 0px) * 0.5)) scale(0.5);
   }
   100% {
     opacity: 0;
-    transform: translateY(-100vh) translateX(0) scale(0.1);
+    transform: translateY(-100vh) translateX(0) scale(0.2);
   }
 }
 
-/* ── Ambient glow layers ── */
+/* ── 环境光层：只改变明暗，不抢焦点 ──
+   配色随底图走（砂金 / 锈橙 / 灰绿）。官方那套猩红需要有黑底 KV 才成立，
+   叠在橄榄调的参考图上只会混成一片泥棕，故不在这里用。 */
 .glowTop {
   position: fixed;
-  top: -20%;
+  top: -22%;
   left: 50%;
   transform: translateX(-50%);
-  width: 700px;
-  height: 400px;
-  background: radial-gradient(ellipse, rgba(200, 155, 60, 0.1) 0%, transparent 70%);
+  width: 760px;
+  height: 460px;
+  background: radial-gradient(ellipse, rgba(207, 194, 165, 0.07) 0%, transparent 70%);
   pointer-events: none;
   z-index: 0;
-  animation: pulseGlow 8s ease-in-out infinite alternate;
+  animation: pulseGlow 14s ease-in-out infinite alternate;
 }
 
 .glowBottom {
   position: fixed;
-  bottom: -15%;
-  left: 30%;
-  width: 500px;
-  height: 350px;
-  background: radial-gradient(ellipse, rgba(139, 26, 26, 0.06) 0%, transparent 70%);
+  bottom: -18%;
+  left: 26%;
+  width: 560px;
+  height: 380px;
+  background: radial-gradient(ellipse, rgba(168, 90, 53, 0.055) 0%, transparent 70%);
   pointer-events: none;
   z-index: 0;
-  animation: pulseGlow 10s ease-in-out infinite alternate-reverse;
+  animation: pulseGlow 18s ease-in-out infinite alternate-reverse;
 }
 
 .glowLeft {
   position: fixed;
-  top: 30%;
-  left: -10%;
-  width: 350px;
-  height: 500px;
-  background: radial-gradient(ellipse, rgba(74, 124, 140, 0.05) 0%, transparent 70%);
+  top: 28%;
+  left: -12%;
+  width: 380px;
+  height: 520px;
+  background: radial-gradient(ellipse, rgba(110, 124, 131, 0.05) 0%, transparent 70%);
   pointer-events: none;
   z-index: 0;
-  animation: pulseGlow 12s ease-in-out infinite alternate;
+  animation: pulseGlow 22s ease-in-out infinite alternate;
 }
 
 .glowRight {
   position: fixed;
-  top: 20%;
-  right: -8%;
-  width: 300px;
-  height: 400px;
-  background: radial-gradient(ellipse, rgba(200, 155, 60, 0.05) 0%, transparent 70%);
+  top: 18%;
+  right: -10%;
+  width: 340px;
+  height: 440px;
+  background: radial-gradient(ellipse, rgba(143, 163, 174, 0.045) 0%, transparent 70%);
   pointer-events: none;
   z-index: 0;
-  animation: pulseGlow 9s ease-in-out infinite alternate-reverse;
+  animation: pulseGlow 20s ease-in-out infinite alternate-reverse;
 }
 
+/* 关键帧只动透明度：位移交给各自的基准 transform，避免互相覆盖 */
 @keyframes pulseGlow {
-  0%   { opacity: 0.5; transform: translateX(-50%) scale(1); }
-  100% { opacity: 1;   transform: translateX(-50%) scale(1.2); }
+  0%   { opacity: 0.55; }
+  100% { opacity: 1; }
 }
 
-/* ── Vignette ── */
+/* ── 边缘压暗（很轻，底图主要靠 .app-vignette 控制） ── */
 .vignette {
   position: fixed;
   inset: 0;
   background:
-    radial-gradient(ellipse at 50% 30%, transparent 40%, rgba(10, 7, 15, 0.6) 100%),
-    radial-gradient(ellipse at 50% 80%, transparent 30%, rgba(10, 7, 15, 0.4) 100%);
+    radial-gradient(ellipse 84% 76% at 50% 44%, transparent 42%, rgba(9, 9, 7, 0.55) 100%);
   pointer-events: none;
   z-index: 1;
 }

@@ -1,39 +1,68 @@
 .page {
+  position: relative;
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
+  min-height: 100vh;
+  padding: 40px 20px;
 }
 
 .content {
+  position: relative;
+  z-index: 2;
   text-align: center;
+  padding: 40px 48px;
+  border: 1px solid var(--line);
+  outline: 1px solid var(--line-hair);
+  outline-offset: 4px;
+  background: linear-gradient(180deg, rgba(28, 27, 21, 0.6) 0%, rgba(14, 14, 11, 0.75) 100%);
+}
+
+.emblem {
+  width: 58px;
+  height: 58px;
+  opacity: 0.85;
+  margin-bottom: 16px;
+  animation: sunTurn 120s linear infinite;
+}
+
+@keyframes sunTurn {
+  to { transform: rotate(360deg); }
 }
 
 .code {
-  font-family: 'Rajdhani', 'Inter', sans-serif;
-  font-size: 96px;
+  font-family: var(--font-display);
+  font-size: 84px;
   font-weight: 700;
-  color: var(--text-muted);
   line-height: 1;
-  margin-bottom: 8px;
+  letter-spacing: 0.1em;
+  color: var(--stone-500);
+  margin-bottom: 14px;
+  text-shadow: 0 2px 12px rgba(11, 11, 8, 0.8);
 }
 
 .message {
-  color: var(--text-secondary);
-  margin-bottom: 24px;
+  font-family: var(--font-serif);
+  font-size: 13px;
+  letter-spacing: 0.24em;
+  color: var(--text-dim);
+  margin-bottom: 26px;
 }
 
 .back {
   display: inline-block;
-  padding: 8px 20px;
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-md);
-  color: var(--text-primary);
-  font-size: 14px;
-  transition: border-color var(--transition-fast);
+  padding: 9px 26px;
+  border: 1px solid var(--line);
+  color: var(--text-hi);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  transition: all var(--transition-fast);
 }
 
 .back:hover {
-  border-color: var(--accent-blue);
-  text-decoration: none;
+  border-color: var(--line-strong);
+  color: var(--sand-200);
+  background: rgba(207, 194, 165, 0.05);
 }

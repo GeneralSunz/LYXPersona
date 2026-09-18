@@ -1,118 +1,142 @@
 .overlay {
   position: fixed;
   inset: 0;
+  z-index: 1000;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba(0, 0, 0, 0.6);
-  z-index: 1000;
-  animation: fadeIn 0.15s ease;
+  background: rgba(8, 8, 6, 0.72);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  animation: fadeIn 160ms ease;
 }
 
 .panel {
-  background: #1a1d29;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 16px;
-  padding: 24px;
-  max-width: 400px;
+  position: relative;
   width: 90vw;
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
+  max-width: 400px;
+  padding: 22px 24px 20px;
+  background: linear-gradient(180deg, rgba(32, 30, 24, 0.96) 0%, rgba(16, 15, 12, 0.98) 100%);
+  border: 1px solid var(--line);
+  outline: 1px solid var(--line-hair);
+  outline-offset: 3px;
+  box-shadow: var(--shadow-lg);
   animation: scaleIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.panel::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 26%;
+  right: 26%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--sand-400), transparent);
+  opacity: 0.65;
 }
 
 .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 12px;
 }
 
 .title {
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--text-primary);
+  font-family: var(--font-serif);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--text-hi);
 }
 
 .closeBtn {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  border: none;
-  background: transparent;
-  color: var(--text-muted);
-  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 26px;
+  height: 26px;
+  border: 1px solid var(--line-hair);
+  background: transparent;
+  color: var(--text-mute);
+  cursor: pointer;
   transition: all var(--transition-fast);
 }
 
 .closeBtn:hover {
-  background: rgba(255, 255, 255, 0.08);
-  color: var(--text-primary);
+  border-color: var(--line-strong);
+  color: var(--text-hi);
+  background: rgba(207, 194, 165, 0.06);
 }
 
 .body {
-  padding: 16px 0;
-  font-size: 14px;
-  color: var(--text-secondary);
-  line-height: 1.6;
+  padding: 16px 0 18px;
+  font-size: 13.5px;
+  color: var(--text-body);
+  line-height: 1.8;
+  letter-spacing: 0.04em;
 }
 
 .footer {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
-  padding-top: 8px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line-hair);
 }
 
 .cancelBtn,
 .confirmBtn {
   padding: 8px 20px;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 12.5px;
+  letter-spacing: 0.14em;
   cursor: pointer;
-  border: none;
+  border: 1px solid var(--line);
   transition: all var(--transition-fast);
 }
 
 .cancelBtn {
-  background: rgba(255, 255, 255, 0.06);
-  color: var(--text-secondary);
+  background: none;
+  color: var(--text-dim);
 }
 
 .cancelBtn:hover {
-  background: rgba(255, 255, 255, 0.1);
-  color: var(--text-primary);
+  color: var(--text-hi);
+  border-color: var(--line-strong);
+  background: rgba(207, 194, 165, 0.05);
 }
 
 .confirmBtn {
-  background: var(--accent-blue);
-  color: #fff;
+  background: linear-gradient(180deg, var(--sand-300) 0%, var(--sand-400) 100%);
+  border-color: var(--sand-200);
+  color: #17160f;
+  font-weight: 700;
 }
 
 .confirmBtn:hover {
-  filter: brightness(1.15);
+  filter: brightness(1.06);
 }
 
 .confirmBtn:disabled {
-  opacity: 0.5;
+  opacity: 0.45;
   cursor: default;
   filter: none;
 }
 
 .confirmBtn.danger {
-  background: var(--accent-red);
+  background: linear-gradient(180deg, var(--rust-400) 0%, var(--rust-600) 100%);
+  border-color: var(--rust-500);
+  color: #f6ece0;
 }
 
 .spinner {
   display: inline-block;
-  width: 16px;
-  height: 16px;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  border-top-color: #fff;
+  width: 14px;
+  height: 14px;
+  border: 1px solid rgba(23, 22, 15, 0.35);
+  border-top-color: #17160f;
   border-radius: 50%;
-  animation: spin 0.6s linear infinite;
+  animation: spin 0.7s linear infinite;
 }
 
 @keyframes fadeIn {
@@ -123,7 +147,7 @@
 @keyframes scaleIn {
   from {
     opacity: 0;
-    transform: scale(0.9);
+    transform: scale(0.97);
   }
   to {
     opacity: 1;

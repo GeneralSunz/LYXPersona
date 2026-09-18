@@ -1,48 +1,205 @@
+/* ═══════════════════════════════════════════════════════════════
+   无终奇语 · 视觉基准 (Design Tokens)
+   ───────────────────────────────────────────────────────────────
+   色彩取自《萨卡兹的无终奇语》参考图（石绿 / 砂金 / 锈橙 / 砖红 / 灰蓝）：
+   哑光、低饱和、带颗粒的"版画"质感，而非霓虹发光。
+
+     #0e0e0b  墨底      #4e4a3e  石      #beaa85  砂
+     #1c1b15  面板      #6e7c83  灰绿    #e0d5bb  浅砂
+     #3b382f  石缝      #8fa3ae  灰蓝    #ece4d3  骨白
+   ═══════════════════════════════════════════════════════════════ */
+
 :root {
-  /* ── Backgrounds ── */
-  --color-bg-deepest: #0a0a0c;
-  --color-bg-dark: #131211;
-  --color-bg-card: rgba(22, 20, 18, 0.88);
-  --color-bg-card-hover: rgba(32, 28, 24, 0.92);
+  /* ── 原始色阶 (Raw) ── */
+  --ink-950: #0b0b08;
+  --ink-900: #0e0e0b;
+  --ink-800: #141410;
+  --ink-700: #1c1b15;
+  --ink-600: #26241d;
+  --stone-700: #3b382f;
+  --stone-600: #4e4a3e;
+  --stone-500: #6e675a;
+  --sage-600: #56666d;
+  --sage-500: #6e7c83;
+  --sage-400: #85939a;
+  --slate-400: #8fa3ae;
+  --clay-500: #a08a6e;
+  --sand-400: #beaa85;
+  --sand-300: #cfc2a5;
+  --sand-200: #e0d5bb;
+  --cream-100: #ece4d3;
+  --ochre-700: #6f5520;
+  --ochre-600: #8a6a28;
+  --ochre-500: #b08a3c;
+  --gold-400: #c9ab6e;
+  --gold-300: #e0c186;
+  --rust-600: #8f4a2b;
+  --rust-500: #a85a35;
+  --rust-400: #b4623a;
+  --brick-600: #7d2a20;
+  --brick-500: #a33a2b;
+  --moss-500: #8a9973;
 
-  /* ── Gold / Brass ── */
-  --color-gold-primary: #c89b3c;
-  --color-gold-dark: #8a6a28;
-  --color-gold-light: #e8c86a;
-  --color-gold-glow: rgba(200, 155, 60, 0.25);
+  /* ═══ 官方 KV 色（实测）═══
+     取自官方主题专题页 ak.hypergryph.com/is/furnacesidefables：
+     直读其构建产物 rogue_4.css 的色值，并对页面截图做像素统计
+     （猩红均值 #942825、米白均值 #EFEEEF、近黑占 58.6%）。
+     官方 KV 是「黑 + 猩红 + 米白 + 少量金」，与仓库里那张
+     构成主义的 萨卡兹.jpg 并非同一张美术，故单列一组。 */
+  --kv-black: #030303;
+  --kv-black-soft: #202020;
+  --kv-crimson: #942825;
+  --kv-crimson-deep: #57140f;
+  --kv-coral: #f56554;
+  --kv-cream: #f4ede3;
+  --kv-cream-soft: #efeeef;
+  --kv-gold: #b49562;
+  --kv-brown: #816e4f;
 
-  /* ── Blood / Crimson ── */
-  --color-blood: #8b1a1a;
-  --color-blood-dark: #5c1010;
-  --color-blood-glow: rgba(139, 26, 26, 0.2);
+  /* ═══ 语义层 (Semantic) ═══
+     新代码请优先使用这一组 */
 
-  /* ── Phosphor / Teal ── */
-  --color-phosphor: #4a7c8c;
-  --color-phosphor-dark: #1a3a4a;
-  --color-phosphor-glow: rgba(74, 124, 140, 0.15);
+  /* 背景 */
+  --bg-void: var(--ink-950);
+  --bg-base: var(--ink-900);
+  --bg-panel: rgba(22, 21, 16, 0.72);
+  --bg-panel-solid: #17160f;
+  --bg-raised: rgba(38, 35, 27, 0.86);
+  --bg-inset: rgba(8, 8, 6, 0.55);
+  --bg-scrim: rgba(10, 10, 7, 0.72);
 
-  /* ── Text ── */
-  --color-text-primary: #bfb096;
-  --color-text-secondary: #8a7a64;
-  --color-text-muted: #5a4f40;
-  --color-text-gold: #c89b3c;
-  --color-text-on-dark: #8a8070;
+  /* 描边：一律极细的砂色发丝线 */
+  --line-hair: rgba(207, 194, 165, 0.12);
+  --line: rgba(207, 194, 165, 0.2);
+  --line-strong: rgba(207, 194, 165, 0.4);
+  --line-bright: rgba(236, 228, 211, 0.65);
+  --line-blue: rgba(143, 163, 174, 0.3);
+  --line-rust: rgba(180, 98, 58, 0.35);
+  --line-guide: rgba(236, 228, 211, 0.14);
 
-  /* ── Fonts ── */
-  --font-title: 'Source Han Serif SC', 'Noto Serif SC', 'SimSun', 'STSong', serif;
-  --font-body: 'Source Han Serif SC', 'Noto Serif SC', 'STSong', serif;
-  --font-ui: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
-  --font-mono: 'Cascadia Code', 'Fira Code', 'JetBrains Mono', monospace;
-  --font-en-title: 'Cinzel Decorative', 'Trajan Pro', 'Times New Roman', serif;
+  /* 文字 */
+  --text-hi: var(--cream-100);
+  --text-body: #c4bba4;
+  --text-dim: #8b8370;
+  --text-mute: #615a4b;
+  --text-disabled: #454034;
 
-  /* ── Shadows ── */
-  --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.6), inset 0 0 40px rgba(200, 155, 60, 0.03);
-  --shadow-card-hover: 0 4px 20px rgba(0, 0, 0, 0.7), inset 0 0 40px rgba(200, 155, 60, 0.06);
-  --shadow-text-gold: 0 0 10px var(--color-gold-glow), 1px 1px 0 rgba(0, 0, 0, 0.8);
-  --shadow-glow-soft: 0 0 15px rgba(200, 155, 60, 0.08);
+  /* 强调 */
+  --accent: var(--sand-300);
+  --accent-bright: var(--gold-300);
+  --accent-deep: var(--ochre-600);
+  --accent-rust: var(--rust-400);
+  --accent-blood: var(--brick-500);
+  --accent-sage: var(--sage-500);
+  --accent-slate: var(--slate-400);
+  --accent-ok: var(--moss-500);
 
-  /* ── Borders ── */
-  --border-gold: 1px solid rgba(200, 155, 60, 0.25);
-  --border-gold-strong: 1px solid rgba(200, 155, 60, 0.45);
-  --border-blood: 1px solid rgba(139, 26, 26, 0.3);
+  /* 分类色（文件类型）— 全部落在参考图的色域内 */
+  --cat-document: var(--slate-400);
+  --cat-image: var(--rust-400);
+  --cat-archive: var(--gold-400);
+  --cat-other: var(--stone-500);
+  --cat-folder: var(--sand-400);
+
+  /* 字体 */
+  --font-serif: 'Noto Serif SC', 'Source Han Serif SC', 'Songti SC', 'SimSun', serif;
+  --font-sans: 'Inter', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Cascadia Code', 'SFMono-Regular', Consolas, monospace;
+  --font-display: 'Cinzel Decorative', 'Noto Serif SC', serif;
+
+  /* 尺寸 */
+  --header-height: 58px;
+  --sidebar-width: 208px;
+  /* 版记宽度：头版、工具栏、统计栏、层级版记、档案网格共用同一把尺子 */
+  --plate-w: 940px;
+  --radius-sm: 2px;
+  --radius-md: 3px;
+  --radius-lg: 4px;
+
+  /* 过渡 */
+  --transition-fast: 140ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 260ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 420ms cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* 阴影：克制，只做层次不发光 */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 6px 22px rgba(0, 0, 0, 0.55);
+  --shadow-lg: 0 18px 48px rgba(0, 0, 0, 0.6);
+  --shadow-inset: inset 0 1px 0 rgba(236, 228, 211, 0.04);
+  --glow-sand: 0 0 24px rgba(207, 194, 165, 0.07);
+  --glow-rust: 0 0 24px rgba(180, 98, 58, 0.09);
+
+  /* 颗粒 / 纸张纹理（内联 SVG，无外部依赖） */
+  --grain-url: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+
+  /* ═══════════════════════════════════════════
+     兼容别名 —— 旧组件仍在引用，统一映射到新语义层
+     ═══════════════════════════════════════════ */
+
+  /* components.css */
+  --color-bg-deepest: var(--bg-base);
+  --color-bg-dark: var(--bg-panel-solid);
+  --color-bg-card: var(--bg-panel);
+  --color-bg-card-hover: var(--bg-raised);
+
+  --color-gold-primary: var(--gold-400);
+  --color-gold-dark: var(--ochre-600);
+  --color-gold-light: var(--gold-300);
+  --color-gold-glow: rgba(201, 171, 110, 0.18);
+
+  --color-blood: var(--brick-500);
+  --color-blood-dark: var(--brick-600);
+  --color-blood-glow: rgba(163, 58, 43, 0.18);
+
+  --color-phosphor: var(--sage-500);
+  --color-phosphor-dark: var(--sage-600);
+  --color-phosphor-glow: rgba(110, 124, 131, 0.15);
+
+  --color-text-primary: var(--text-hi);
+  --color-text-secondary: var(--text-dim);
+  --color-text-muted: var(--text-mute);
+  --color-text-gold: var(--sand-300);
+  --color-text-on-dark: var(--text-body);
+
+  --font-title: var(--font-serif);
+  --font-body: var(--font-serif);
+  --font-ui: var(--font-sans);
+  --font-en-title: var(--font-display);
+
+  --shadow-card: var(--shadow-md), var(--shadow-inset);
+  --shadow-card-hover: var(--shadow-lg), var(--glow-sand);
+  --shadow-text-gold: 0 0 12px rgba(207, 194, 165, 0.12), 0 1px 2px rgba(0, 0, 0, 0.75);
+  --shadow-glow-soft: var(--glow-sand);
+
+  --border-gold: 1px solid var(--line);
+  --border-gold-strong: 1px solid var(--line-strong);
+  --border-blood: 1px solid var(--line-rust);
+
+  /* globals.css（旧模块样式表使用） */
+  --bg-primary: var(--bg-base);
+  --bg-secondary: var(--bg-panel-solid);
+  --bg-tertiary: var(--bg-raised);
+  --bg-card: var(--bg-panel);
+
+  --border-default: var(--line);
+  --border-hover: var(--line-strong);
+  --border-active: var(--sand-300);
+
+  --text-primary: var(--text-hi);
+  --text-secondary: var(--text-dim);
+  --text-muted: var(--text-mute);
+
+  --accent-purple: var(--sage-500);
+  --accent-gold: var(--gold-400);
+  --accent-orange: var(--rust-500);
+  --accent-red: var(--brick-500);
+  --accent-amber: var(--ochre-500);
+  --accent-blue: var(--slate-400);
+  --accent-green: var(--moss-500);
+  --accent-pink: var(--rust-400);
+
+  --gem-purple: var(--sage-600);
+  --gem-gold: var(--sand-400);
+  --gem-crimson: var(--brick-600);
+  --gem-amber: var(--ochre-500);
 }

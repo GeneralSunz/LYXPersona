@@ -10,17 +10,18 @@ interface Ember {
   drift: string
 }
 
-const COLORS = ['#c89b3c', '#e8c86a', '#8a6a28', '#8b1a1a', '#4a7c8c', '#c89b3c']
+/* 灰烬颗粒：砂金 / 浅砂 / 锈橙 / 灰蓝 —— 参考图色域内的低饱和微粒 */
+const COLORS = ['#cfc2a5', '#beaa85', '#c9ab6e', '#b4623a', '#8fa3ae', '#e0d5bb']
 
 export default function StarBackground() {
   const embers = useMemo(() =>
-    Array.from({ length: 35 }, (): Ember => ({
+    Array.from({ length: 28 }, (): Ember => ({
       left: `${Math.random() * 100}%`,
-      size: `${Math.random() * 4 + 1.5}px`,
-      delay: `${Math.random() * 12}s`,
-      duration: `${6 + Math.random() * 10}s`,
+      size: `${Math.random() * 2.4 + 1}px`,
+      delay: `${Math.random() * 16}s`,
+      duration: `${10 + Math.random() * 14}s`,
       color: COLORS[Math.floor(Math.random() * COLORS.length)],
-      drift: `${(Math.random() - 0.5) * 60}px`,
+      drift: `${(Math.random() - 0.5) * 70}px`,
     })),
   [])
 
@@ -35,20 +36,20 @@ export default function StarBackground() {
               animationDelay: e.delay,
               animationDuration: e.duration,
               backgroundColor: e.color,
-              boxShadow: `0 0 ${parseFloat(e.size) * 3}px ${e.color}`,
+              boxShadow: `0 0 ${parseFloat(e.size) * 2}px ${e.color}`,
               '--drift': e.drift,
             } as React.CSSProperties}
           />
         ))}
       </div>
 
-      {/* Ambient glow layers — gold/blood/phosphor */}
+      {/* 环境光：砂金 / 砖红 / 灰绿，只做层次，不做发光 */}
       <div className={styles.glowTop} />
       <div className={styles.glowBottom} />
       <div className={styles.glowLeft} />
       <div className={styles.glowRight} />
 
-      {/* Vignette */}
+      {/* 边缘压暗 */}
       <div className={styles.vignette} />
     </>
   )

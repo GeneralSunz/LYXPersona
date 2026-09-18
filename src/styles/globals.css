@@ -1,47 +1,7 @@
-:root {
-  /* Background */
-  --bg-primary: #0a070f;
-  --bg-secondary: #0f0b1a;
-  --bg-tertiary: #16131f;
-  --bg-card: rgba(22, 15, 31, 0.7);
-
-  /* Borders */
-  --border-default: #2a2340;
-  --border-hover: #3d3160;
-  --border-active: #8b5cf6;
-
-  /* Text */
-  --text-primary: #e4dff0;
-  --text-secondary: #8b7fa0;
-  --text-muted: #5c4f78;
-
-  /* Accent - Sarkaz palette */
-  --accent-purple: #7c3aed;
-  --accent-gold: #f59e0b;
-  --accent-orange: #f59e0b;
-  --accent-red: #dc2626;
-  --accent-amber: #d97706;
-  --accent-blue: #3b82f6;
-  --accent-green: #22c55e;
-  --accent-pink: #ec4899;
-
-  /* Gem tones - game UI */
-  --gem-purple: #6d28d9;
-  --gem-gold: #b8860b;
-  --gem-crimson: #991b1b;
-  --gem-amber: #d97706;
-
-  /* Sizing */
-  --header-height: 56px;
-  --sidebar-width: 240px;
-  --radius-sm: 2px;
-  --radius-md: 6px;
-  --radius-lg: 10px;
-
-  /* Transitions */
-  --transition-fast: 150ms ease;
-  --transition-normal: 250ms ease;
-}
+/* ═══════════════════════════════════════════════
+   全局基线 —— 重置 / 基础元素 / 滚动条
+   变量一律来自 design-tokens.css
+   ═══════════════════════════════════════════════ */
 
 *,
 *::before,
@@ -55,14 +15,16 @@ html {
   font-size: 14px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 body {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
+  font-family: var(--font-sans);
+  background-color: var(--bg-void);
+  color: var(--text-body);
   line-height: 1.6;
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 #root {
@@ -71,29 +33,65 @@ body {
   flex-direction: column;
 }
 
+h1, h2, h3, h4 {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  color: var(--text-hi);
+  letter-spacing: 0.06em;
+}
+
 a {
-  color: var(--accent-blue);
+  color: var(--sand-300);
   text-decoration: none;
+  transition: color var(--transition-fast);
 }
 
 a:hover {
-  text-decoration: underline;
+  color: var(--gold-300);
 }
 
 button {
   cursor: pointer;
   font-family: inherit;
   font-size: inherit;
+  color: inherit;
 }
 
-input, textarea {
+input,
+textarea,
+select {
   font-family: inherit;
   font-size: inherit;
 }
 
-/* Scrollbar */
+::selection {
+  background: rgba(201, 171, 110, 0.24);
+  color: var(--cream-100);
+}
+
+:focus-visible {
+  outline: 1px solid var(--line-strong);
+  outline-offset: 2px;
+}
+
+/* ── 数字/档案数据统一等宽 ── */
+code,
+kbd,
+samp,
+pre {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── 滚动条：细、砂色、无轨道底 ── */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(207, 194, 165, 0.22) transparent;
+}
+
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
@@ -101,14 +99,27 @@ input, textarea {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--border-default);
-  border-radius: var(--radius-sm);
+  background: rgba(207, 194, 165, 0.18);
+  border: 2px solid transparent;
+  background-clip: padding-box;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--border-hover);
+  background: rgba(207, 194, 165, 0.34);
+  background-clip: padding-box;
 }
 
 @keyframes spin {
   to { transform: rotate(360deg); }
+}
+
+/* ── 尊重系统的减弱动效设置 ── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
 }

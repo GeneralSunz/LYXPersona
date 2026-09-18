@@ -1,106 +1,143 @@
+/* ── 登录页：熔炉档案局的版记封面 ── */
+
 .page {
+  position: relative;
   flex: 1;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 24px;
+  padding: 60px 20px;
+  min-height: 100vh;
 }
 
 .form {
+  position: relative;
+  z-index: 2;
+  margin: auto;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 14px;
   width: 100%;
-  max-width: 360px;
-  padding: 32px;
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-md);
-  background-color: var(--bg-secondary);
+  max-width: 380px;
+  padding: 30px 32px 32px;
+  border: 1px solid var(--line);
+  outline: 1px solid var(--line-hair);
+  outline-offset: 4px;
+  background: linear-gradient(180deg, rgba(30, 29, 23, 0.82) 0%, rgba(15, 15, 11, 0.9) 100%);
+  box-shadow: var(--shadow-lg);
+}
+
+.form::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 22%;
+  right: 22%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--sand-400), transparent);
+  opacity: 0.7;
 }
 
 .backLink {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 12px;
-  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: var(--text-mute);
   text-decoration: none;
   align-self: flex-start;
-  transition: color 0.2s;
+  transition: color var(--transition-fast);
 }
 
 .backLink:hover {
-  color: var(--accent-blue);
-  text-decoration: none;
+  color: var(--sand-300);
 }
 
 .title {
-  font-size: 20px;
-  font-weight: 700;
-  color: var(--text-primary);
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--text-hi);
   text-align: center;
+  letter-spacing: 0.24em;
+  text-indent: 0.24em;
+  margin-top: 4px;
 }
 
 .desc {
-  font-size: 13px;
-  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.2em;
+  color: var(--text-mute);
   text-align: center;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 
 .error {
-  font-size: 13px;
-  color: var(--accent-red);
+  font-size: 12.5px;
+  color: var(--accent-rust);
   text-align: center;
   padding: 8px 12px;
-  background-color: rgba(239, 68, 68, 0.08);
-  border-radius: var(--radius-sm);
+  background: rgba(180, 98, 58, 0.1);
+  border: 1px solid var(--line-rust);
 }
 
 .label {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  font-size: 13px;
-  color: var(--text-secondary);
+  gap: 7px;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  color: var(--text-dim);
 }
 
 .input {
   padding: 10px 12px;
-  background-color: var(--bg-primary);
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-md);
-  color: var(--text-primary);
-  font-size: 13px;
+  background: var(--bg-inset);
+  border: 1px solid var(--line-hair);
+  color: var(--text-hi);
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  letter-spacing: 0.04em;
   outline: none;
-  transition: border-color var(--transition-fast);
+  transition: border-color var(--transition-fast), background var(--transition-fast);
 }
 
 .input:focus {
-  border-color: var(--accent-blue);
+  border-color: var(--line-strong);
+  background: rgba(8, 8, 6, 0.7);
 }
 
 .input::placeholder {
-  color: var(--text-muted);
+  color: var(--text-disabled);
+  font-family: var(--font-sans);
 }
 
 .btn {
-  padding: 10px;
-  background-color: var(--accent-blue);
-  border: none;
-  border-radius: var(--radius-md);
-  color: #fff;
-  font-size: 14px;
-  font-weight: 500;
   margin-top: 8px;
-  transition: opacity var(--transition-fast);
+  padding: 11px;
+  background: linear-gradient(180deg, var(--sand-300) 0%, var(--sand-400) 100%);
+  border: 1px solid var(--sand-200);
+  color: #17160f;
+  font-family: var(--font-serif);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-indent: 0.3em;
+  transition: filter var(--transition-fast), box-shadow var(--transition-fast);
 }
 
 .btn:hover {
-  opacity: 0.9;
+  filter: brightness(1.06);
+  box-shadow: var(--glow-sand);
 }
 
 .btn:disabled {
-  opacity: 0.5;
+  opacity: 0.45;
   cursor: not-allowed;
+  filter: none;
+  box-shadow: none;
 }
