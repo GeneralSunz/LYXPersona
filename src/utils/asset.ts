@@ -6,7 +6,7 @@
  * 都必须过这一层，否则线上一定 404。
  */
 
-/** 去掉尾部斜杠的 base，本地构建为 ''，线上为 '/filevault' */
+/** 去掉尾部斜杠的 base，本地构建为 ''，线上为 '/LYXPersona' */
 const BASE = import.meta.env.BASE_URL.replace(/\/+$/, '')
 
 /** 把 public/ 下的绝对路径转成带 base 的真实 URL */

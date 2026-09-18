@@ -33,7 +33,7 @@
 
    ⚠ 路径必须走相对引用让 Vite 处理：
    早先用 public/ 下的 url('/萨卡兹.jpg') 是根绝对路径，部署到
-   GitHub Pages 的 /filevault/ 子路径后解析成站点根，必然 404，
+   GitHub Pages 的 /LYXPersona/ 子路径后解析成站点根，必然 404，
    档案馆一直没有背景图。改为从 src/assets 相对引用后，
    Vite 会按 base 生成带哈希的正确地址。 */
 .app-bg::before {
