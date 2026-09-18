@@ -4,6 +4,8 @@ import { AuthProvider } from './store/AuthContext'
 import { isSupabaseConfigured } from './lib/supabase'
 import { useAuth } from './store/AuthContext'
 import Header from './layouts/Header'
+import Portfolio from './pages/Portfolio'
+import Resume from './pages/Resume'
 import DownloadPage from './pages/DownloadPage'
 import Home from './pages/Home'
 import Login from './pages/Login'
@@ -40,8 +42,14 @@ export default function App() {
     <AuthProvider>
       <FileProvider>
         <Routes>
-          {/* Download portal - public */}
-          <Route path="/" element={<DownloadPage />} />
+          {/* 个人主页 —— 站点门面 */}
+          <Route path="/" element={<Portfolio />} />
+
+          {/* A4 简历页：供浏览器打印 / 生成 PDF 使用，同时也是在线简历 */}
+          <Route path="/resume" element={<Resume />} />
+
+          {/* 子界面：熔炉档案馆（公开下载门户） */}
+          <Route path="/archive" element={<DownloadPage />} />
 
           {/* Admin routes */}
           <Route

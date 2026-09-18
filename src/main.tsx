@@ -5,6 +5,8 @@ import App from './App'
 import './styles/globals.css'
 import './styles/design-tokens.css'
 import './styles/textures.css'
+// KV 主题层：变量作用域限定在 .kv-scope（个人主页用），不影响档案馆
+import './styles/kv-theme.css'
 import './styles/components.css'
 // 氛围层放最后：它要覆盖 components.css 里若干元素的入场/视差表现
 import './styles/atmosphere.css'

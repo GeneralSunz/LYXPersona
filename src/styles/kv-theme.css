@@ -1,0 +1,188 @@
+/* ═══════════════════════════════════════════════════════════════
+   无终奇语 · KV 主题层
+   ───────────────────────────────────────────────────────────────
+   色值与字体均取自官方主题站样式表 rogue_4.css / commons.css 的实测
+   （详见《设计风格调研-萨卡兹的无终奇语.md》）。
+
+   ⚠ 全部变量作用域限定在 .kv-scope 内，**不改动** design-tokens.css，
+     因此熔炉档案馆（/archive）的既有羊皮纸视觉零回归风险。
+
+   铁律：近黑主导 · 猩红是唯一热色 · 米白是唯一的亮 · 金只做线。
+   ═══════════════════════════════════════════════════════════════ */
+
+.kv-scope {
+  /* ── 墨底与分层 ── */
+  --kv-void: #030303;
+  --kv-void-soft: #0a0908;
+  --kv-panel: #100e0c;
+  --kv-panel-2: #191512;
+  --kv-inset: #060505;
+
+  /* ── 砂金：只走线与小符形 ── */
+  --kv-gold: #b49562;
+  --kv-gold-bright: #d8bb7c;
+  --kv-brown: #816e4f;
+  --kv-brown-deep: #4a3d28;
+
+  /* ── 猩红：全站唯一热色 ── */
+  --kv-crimson: #8a0000;
+  --kv-crimson-mid: #b43a34;
+  --kv-crimson-deep: #4b0d08;
+  --kv-coral: #f56554;
+
+  /* ── 米白与文字 ── */
+  --kv-cream: #f4ede3;
+  --kv-cream-soft: #f8f3e9;
+  --kv-body: #bdb4a5;
+  --kv-dim: #8a8175;
+  --kv-mute: #605a50;
+
+  /* ── 冷色中和 ── */
+  --kv-slate: #575f6e;
+  --kv-slate-soft: #7e8a9b;
+
+  /* ── 线 ── */
+  --kv-hair: rgba(180, 149, 98, 0.16);
+  --kv-line: rgba(180, 149, 98, 0.3);
+  --kv-line-strong: rgba(180, 149, 98, 0.5);
+  --kv-line-cream: rgba(244, 237, 227, 0.22);
+  --kv-line-blood: rgba(180, 58, 52, 0.4);
+
+  /* ── 字体：官方基准是思源宋体（衬线主导），拉丁用 Cinzel →── */
+  --kv-serif: 'Noto Serif SC', 'Source Han Serif SC', 'Songti SC', serif;
+  --kv-sans: 'Noto Sans SC', 'PingFang SC', system-ui, sans-serif;
+  --kv-display: 'Cinzel Decorative', 'Noto Serif SC', serif;
+  --kv-mono: 'JetBrains Mono', Consolas, monospace;
+
+  /* ── 别名覆写 ──
+     textures.css 的 .plate-frame / .plate-tick 读的是这几个通用变量，
+     在这里改写后，那些既有版记零件会自动换成 KV 的砂金发丝线，
+     不必复制一份组件。作用域仍限于 .kv-scope。 */
+  --line: var(--kv-line);
+  --line-hair: var(--kv-hair);
+  --line-strong: var(--kv-line-strong);
+  --text-hi: var(--kv-cream);
+
+  background-color: var(--kv-void);
+  color: var(--kv-body);
+  font-family: var(--kv-serif);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ══════════════════ 通用零件 ══════════════════ */
+
+/* ── 拉丁版记小字：大字距等宽，官方 Novecento Wide 的近似处理 ── */
+.kv-caption {
+  font-family: var(--kv-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--kv-mute);
+}
+
+/* ── 发丝线：中间带菱形结点 ── */
+.kv-rule {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+}
+
+.kv-rule::before,
+.kv-rule::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--kv-line), transparent);
+}
+
+/* ── 空心菱形 ◇：官方落地页最常出现的配重符号 ── */
+.kv-diamond {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  flex: none;
+  border: 1px solid var(--kv-line-strong);
+  transform: rotate(45deg);
+}
+
+.kv-diamond--solid {
+  background: var(--kv-gold);
+  border-color: var(--kv-gold);
+}
+
+.kv-diamond--blood {
+  border-color: var(--kv-crimson-mid);
+}
+
+/* ── 竖排中文：官方主标题的排法 ── */
+.kv-vertical {
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+}
+
+/* ── 猩红墨晕：大块水彩扩散 + 飞溅点，纯 CSS，无外部图片 ── */
+.kv-bloom {
+  position: absolute;
+  pointer-events: none;
+  background:
+    radial-gradient(closest-side, rgba(138, 0, 0, 0.95) 0%, rgba(138, 0, 0, 0.55) 38%, rgba(90, 12, 8, 0.22) 62%, transparent 78%),
+    radial-gradient(closest-side at 38% 34%, rgba(180, 58, 52, 0.5) 0%, transparent 62%);
+  filter: blur(26px);
+  mix-blend-mode: screen;
+}
+
+/* ── 拱门：流淌状金色笔触拱 ── */
+.kv-arch {
+  position: absolute;
+  pointer-events: none;
+  border: 15px solid transparent;
+  border-bottom: none;
+  border-radius: 50% 50% 0 0 / 62% 62% 0 0;
+  border-image: linear-gradient(180deg, var(--kv-gold-bright), var(--kv-brown) 45%, rgba(74, 61, 40, 0.15)) 1;
+  mask-image: linear-gradient(180deg, #000 62%, transparent 100%);
+  -webkit-mask-image: linear-gradient(180deg, #000 62%, transparent 100%);
+}
+
+/* ── 棋盘格：主题图里门外平台的地面 ── */
+.kv-checker {
+  background-image:
+    repeating-conic-gradient(
+      from 0deg,
+      rgba(3, 3, 3, 0.92) 0% 25%,
+      rgba(184, 178, 168, 0.32) 0% 50%
+    );
+  background-size: 11px 11px;
+  border-top: 1px solid var(--kv-line);
+  border-bottom: 1px solid var(--kv-line);
+}
+
+/* ── 玻璃重影：蓝白通道偏移，主题图里的"幻象叠层" ── */
+.kv-ghost {
+  text-shadow:
+    -1.5px 0 0 rgba(87, 95, 110, 0.55),
+    1.5px 0 0 rgba(180, 58, 52, 0.32);
+}
+
+/* ══════════════════ 动效 ══════════════════ */
+
+@keyframes kv-bloom-drift {
+  0%, 100% { transform: scale(1) translate3d(0, 0, 0); opacity: 0.85; }
+  50% { transform: scale(1.07) translate3d(1.5%, -1.5%, 0); opacity: 1; }
+}
+
+@keyframes kv-ember {
+  0% { transform: translateY(0) scale(1); opacity: 0; }
+  14% { opacity: 0.9; }
+  100% { transform: translateY(-190px) scale(0.3); opacity: 0; }
+}
+
+@keyframes kv-cue {
+  0%, 100% { transform: translateY(0); opacity: 0.45; }
+  50% { transform: translateY(7px); opacity: 1; }
+}
+
+@keyframes kv-sheen {
+  0% { background-position: -160% 0; }
+  100% { background-position: 260% 0; }
+}

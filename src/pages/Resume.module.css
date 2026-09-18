@@ -1,0 +1,443 @@
+/* ═══════════════════════════════════════════════════════════════
+   A4 简历 —— 打印优先
+   ───────────────────────────────────────────────────────────────
+   屏幕上是浅色纸面（省墨、打印不糊），版式沿用「卷宗」语汇：
+   罗马记号 + 发丝线 + 宋体主导。@page 尺寸即 A4，PDF 由此页生成。
+   ═══════════════════════════════════════════════════════════════ */
+
+.screen {
+  min-height: 100vh;
+  padding: 34px 20px 60px;
+  background: #0a0908;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+/* ── 屏幕工具条（打印时隐藏） ── */
+.toolbar {
+  width: 210mm;
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(180, 149, 98, 0.2);
+}
+
+.toolbarTitle {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 0.95rem;
+  letter-spacing: 0.16em;
+  color: #b49562;
+}
+
+.toolbarSpacer { flex: 1; }
+
+.toolBtn {
+  padding: 8px 16px;
+  border: 1px solid rgba(180, 149, 98, 0.35);
+  background: transparent;
+  color: #bdb4a5;
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 0.82rem;
+  letter-spacing: 0.1em;
+  transition: all 160ms ease;
+}
+
+.toolBtn:hover {
+  border-color: #b49562;
+  color: #f4ede3;
+  background: rgba(180, 149, 98, 0.1);
+}
+
+.toolBtnPrimary {
+  border-color: rgba(180, 58, 52, 0.5);
+  background: linear-gradient(180deg, rgba(138, 0, 0, 0.4), rgba(75, 13, 8, 0.4));
+  color: #f4ede3;
+}
+
+.toolBtnPrimary:hover {
+  border-color: #b43a34;
+  background: linear-gradient(180deg, rgba(180, 58, 52, 0.55), rgba(110, 18, 12, 0.55));
+  color: #fff;
+}
+
+/* ══════════════════ A4 纸面 ══════════════════ */
+
+.page {
+  width: 210mm;
+  min-height: 297mm;
+  padding: 13mm 14mm 11mm;
+  background: #fdfbf7;
+  color: #24211c;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+  font-family: 'Noto Serif SC', 'Source Han Serif SC', 'Songti SC', serif;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── 抬头 ── */
+
+.head {
+  display: flex;
+  align-items: flex-start;
+  gap: 14mm;
+  padding-bottom: 5mm;
+  border-bottom: 1.6px solid #24211c;
+}
+
+.headMain { flex: 1; min-width: 0; }
+
+.name {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 25pt;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  line-height: 1.1;
+  color: #171512;
+  margin-bottom: 2.5mm;
+}
+
+.nameEn {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 7.5pt;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: #8a6a28;
+  margin-bottom: 3mm;
+}
+
+.tagline {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 10pt;
+  letter-spacing: 0.1em;
+  color: #4a4438;
+  margin-bottom: 4mm;
+}
+
+.contactGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.4mm 6mm;
+  max-width: 118mm;
+}
+
+.contactItem {
+  display: flex;
+  align-items: baseline;
+  gap: 2.4mm;
+  font-size: 8.4pt;
+  color: #3a352c;
+}
+
+.contactKey {
+  flex: none;
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 7.6pt;
+  letter-spacing: 0.12em;
+  color: #8f8676;
+}
+
+.contactVal {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8pt;
+  color: #24211c;
+  word-break: break-all;
+}
+
+.portraitBox {
+  flex: none;
+  width: 30mm;
+  height: 39mm;
+  border: 1px solid #c9c0af;
+  padding: 1.1mm;
+  background: #fff;
+}
+
+.portrait {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.portraitFallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f0ece4;
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 7pt;
+  color: #a79d8c;
+  letter-spacing: 0.1em;
+}
+
+/* ── 分区 ── */
+
+.section {
+  padding-top: 4.6mm;
+}
+
+.sectionHead {
+  display: flex;
+  align-items: center;
+  gap: 2.6mm;
+  margin-bottom: 2.8mm;
+}
+
+.sectionMark {
+  flex: none;
+  width: 6.6mm;
+  height: 6.6mm;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #24211c;
+  color: #fdfbf7;
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 9pt;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.sectionTitle {
+  flex: none;
+  font-family: 'Noto Serif SC', serif;
+  font-size: 11.5pt;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: #171512;
+}
+
+.sectionRule {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, #c9c0af, transparent);
+}
+
+.sectionEn {
+  flex: none;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 6.6pt;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: #a79d8c;
+}
+
+.subHead {
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 8.6pt;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #8a6a28;
+  margin-bottom: 2mm;
+}
+
+/* ── 竞赛条目：两栏排布，省纵向空间 ── */
+
+.awardCols {
+  columns: 2;
+  column-gap: 8mm;
+}
+
+.awardItem {
+  display: flex;
+  align-items: baseline;
+  gap: 2mm;
+  padding: 1.15mm 0;
+  break-inside: avoid;
+  font-size: 8.5pt;
+  line-height: 1.5;
+}
+
+.awardDot {
+  flex: none;
+  width: 1.5mm;
+  height: 1.5mm;
+  background: #8a6a28;
+  transform: rotate(45deg) translateY(-0.2mm);
+}
+
+.awardName {
+  flex: 1;
+  color: #2e2a24;
+}
+
+.awardLevel {
+  flex: none;
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 7.6pt;
+  font-weight: 700;
+  color: #8a0000;
+  white-space: nowrap;
+}
+
+.awardYear {
+  flex: none;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 7pt;
+  color: #a79d8c;
+}
+
+/* ── 项目 / 组织条目 ── */
+
+.entry {
+  padding: 1.6mm 0 1.6mm 4mm;
+  border-left: 1.2px solid #ded6c7;
+  break-inside: avoid;
+}
+
+.entry + .entry { margin-top: 1.6mm; }
+
+.entryTop {
+  display: flex;
+  align-items: baseline;
+  gap: 2.6mm;
+  margin-bottom: 0.9mm;
+}
+
+.entryTitle {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 9.4pt;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #171512;
+}
+
+.entryRole {
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 7.8pt;
+  letter-spacing: 0.1em;
+  color: #8a6a28;
+}
+
+.entryDesc {
+  font-size: 8.4pt;
+  line-height: 1.62;
+  color: #3a352c;
+}
+
+/* ── 特质：横排三格 ── */
+
+.traitRow {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 4mm;
+}
+
+.traitCell {
+  padding: 2.4mm 2.8mm;
+  border: 1px solid #ded6c7;
+  background: #fbf8f2;
+  break-inside: avoid;
+}
+
+.traitTitle {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 8.8pt;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #171512;
+  margin-bottom: 1.4mm;
+}
+
+.traitDesc {
+  font-size: 8pt;
+  line-height: 1.6;
+  color: #3a352c;
+}
+
+/* ── 学业数据条 ── */
+
+.statBar {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+  margin-bottom: 3.4mm;
+  border: 1px solid #ded6c7;
+  background: #fbf8f2;
+}
+
+.statCell {
+  padding: 2.4mm 3mm;
+  border-left: 1px solid #ded6c7;
+  text-align: center;
+}
+
+.statCell:first-child { border-left: none; }
+
+.statValue {
+  display: block;
+  font-family: 'Noto Serif SC', serif;
+  font-size: 12pt;
+  font-weight: 700;
+  color: #8a0000;
+  letter-spacing: 0.04em;
+}
+
+.statLabel {
+  display: block;
+  margin-top: 0.6mm;
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 7pt;
+  letter-spacing: 0.14em;
+  color: #8f8676;
+}
+
+/* ── 页脚 ── */
+
+.foot {
+  margin-top: auto;
+  padding-top: 4mm;
+  border-top: 1.6px solid #24211c;
+  display: flex;
+  align-items: center;
+  gap: 4mm;
+}
+
+.footMotto {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 9.6pt;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: #8a0000;
+}
+
+.footSpacer { flex: 1; }
+
+.footMeta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 6.8pt;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #a79d8c;
+}
+
+/* ══════════════════ 打印 ══════════════════ */
+
+@page {
+  size: A4;
+  margin: 0;
+}
+
+@media print {
+  .screen {
+    padding: 0;
+    background: #fff;
+    gap: 0;
+    display: block;
+  }
+
+  .toolbar { display: none; }
+
+  .page {
+    width: 210mm;
+    min-height: 297mm;
+    box-shadow: none;
+    margin: 0;
+  }
+}

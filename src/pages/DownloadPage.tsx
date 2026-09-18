@@ -440,6 +440,14 @@ export default function DownloadPage() {
               <svg viewBox="0 0 24 24"><use href="#icon-folder" /></svg>
               熔炉档案局 —— 没有终点，只有未来
             </span>
+            <Link to="/" className="admin-link">
+              <svg className="admin-link-icon" viewBox="0 0 32 32"><use href="#rune-ring" /></svg>
+              返回个人主页
+            </Link>
+            <Link to="/resume" className="admin-link">
+              <svg className="admin-link-icon" viewBox="0 0 32 32"><use href="#rune-ring" /></svg>
+              在线简历
+            </Link>
             <Link to="/admin" className="admin-link">
               <svg className="admin-link-icon" viewBox="0 0 32 32"><use href="#rune-ring" /></svg>
               管理员入口
