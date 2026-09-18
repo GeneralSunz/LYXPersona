@@ -10,6 +10,7 @@ import {
 } from '../content/profile'
 import type { Photo } from '../content/profile'
 import { asset } from '../utils/asset'
+import MessageDialog from '../components/MessageDialog'
 import styles from './Portfolio.module.css'
 
 /* ═══════════════════════════════════════════════════════════════
@@ -198,6 +199,8 @@ export default function Portfolio() {
   const sectionIds = useMemo(() => SECTIONS.map(s => s.id as string), [])
   const active = useActiveSection(sectionIds)
   const progress = useScrollProgress()
+  /** 「想对我说」留言弹窗 */
+  const [msgOpen, setMsgOpen] = useState(false)
 
   const handleAnchor = useCallback((e: React.MouseEvent, id: string) => {
     e.preventDefault()
@@ -606,6 +609,12 @@ export default function Portfolio() {
             {PROFILE.name} · {PROFILE.archiveNo}
           </span>
           <span className={styles.footerSpacer} />
+          <button className={styles.footerAction} onClick={() => setMsgOpen(true)}>
+            <svg className={styles.footerActionIcon} viewBox="0 0 24 24" aria-hidden="true">
+              <use href="#icon-mail" />
+            </svg>
+            想对我说
+          </button>
           <span className="kv-caption">没有终点，只有未来</span>
         </div>
         <div className={styles.footerSections}>
@@ -621,6 +630,10 @@ export default function Portfolio() {
           <span className={styles.footerSection}>无终安息</span>
         </div>
       </footer>
+
+      {/* 「想对我说」留言弹窗。刻意挂在页面根节点而非 portal：
+          portal 会脱离 .kv-scope，丢掉落 KV 色板变量。 */}
+      <MessageDialog open={msgOpen} onClose={() => setMsgOpen(false)} />
     </div>
   )
 }

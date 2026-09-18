@@ -1629,6 +1629,34 @@ a.contactItem:hover {
 
 .footerSpacer { flex: 1; }
 
+/* 页脚的「想对我说」入口 */
+.footerAction {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 15px;
+  border: 1px solid var(--kv-line);
+  background: rgba(180, 149, 98, 0.08);
+  color: var(--kv-sand, #beaa85);
+  font-family: var(--kv-serif);
+  font-size: 0.82rem;
+  letter-spacing: 0.16em;
+  transition: border-color 170ms ease, background 170ms ease, color 170ms ease;
+}
+
+.footerAction:hover {
+  border-color: var(--kv-gold);
+  background: rgba(180, 149, 98, 0.16);
+  color: var(--kv-cream);
+}
+
+.footerActionIcon {
+  width: 14px;
+  height: 14px;
+  flex: none;
+  opacity: 0.85;
+}
+
 .footerSections {
   display: flex;
   flex-wrap: wrap;
